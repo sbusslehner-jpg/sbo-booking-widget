@@ -13,6 +13,7 @@ import { registerCustomElement, openOverlay, closeOverlay } from './widget/custo
 // NPM-Exporte
 export { EmbeddedBookingWidget as BookingWidget }
 export type { BookingWidgetProps }
+export { BookingCtaButton } from './widget/BookingCtaButton'
 export { LocalStorageAdapter } from './state/storage/LocalStorageAdapter'
 export type { StorageAdapter } from './state/storage/StorageAdapter'
 export { MockBookingService, defaultBookingService } from './data/service'

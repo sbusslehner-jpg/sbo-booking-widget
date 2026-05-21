@@ -1,6 +1,9 @@
 import type { Model } from '../../types'
+import poloImg from '../../assets/models/polo.png'
+import golfImg from '../../assets/models/golf.png'
+import trocImg from '../../assets/models/trock.png'
 
-// Einfacher SVG-Auto-Platzhalter als data URI, eingefärbt via currentColor.
+// Generischer Platzhalter für Modelle, für die noch kein Foto existiert.
 const carPlaceholder = `data:image/svg+xml;utf8,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 48" aria-hidden="true">
   <path d="M8 32 L14 18 Q16 14 20 14 L60 14 Q64 14 66 18 L72 32 Z"
@@ -11,10 +14,10 @@ const carPlaceholder = `data:image/svg+xml;utf8,${encodeURIComponent(`
 </svg>`)}`
 
 export const models: Model[] = [
-  { id: 'polo', brandId: 'vw', name: 'Polo', image: carPlaceholder },
-  { id: 'golf', brandId: 'vw', name: 'Golf', image: carPlaceholder },
-  { id: 'golf-variant', brandId: 'vw', name: 'Golf Variant', image: carPlaceholder },
-  { id: 't-roc-cabrio', brandId: 'vw', name: 'T-Roc Cabriolet', image: carPlaceholder },
+  { id: 'polo', brandId: 'vw', name: 'Polo', image: poloImg },
+  { id: 'golf', brandId: 'vw', name: 'Golf', image: golfImg },
+  { id: 'golf-variant', brandId: 'vw', name: 'Golf Variant', image: golfImg },
+  { id: 't-roc-cabrio', brandId: 'vw', name: 'T-Roc Cabriolet', image: trocImg },
   { id: 'passat', brandId: 'vw', name: 'Passat', image: carPlaceholder },
   { id: 'tiguan', brandId: 'vw', name: 'Tiguan', image: carPlaceholder },
   { id: 'id3', brandId: 'vw', name: 'ID.3', image: carPlaceholder },

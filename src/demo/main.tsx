@@ -1,9 +1,11 @@
 /**
- * Demo-Entry für `npm run dev`.
- * Importiert den Library-Entry — registriert dadurch das Custom Element
- * und legt die globale `window.BookingWidget.open(...)`-API an.
+ * Demo-Entry für `npm run dev` und das Netlify-SPA-Build.
+ * Importiert den Library-Entry (registriert Custom Element + globale API)
+ * und mountet zusätzlich den CTA-Button in einen Demo-Slot.
  */
+import { createRoot } from 'react-dom/client'
 import '../index'
+import { BookingCtaButton } from '../widget/BookingCtaButton'
 
 declare global {
   interface Window {
@@ -25,8 +27,19 @@ function bindOverlayTriggers() {
   })
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', bindOverlayTriggers)
-} else {
+function mountCtaButton() {
+  const slot = document.getElementById('sbo-cta-slot')
+  if (!slot) return
+  createRoot(slot).render(<BookingCtaButton dealerId="senker" />)
+}
+
+function init() {
   bindOverlayTriggers()
+  mountCtaButton()
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init)
+} else {
+  init()
 }

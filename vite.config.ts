@@ -56,6 +56,10 @@ export default defineConfig(() => {
           exports: 'named',
         },
       },
+      // Alle Brand-/Modell-Bilder unter 100KB werden als data-URI ins JS-Bundle
+      // inlined. Damit bleibt die Library ein einziges Script-File und
+      // funktioniert auf jeder Fremdseite ohne zusätzliche Asset-Requests.
+      assetsInlineLimit: 100_000,
       sourcemap: true,
       emptyOutDir: true,
     },
