@@ -1448,7 +1448,7 @@ BookingWidget.open({
           iat: Math.floor(Date.now() / 1000),
           exp: Math.floor(Date.now() / 1000) + 15 * 60,
           ...payload,
-        })
+        }))
         // Demo-Signatur: in Produktion vom Backend signiert + verifiziert.
         const signature = b64url('demo-only-not-a-real-signature-' + Math.random().toString(36))
         return `${header}.${body}.${signature}`

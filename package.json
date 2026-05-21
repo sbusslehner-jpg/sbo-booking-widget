@@ -1,6 +1,6 @@
 {
   "name": "@dealer/booking-widget",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Werkstatt-Booking-Widget für Autohaus Senker — dreistufiges Buchungs-Widget mit Web-Component-Embedding.",
   "private": false,
   "type": "module",
