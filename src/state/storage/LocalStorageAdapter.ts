@@ -7,28 +7,54 @@ export type LocalStorageAdapterOptions = {
   ttlMs?: number
   /** Override storage (for tests). */
   storage?: Storage
+  /**
+   * Wenn true (Default), werden alle Kundendaten (E-Mail, Name, Adresse, …)
+   * vor dem Speichern entfernt. Datenminimierung gemäß DSGVO Art. 5(1)(c) —
+   * Kundendaten kommen pro Session frisch via Prefill, alles andere ist
+   * unkritisch (Marke, Modell, Service-Auswahl, Wunschtermin).
+   */
+  excludeCustomerFields?: boolean
 }
 
 const DEFAULT_TTL = 24 * 60 * 60 * 1000
+
+const EMPTY_CUSTOMER: BookingDraft['customer'] = {
+  salutation: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+  phoneCountry: '+43',
+  phone: '',
+  address: '',
+  zip: '',
+  city: '',
+  country: 'Österreich',
+  hasTopcard: false,
+  acceptedTerms: false,
+}
 
 export class LocalStorageAdapter implements StorageAdapter {
   private readonly key: string
   private readonly ttlMs: number
   private readonly storage: Storage | null
+  private readonly excludeCustomerFields: boolean
 
   constructor(opts: LocalStorageAdapterOptions) {
     this.key = `booking-draft:${opts.dealerId}`
     this.ttlMs = opts.ttlMs ?? DEFAULT_TTL
     this.storage = opts.storage ?? (typeof window !== 'undefined' ? window.localStorage : null)
+    this.excludeCustomerFields = opts.excludeCustomerFields ?? true
   }
 
   async save(draft: BookingDraft): Promise<void> {
     if (!this.storage) return
     try {
-      const payload = JSON.stringify({ ...draft, updatedAt: Date.now() })
-      this.storage.setItem(this.key, payload)
+      const sanitized = this.excludeCustomerFields
+        ? { ...draft, customer: EMPTY_CUSTOMER, updatedAt: Date.now() }
+        : { ...draft, updatedAt: Date.now() }
+      this.storage.setItem(this.key, JSON.stringify(sanitized))
     } catch {
-      // Quota oder Privacy-Modus → still ignorieren
+      // Quota / Privacy-Modus → still ignorieren
     }
   }
 

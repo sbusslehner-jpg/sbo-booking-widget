@@ -64,7 +64,13 @@ export class MockBookingService implements BookingService {
     return delay(sc)
   }
 
-  async submitBooking(_draft: BookingDraft): Promise<{ bookingId: string }> {
+  async submitBooking(
+    _draft: BookingDraft,
+    _ctx?: { prefillToken?: string },
+  ): Promise<{ bookingId: string }> {
+    // In Produktion: Backend verifiziert _ctx.prefillToken hier (Signatur, exp,
+    // aud), zieht customer-Daten aus dem Token statt aus _draft.customer und
+    // lehnt ab, wenn Token fehlt/abgelaufen ist. Mock akzeptiert alles.
     return delay({ bookingId: `BK-${Date.now().toString(36).toUpperCase()}` }, 600)
   }
 }

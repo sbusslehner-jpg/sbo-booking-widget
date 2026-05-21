@@ -15,9 +15,28 @@ export { EmbeddedBookingWidget as BookingWidget }
 export type { BookingWidgetProps }
 export { BookingCtaButton } from './widget/BookingCtaButton'
 export { LocalStorageAdapter } from './state/storage/LocalStorageAdapter'
+export { InMemoryStorageAdapter } from './state/storage/InMemoryStorageAdapter'
+export { createStorageAdapter } from './state/storage/factory'
 export type { ThemeInput, ThemeName, ThemeTokens } from './widget/themes'
 export { availableThemes } from './widget/themes'
 export type { PrefillData } from './state/prefill'
+export type {
+  PrefillTokenPayload,
+  DecodedPrefillToken,
+} from './state/prefillToken'
+export { decodePrefillToken, tokenToPrefill } from './state/prefillToken'
+export type { ConsentState } from './state/consent'
+export {
+  FULL_CONSENT,
+  NO_CONSENT,
+  readOneTrustConsent,
+  subscribeOneTrustConsent,
+} from './state/consent'
+export type {
+  AnalyticsEvent,
+} from './analytics/events'
+export type { AnalyticsSink } from './analytics/dataLayer'
+export { defaultSink as defaultAnalyticsSink, noopSink as noopAnalyticsSink } from './analytics/dataLayer'
 export type { StorageAdapter } from './state/storage/StorageAdapter'
 export { MockBookingService, defaultBookingService } from './data/service'
 export type {

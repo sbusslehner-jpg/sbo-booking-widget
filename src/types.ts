@@ -96,6 +96,15 @@ export type BookingDraft = {
   updatedAt: number
 }
 
+export type SubmitContext = {
+  /**
+   * Signed prefill token, falls vorhanden. Das Backend nutzt diesen als
+   * canonical source für Kundendaten und ignoriert die im Draft enthaltenen
+   * customer-Felder. Bei Mismatch lehnt das Backend ab.
+   */
+  prefillToken?: string
+}
+
 export type BookingService = {
   getBrands(): Promise<Brand[]>
   getModels(brandId: string): Promise<Model[]>
@@ -104,5 +113,8 @@ export type BookingService = {
   getAvailableSlots(serviceCenterId: string, date: string): Promise<Slot[]>
   getNextSlots(serviceCenterId: string, count: number): Promise<Slot[]>
   getServiceCenter(id: string): Promise<ServiceCenter>
-  submitBooking(draft: BookingDraft): Promise<{ bookingId: string }>
+  submitBooking(
+    draft: BookingDraft,
+    ctx?: SubmitContext,
+  ): Promise<{ bookingId: string }>
 }

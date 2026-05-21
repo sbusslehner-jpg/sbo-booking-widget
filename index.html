@@ -114,9 +114,55 @@
       .prefill-actions button:hover { background: #2a3a5a; transform: translateY(-1px); }
       .prefill-actions button.secondary { background: #ffffff; color: #0f172a; border: 1px solid #e5e7eb; }
       .prefill-actions button.secondary:hover { border-color: #94a3b8; }
+
+      .control-bar { position: sticky; top: 0; z-index: 50;
+        background: #ffffff; border-bottom: 1px solid #e5e7eb;
+        padding: 10px 32px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+        font-size: 13px;
+      }
+      .control-bar strong { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6b7280; }
+      .consent-toggle { display: inline-flex; gap: 6px; padding: 3px; background: #f1f5f9; border-radius: 8px; }
+      .consent-toggle button {
+        background: transparent; color: #475569; border: none;
+        font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+        padding: 5px 12px; border-radius: 6px; cursor: pointer;
+      }
+      .consent-toggle button.active { background: #ffffff; color: #0f172a; box-shadow: 0 1px 2px rgba(15,23,42,0.08); }
+
+      .datalayer-panel {
+        position: fixed; right: 16px; bottom: 16px; z-index: 100;
+        width: 380px; max-height: 320px;
+        background: #0f172a; color: #e5e7eb;
+        border-radius: 10px; box-shadow: 0 12px 32px -8px rgba(15,23,42,0.35);
+        overflow: hidden; display: flex; flex-direction: column;
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+      }
+      .datalayer-panel header {
+        padding: 8px 12px; background: #1e293b;
+        display: flex; align-items: center; justify-content: space-between;
+        font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8;
+      }
+      .datalayer-panel header button { background: transparent; color: #94a3b8; border: none; cursor: pointer; font-size: 11px; }
+      .datalayer-panel header button:hover { color: #ffffff; }
+      .datalayer-list { flex: 1; overflow-y: auto; padding: 6px; font-size: 11.5px; line-height: 1.5; }
+      .datalayer-list .event { padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .datalayer-list .event-name { color: #fbbf24; font-weight: 600; }
+      .datalayer-list .event-params { color: #94a3b8; }
+      .datalayer-list .empty { padding: 20px; text-align: center; color: #64748b; font-family: 'Inter', sans-serif; font-size: 12px; }
     </style>
   </head>
   <body>
+    <!-- Control-Bar simuliert ein OneTrust-CMP-Setup für die Demo -->
+    <div class="control-bar">
+      <span><strong>Demo-Modus · Consent simulieren:</strong></span>
+      <div class="consent-toggle" id="consent-toggle">
+        <button data-consent="none">Kein Consent</button>
+        <button data-consent="functional">+ Functional</button>
+        <button data-consent="all" class="active">+ Functional + Analytics</button>
+      </div>
+      <span id="consent-status" style="color: #6b7280; font-size: 12px;">Aktiv: functional + analytics</span>
+    </div>
+
     <nav class="nav">
       <div class="nav-brand"><span class="accent">Sen</span>ker</div>
       <div class="nav-links">
@@ -519,6 +565,171 @@ https://senker.at/service-buchen
       </div>
     </section>
 
+    <!-- ============================== SIGNED TOKEN / PHASE 1 ============================== -->
+    <section class="demo-section" id="token-docs">
+      <h2>Variante 5 · Signed Token (vertrauenswürdiger Prefill)</h2>
+      <p class="lede">
+        Plain-<code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">prefill</code>
+        ist UX-Convenience und vom Browser manipulierbar — geeignet für unkritische Felder
+        (Fahrzeug, Service-Auswahl). Für Kundendaten aus carlog oder E-Mail-Einladungen
+        nimmt das Widget einen <strong>signierten JWT</strong>: der Token wird vom SBO-Backend
+        ausgestellt, vom Widget nur dekodiert und beim Submit unverändert an das Backend
+        zurückgereicht. Das Backend verifiziert Signatur + Verfall und zieht die Kundendaten
+        ausschließlich aus dem Token.
+      </p>
+      <div class="demo-grid">
+        <div>
+          <div class="preview-label">Live ausprobieren</div>
+          <div class="preview-pane" style="flex-direction: column; gap: 14px; align-items: flex-start;">
+            <div class="prefill-actions">
+              <button id="open-token-overlay">Mit Token-Prefill öffnen</button>
+            </div>
+            <div style="font-size: 11.5px; color: #6b7280; line-height: 1.5;">
+              Mock-Token mit <code style="background:#f3f4f6;padding:1px 4px;border-radius:3px;font-size:11px">exp</code> 15 min.
+              In Produktion vom SBO-Backend signiert.<br />
+              Im Widget: carlog-Banner zeigt "Daten übernommen", customer-Felder sind <strong>trusted</strong>.
+            </div>
+          </div>
+        </div>
+        <div class="docs-pane">
+          <div class="preview-label">So bindest du das ein</div>
+          <div class="tabs" data-tabgroup="token">
+            <button class="tab active" data-tab="token-flow">Flow</button>
+            <button class="tab" data-tab="token-react">React</button>
+            <button class="tab" data-tab="token-html">Custom Element</button>
+          </div>
+          <div class="tab-panel active" id="token-flow">
+            <div class="snippet">
+<span class="com">// 1. Trägerseite kennt carlog-User-ID</span>
+<span class="com">// 2. Server-zu-Server: SBO-Backend signiert JWT</span>
+POST /api/widget-tokens
+  Authorization: Bearer &lt;service-account-jwt&gt;
+  { <span class="attr">user_id</span>: <span class="str">"u_abc123"</span>, <span class="attr">dealer_id</span>: <span class="str">"senker"</span>, <span class="attr">ttl_seconds</span>: 900 }
+→ 200 { <span class="attr">token</span>: <span class="str">"eyJhbGciOiJIUzI1NiJ9..."</span> }
+
+<span class="com">// 3. Trägerseite gibt Token ans Widget weiter</span>
+&lt;BookingWidget <span class="attr">prefillToken</span>={token} <span class="attr">dealerId</span>=<span class="str">"senker"</span> /&gt;
+
+<span class="com">// 4. Beim Submit wird der Token mitgeschickt</span>
+POST /api/bookings
+  { <span class="attr">draft</span>: {...}, <span class="attr">prefill_token</span>: <span class="str">"eyJhbGciOiJI..."</span> }
+<span class="com">// 5. Backend verifiziert Token + überschreibt draft.customer aus Token</span></div>
+            <p>
+              <strong>Security-Eigenschaften:</strong> Per DevTools modifizierte
+              <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">draft.customer</code>-Felder
+              werden vom Backend ignoriert. Token-Verfall macht abgefangene
+              E-Mail-Links nach 15 min nutzlos. Replay innerhalb der TTL durch
+              <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">jti</code>-Blacklist möglich.
+            </p>
+          </div>
+          <div class="tab-panel" id="token-react">
+            <div class="snippet">
+<span class="kw">import</span> { BookingWidget } <span class="kw">from</span> <span class="str">'@dealer/booking-widget'</span>
+
+<span class="kw">async function</span> <span class="attr">BookingPage</span>() {
+  <span class="kw">const</span> token = <span class="kw">await</span> fetch(<span class="str">'/api/widget-token'</span>).then(r =&gt; r.text())
+  <span class="kw">return</span> (
+    <span class="tag">&lt;BookingWidget</span>
+      <span class="attr">dealerId</span>=<span class="str">"senker"</span>
+      <span class="attr">theme</span>=<span class="str">"vw"</span>
+      <span class="attr">prefillToken</span>={token}
+    <span class="tag">/&gt;</span>
+  )
+}<button class="copy-btn" data-copy="token-react-code">Kopieren</button>
+            </div>
+            <textarea id="token-react-code" hidden>import { BookingWidget } from '@dealer/booking-widget'
+
+async function BookingPage() {
+  const token = await fetch('/api/widget-token').then(r =&gt; r.text())
+  return (
+    &lt;BookingWidget
+      dealerId="senker"
+      theme="vw"
+      prefillToken={token}
+    /&gt;
+  )
+}</textarea>
+          </div>
+          <div class="tab-panel" id="token-html">
+            <div class="snippet">
+<span class="tag">&lt;booking-widget</span>
+  <span class="attr">dealer-id</span>=<span class="str">"senker"</span>
+  <span class="attr">prefill-token</span>=<span class="str">"eyJhbGciOiJIUzI1NiJ9..."</span>
+<span class="tag">&gt;&lt;/booking-widget&gt;</span>
+
+<span class="com">// Oder via JS-API:</span>
+BookingWidget.open({
+  <span class="attr">dealerId</span>: <span class="str">'senker'</span>,
+  <span class="attr">prefillToken</span>: tokenFromServer,
+})<button class="copy-btn" data-copy="token-html-code">Kopieren</button>
+            </div>
+            <textarea id="token-html-code" hidden>&lt;booking-widget
+  dealer-id="senker"
+  prefill-token="eyJhbGciOiJIUzI1NiJ9..."
+&gt;&lt;/booking-widget&gt;
+
+// JS-API:
+BookingWidget.open({
+  dealerId: 'senker',
+  prefillToken: tokenFromServer,
+})</textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== PHASE 1 SECURITY ÜBERSICHT ============================== -->
+    <section class="demo-section" id="phase1-docs">
+      <h2>Phase 1 · Sicherheits- und Compliance-Bausteine</h2>
+      <p class="lede">
+        Was wir in v1 für Pilot-Reife eingebaut haben. Volle Architektur siehe README + <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">docs/COOKIES.md</code>.
+      </p>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 12px;">
+        <div style="background:#f7f8fa; border:1px solid #e5e7eb; border-radius:10px; padding:16px;">
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #10b981; margin-bottom: 6px;">✓ Signed Tokens</div>
+          <div style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">Vertrauenswürdiger Prefill</div>
+          <div style="font-size: 12.5px; color: #6b7280; line-height: 1.5;">JWT-basiertes Prefill für Kundendaten. DevTools-Manipulation wirkungslos, Backend ist canonical source.</div>
+        </div>
+        <div style="background:#f7f8fa; border:1px solid #e5e7eb; border-radius:10px; padding:16px;">
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #10b981; margin-bottom: 6px;">✓ Consent-aware</div>
+          <div style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">OneTrust-Integration</div>
+          <div style="font-size: 12.5px; color: #6b7280; line-height: 1.5;">Liest <code style="font-size: 11.5px">window.OnetrustActiveGroups</code> automatisch. Ohne functional consent → In-Memory-Storage, ohne analytics consent → keine Events.</div>
+        </div>
+        <div style="background:#f7f8fa; border:1px solid #e5e7eb; border-radius:10px; padding:16px;">
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #10b981; margin-bottom: 6px;">✓ GA4 / GTM</div>
+          <div style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">dataLayer-Events</div>
+          <div style="font-size: 12.5px; color: #6b7280; line-height: 1.5;">11 PII-freie Event-Typen für Step-Views, Service-Selections, Conversions. Trägerseiten-GTM picked sie up.</div>
+        </div>
+        <div style="background:#f7f8fa; border:1px solid #e5e7eb; border-radius:10px; padding:16px;">
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #10b981; margin-bottom: 6px;">✓ PII-Minimization</div>
+          <div style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">Kein PII im Storage</div>
+          <div style="font-size: 12.5px; color: #6b7280; line-height: 1.5;">E-Mail, Name, Adresse werden nie persistiert. Draft enthält nur Fahrzeug-, Service- und Termin-Auswahl.</div>
+        </div>
+        <div style="background:#f7f8fa; border:1px solid #e5e7eb; border-radius:10px; padding:16px;">
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #10b981; margin-bottom: 6px;">✓ Versioning</div>
+          <div style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">Stabile CDN-Pfade</div>
+          <div style="font-size: 12.5px; color: #6b7280; line-height: 1.5;"><code style="font-size: 11.5px">/v1/booking-widget.umd.js</code> für Major-Pinning, <code style="font-size: 11.5px">/v1.x.y/</code> für exact-pinning. Breaking-Changes können nie versehentlich propagieren.</div>
+        </div>
+        <div style="background:#f7f8fa; border:1px solid #e5e7eb; border-radius:10px; padding:16px;">
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #10b981; margin-bottom: 6px;">✓ SRI</div>
+          <div style="font-size: 13.5px; font-weight: 600; margin-bottom: 4px;">Subresource Integrity</div>
+          <div style="font-size: 12.5px; color: #6b7280; line-height: 1.5;">SHA-384-Hashes pro Bundle in <code style="font-size: 11.5px">/integrity.json</code>. Kompromittierter CDN ≠ kompromittierte Trägerseiten.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live-Mirror der dataLayer-Events. Zeigt, was bei jedem Schritt
+         an die Trägerseite (GTM/GA) ausgeliefert würde. -->
+    <div class="datalayer-panel" id="datalayer-panel">
+      <header>
+        <span>📊 window.dataLayer · Live</span>
+        <button id="datalayer-clear">Leeren</button>
+      </header>
+      <div class="datalayer-list" id="datalayer-list">
+        <div class="empty">Noch keine Events. Interagiere mit dem Widget …</div>
+      </div>
+    </div>
+
     <script type="module" src="/src/demo/main.tsx"></script>
     <script>
       // Tab-Wechsel
@@ -595,6 +806,99 @@ https://senker.at/service-buchen
           },
         }))
       })
+      // -------- Consent-Switcher --------
+      const consentToggle = document.getElementById('consent-toggle')
+      const consentStatus = document.getElementById('consent-status')
+      const presets = {
+        none:       { functional: false, analytics: false, marketing: false },
+        functional: { functional: true,  analytics: false, marketing: false },
+        all:        { functional: true,  analytics: true,  marketing: false },
+      }
+      function applyConsent(name) {
+        const consent = presets[name]
+        if (!consent) return
+        consentToggle?.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.consent === name))
+        const json = JSON.stringify(consent)
+        inlineWidget?.setAttribute('consent', json)
+        window.__sboConsent = consent
+        const summary = Object.entries(consent).filter(([, v]) => v).map(([k]) => k).join(' + ') || 'nichts'
+        if (consentStatus) consentStatus.textContent = `Aktiv: ${summary}`
+      }
+      consentToggle?.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-consent]')
+        if (btn) applyConsent(btn.dataset.consent)
+      })
+      // Initial-State auf den inline-Widget anwenden, sobald gemountet.
+      setTimeout(() => applyConsent('all'), 0)
+
+      // -------- dataLayer-Mirror --------
+      const dlPanel = document.getElementById('datalayer-list')
+      const dlClear = document.getElementById('datalayer-clear')
+      window.dataLayer = window.dataLayer || []
+      const originalPush = window.dataLayer.push.bind(window.dataLayer)
+      window.dataLayer.push = function patched(...items) {
+        items.forEach(renderDlEvent)
+        return originalPush(...items)
+      }
+      function renderDlEvent(item) {
+        if (!dlPanel || !item || typeof item !== 'object') return
+        const empty = dlPanel.querySelector('.empty')
+        if (empty) empty.remove()
+        const div = document.createElement('div')
+        div.className = 'event'
+        const { event, sbo_timestamp, ...rest } = item
+        const time = new Date(sbo_timestamp || Date.now()).toLocaleTimeString('de-AT')
+        div.innerHTML = `<span class="event-name">${event || '(kein event)'}</span><span class="event-params"> · ${time} · ${JSON.stringify(rest)}</span>`
+        dlPanel.appendChild(div)
+        dlPanel.scrollTop = dlPanel.scrollHeight
+      }
+      dlClear?.addEventListener('click', () => {
+        window.dataLayer.length = 0
+        if (dlPanel) dlPanel.innerHTML = '<div class="empty">Cleared.</div>'
+      })
+
+      // -------- Mock-Token-Generator --------
+      function b64url(str) {
+        return btoa(str).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
+      }
+      function mockToken(payload) {
+        const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+        const body = b64url(JSON.stringify({
+          iss: 'sbo-mock',
+          aud: 'senker',
+          iat: Math.floor(Date.now() / 1000),
+          exp: Math.floor(Date.now() / 1000) + 15 * 60,
+          ...payload,
+        }))
+        // Demo-Signatur: in Produktion vom Backend signiert + verifiziert.
+        const signature = b64url('demo-only-not-a-real-signature-' + Math.random().toString(36))
+        return `${header}.${body}.${signature}`
+      }
+
+      document.getElementById('open-token-overlay')?.addEventListener('click', () => {
+        const token = mockToken({
+          sub: 'u_carlog_abc123',
+          customer: {
+            salutation: 'mr',
+            email: 'trusted@carlog.example',
+            firstName: 'Maximilian',
+            lastName: 'Mustermann',
+            phone: '660 1234567',
+            address: 'Carlog-Strasse 42',
+            zip: '5020',
+            city: 'Salzburg',
+            phoneCountry: '+43',
+            country: 'Österreich',
+          },
+          vehicle: { brand: 'vw', model: 'polo', mileage: 87500 },
+        })
+        waitForWidget(() => window.BookingWidget.open({
+          dealerId: 'senker',
+          theme: 'vw',
+          prefillToken: token,
+        }))
+      })
+
       document.getElementById('open-prefill-full')?.addEventListener('click', () => {
         waitForWidget(() => window.BookingWidget.open({
           dealerId: 'senker',

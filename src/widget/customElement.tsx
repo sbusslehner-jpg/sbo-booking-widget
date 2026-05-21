@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import type { PrefillData } from '../state/prefill'
 import type { ThemeName, ThemeInput } from './themes'
 import { availableThemes } from './themes'
+import type { ConsentState } from '../state/consent'
 
 const CE_TAG = 'booking-widget'
 
@@ -15,6 +16,8 @@ type CEAttrs = {
   open?: string
   theme?: string
   prefill?: string
+  consent?: string
+  'prefill-token'?: string
 }
 
 /**
@@ -25,7 +28,16 @@ class BookingWidgetElement extends HTMLElement {
   private root: Root | null = null
 
   static get observedAttributes(): string[] {
-    return ['dealer-id', 'mode', 'language', 'open', 'theme', 'prefill']
+    return [
+      'dealer-id',
+      'mode',
+      'language',
+      'open',
+      'theme',
+      'prefill',
+      'consent',
+      'prefill-token',
+    ]
   }
 
   connectedCallback() {
@@ -56,6 +68,8 @@ class BookingWidgetElement extends HTMLElement {
       open: this.getAttribute('open') ?? 'true',
       theme: this.getAttribute('theme') ?? undefined,
       prefill: this.getAttribute('prefill') ?? undefined,
+      consent: this.getAttribute('consent') ?? undefined,
+      'prefill-token': this.getAttribute('prefill-token') ?? undefined,
     }
     const props: BookingWidgetProps = {
       dealerId: attrs['dealer-id'] || 'default',
@@ -65,8 +79,28 @@ class BookingWidgetElement extends HTMLElement {
       onClose: () => this.removeAttribute('open'),
       theme: parseThemeAttr(attrs.theme),
       prefill: parsePrefillAttr(attrs.prefill),
+      consent: parseConsentAttr(attrs.consent),
+      prefillToken: attrs['prefill-token'],
     }
     this.root?.render(<CEHost host={this} props={props} />)
+  }
+}
+
+function parseConsentAttr(raw: string | undefined): ConsentState | undefined {
+  if (!raw) return undefined
+  // Akzeptiert "all", "none" oder JSON-Objekt.
+  const trimmed = raw.trim().toLowerCase()
+  if (trimmed === 'all') return { functional: true, analytics: true, marketing: true }
+  if (trimmed === 'none') return { functional: false, analytics: false, marketing: false }
+  try {
+    const parsed = JSON.parse(raw) as Partial<ConsentState>
+    return {
+      functional: !!parsed.functional,
+      analytics: !!parsed.analytics,
+      marketing: !!parsed.marketing,
+    }
+  } catch {
+    return undefined
   }
 }
 

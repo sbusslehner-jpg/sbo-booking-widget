@@ -1,6 +1,6 @@
 {
   "name": "@dealer/booking-widget",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Werkstatt-Booking-Widget für Autohaus Senker — dreistufiges Buchungs-Widget mit Web-Component-Embedding.",
   "private": false,
   "type": "module",
@@ -22,7 +22,7 @@
     "build": "tsc -p tsconfig.build.json && vite build",
     "build:lib": "tsc -p tsconfig.build.json && BUILD_TARGET=lib vite build",
     "build:demo": "BUILD_TARGET=demo vite build",
-    "build:netlify": "npm run build:lib && npm run build:demo && cp dist/booking-widget.umd.js dist/booking-widget.es.js dist/index.d.ts dist-demo/",
+    "build:netlify": "npm run build:lib && npm run build:demo && cp dist/booking-widget.umd.js dist/booking-widget.es.js dist/index.d.ts dist-demo/ && node scripts/post-build.mjs",
     "preview": "vite preview --outDir dist-demo",
     "test": "vitest run",
     "test:watch": "vitest",

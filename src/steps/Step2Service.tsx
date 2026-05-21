@@ -10,6 +10,7 @@ import { formatEUR, cn } from '../components/util'
 import { useBookingStore } from '../state/store'
 import { useWidget } from '../widget/WidgetContext'
 import { WidgetShell } from '../widget/WidgetShell'
+import { useTrack } from '../analytics/AnalyticsContext'
 import type { Recommendation, Service } from '../types'
 
 type Props = {
@@ -21,9 +22,10 @@ const TIRE_STORAGE_PRICE = 45
 
 export function Step2Service({ onNext, onBack }: Props) {
   const { t } = useTranslation()
-  const { service, isMobile } = useWidget()
+  const { service, isMobile, dealerId } = useWidget()
   const draft = useBookingStore((s) => s.draft)
   const patch = useBookingStore((s) => s.patch)
+  const track = useTrack()
 
   const [services, setServices] = useState<Service[]>([])
   const [showExtra, setShowExtra] = useState(false)
@@ -56,14 +58,27 @@ export function Step2Service({ onNext, onBack }: Props) {
   const canContinue = draft.services.selected.length > 0
 
   const toggleService = (id: string) => {
-    const selected = draft.services.selected.includes(id)
+    const wasSelected = draft.services.selected.includes(id)
+    const selected = wasSelected
       ? draft.services.selected.filter((x) => x !== id)
       : [...draft.services.selected, id]
     patch('services', { selected })
+    track({
+      event: 'sbo_service_toggle',
+      service_id: id,
+      action: wasSelected ? 'remove' : 'add',
+      dealer: dealerId,
+    })
   }
 
   const handleRecommend = async () => {
     setRecommending(true)
+    track({
+      event: 'sbo_recommendation_request',
+      vin_provided: !!draft.vehicle.vin && draft.vehicle.vin.length > 5,
+      mileage: draft.vehicle.mileage ?? 0,
+      dealer: dealerId,
+    })
     try {
       const rec = await service.getServiceRecommendation(
         draft.vehicle.vin ?? '',
@@ -82,6 +97,11 @@ export function Step2Service({ onNext, onBack }: Props) {
       new Set([...draft.services.selected, ...recommendation.serviceIds]),
     )
     patch('services', { selected: merged })
+    track({
+      event: 'sbo_recommendation_apply',
+      service_count: recommendation.serviceIds.length,
+      dealer: dealerId,
+    })
     setRecModalOpen(false)
   }
 

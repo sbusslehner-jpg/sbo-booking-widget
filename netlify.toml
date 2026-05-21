@@ -18,12 +18,31 @@
   NODE_VERSION = "20"
   NPM_FLAGS = "--no-audit --no-fund"
 
-# Library-Bundles dürfen aggressiv gecached werden — sie sind durch das
-# Versions-Hashing in package.json an den jeweiligen Deploy gebunden.
+# Library-Bundles dürfen aggressiv gecached werden.
+# Pinned-Version-Pfade (/v1.0.0/...) sind immutable, /v1/... folgt dem
+# Major-Track und darf eine kürzere Lebensdauer haben.
+[[headers]]
+  for = "/v*.*.*/booking-widget.*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/v*/booking-widget.*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
 [[headers]]
   for = "/booking-widget.*.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=300, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/integrity.json"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
     Access-Control-Allow-Origin = "*"
 
 # SPA-Fallback: alle unbekannten Pfade auf die Demo-Seite.

@@ -8,6 +8,7 @@ import { Button } from '../components/Button'
 import { useBookingStore } from '../state/store'
 import { useWidget } from '../widget/WidgetContext'
 import { WidgetShell } from '../widget/WidgetShell'
+import { useTrack } from '../analytics/AnalyticsContext'
 import type { Brand, Model } from '../types'
 
 type Props = {
@@ -16,9 +17,10 @@ type Props = {
 
 export function Step1Vehicle({ onNext }: Props) {
   const { t } = useTranslation()
-  const { service } = useWidget()
+  const { service, dealerId } = useWidget()
   const draft = useBookingStore((s) => s.draft)
   const patch = useBookingStore((s) => s.patch)
+  const track = useTrack()
 
   const [brands, setBrands] = useState<Brand[]>([])
   const [models, setModels] = useState<Model[]>([])
@@ -84,6 +86,7 @@ export function Step1Vehicle({ onNext }: Props) {
               onSelect={() => {
                 if (draft.vehicle.brand !== b.id) {
                   patch('vehicle', { brand: b.id, model: null })
+                  track({ event: 'sbo_brand_select', brand_id: b.id, dealer: dealerId })
                 }
               }}
             />
@@ -136,7 +139,10 @@ export function Step1Vehicle({ onNext }: Props) {
               key={m.id}
               model={m}
               selected={draft.vehicle.model === m.id}
-              onSelect={() => patch('vehicle', { model: m.id })}
+              onSelect={() => {
+                patch('vehicle', { model: m.id })
+                track({ event: 'sbo_model_select', model_id: m.id, dealer: dealerId })
+              }}
             />
           ))}
         </div>
