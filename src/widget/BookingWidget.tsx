@@ -129,6 +129,19 @@ export function BookingWidget({
     return createStorageAdapter({ dealerId, consent, ttlMs: draftTtlMs })
   }, [storage, dealerId, consent, draftTtlMs])
 
+  // Wenn functional consent widerrufen wird, alle persistierten Drafts
+  // explizit aus localStorage löschen — sonst lebt der Draft länger als
+  // der Consent dazu.
+  useEffect(() => {
+    if (consent.functional) return
+    if (typeof window === 'undefined') return
+    try {
+      window.localStorage.removeItem(`booking-draft:${dealerId}`)
+    } catch {
+      // Privacy-Modus etc. — egal
+    }
+  }, [consent.functional, dealerId])
+
   // Token dekodieren + final Prefill bauen.
   // Reihenfolge: URL-Params < explizites prefill < prefillToken
   // Token gewinnt, weil signiert/trusted.

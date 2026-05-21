@@ -16,11 +16,8 @@ export function CarlogBanner() {
       <div className="flex items-start gap-3 p-4 rounded-md bg-info-bg text-text">
         <CheckCircle2 className="w-5 h-5 text-success mt-0.5 shrink-0" aria-hidden="true" />
         <div className="flex-1 text-sm leading-snug">
-          <div className="font-semibold mb-0.5">Daten übernommen</div>
-          <div className="text-text-muted">
-            Ihre Stammdaten wurden aus carlog automatisch übernommen. Sie können sie
-            unten bei Bedarf anpassen.
-          </div>
+          <div className="font-semibold mb-0.5">{t('carlog.trustedTitle')}</div>
+          <div className="text-text-muted">{t('carlog.trustedBody')}</div>
         </div>
       </div>
     )

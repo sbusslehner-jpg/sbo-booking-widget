@@ -10,12 +10,18 @@
     "soon": "Prossimamente",
     "from": "da",
     "yes": "Sì",
-    "no": "No"
+    "no": "No",
+    "selectPlaceholder": "Seleziona",
+    "bookAppointmentAria": "Prenota appuntamento",
+    "countryCodeAria": "Prefisso internazionale",
+    "selectBrandFirst": "Seleziona prima una marca."
   },
   "carlog": {
     "title": "Accedi con carlog",
     "subtitle": "Importa automaticamente i dati dal tuo account.",
-    "cta": "Accedi"
+    "cta": "Accedi",
+    "trustedTitle": "Dati importati",
+    "trustedBody": "I tuoi dati sono stati importati da carlog. Puoi comunque modificarli qui sotto se necessario."
   },
   "step1": {
     "title": "Con quale veicolo verrai da noi?",
@@ -128,6 +134,8 @@
     "appointmentSection": "Il tuo appuntamento",
     "centerSection": "Il tuo centro di servizio",
     "summarySection": "La tua prenotazione",
+    "icsTitle": "Appuntamento officina · {{center}}",
+    "icsDescription": "Prenotazione {{id}}",
     "nextStepsTitle": "I prossimi passi",
     "nextSteps": [
       "Riceverai una conferma via e-mail con tutti i dettagli.",

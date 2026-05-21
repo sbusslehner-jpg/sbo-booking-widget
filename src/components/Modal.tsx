@@ -1,5 +1,6 @@
 import { ReactNode, useEffect } from 'react'
 import { X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from './util'
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 }
 
 export function Modal({ open, onClose, title, children, className }: Props) {
+  const { t } = useTranslation()
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
@@ -37,7 +39,7 @@ export function Modal({ open, onClose, title, children, className }: Props) {
           <button
             type="button"
             onClick={onClose}
-            aria-label="Schließen"
+            aria-label={t('common.close')}
             className="p-1.5 -m-1.5 text-text-muted hover:text-text rounded-md hover:bg-surface-muted transition-colors bw-focus"
           >
             <X className="w-4 h-4" />

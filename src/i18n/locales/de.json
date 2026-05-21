@@ -10,12 +10,18 @@
     "soon": "Demnächst verfügbar",
     "from": "ab",
     "yes": "Ja",
-    "no": "Nein"
+    "no": "Nein",
+    "selectPlaceholder": "Bitte wählen",
+    "bookAppointmentAria": "Termin buchen",
+    "countryCodeAria": "Ländervorwahl",
+    "selectBrandFirst": "Bitte zuerst eine Marke wählen."
   },
   "carlog": {
     "title": "Mit carlog anmelden",
     "subtitle": "Übernehmen Sie automatisch ihre Daten aus ihrem Konto.",
-    "cta": "Jetzt anmelden"
+    "cta": "Jetzt anmelden",
+    "trustedTitle": "Daten übernommen",
+    "trustedBody": "Ihre Stammdaten wurden aus carlog automatisch übernommen. Sie können sie unten bei Bedarf anpassen."
   },
   "step1": {
     "title": "Mit welchem Fahrzeug kommen Sie zu uns?",
@@ -128,6 +134,8 @@
     "appointmentSection": "Ihr Termin",
     "centerSection": "Ihr Servicebetrieb",
     "summarySection": "Ihre Buchung",
+    "icsTitle": "Werkstatt-Termin · {{center}}",
+    "icsDescription": "Buchung {{id}}",
     "nextStepsTitle": "Wie es weitergeht",
     "nextSteps": [
       "Sie erhalten eine E-Mail-Bestätigung mit allen Details.",

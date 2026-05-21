@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { cn } from './util'
 
 type CountryCode = {
@@ -33,6 +34,7 @@ export function PhoneInput({
   error,
   containerClassName,
 }: Props) {
+  const { t } = useTranslation()
   const selected = COUNTRIES.find((c) => c.code === country) ?? COUNTRIES[0]
   return (
     <div className={cn('relative', containerClassName)}>
@@ -45,7 +47,7 @@ export function PhoneInput({
         <label className="flex items-center gap-1.5 pl-3 pr-2 border-r border-border bg-surface-muted">
           <span aria-hidden="true" className="text-sm">{selected.flag}</span>
           <select
-            aria-label="Ländervorwahl"
+            aria-label={t('common.countryCodeAria')}
             value={country}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => onCountryChange(e.target.value)}
             className="bg-transparent py-2 pr-2 text-sm outline-none cursor-pointer bw-focus"

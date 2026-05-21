@@ -121,7 +121,7 @@ export function Step1Vehicle({ onNext }: Props) {
         <div className="space-y-2">
           {!draft.vehicle.brand && (
             <div className="text-sm text-text-muted py-6 text-center border border-dashed border-border rounded-md">
-              Bitte zuerst eine Marke wählen.
+              {t('common.selectBrandFirst')}
             </div>
           )}
           {draft.vehicle.brand && loadingModels && (

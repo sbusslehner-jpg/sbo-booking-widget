@@ -57,11 +57,11 @@ export function SuccessView({ bookingId, draft }: Props) {
   const icsUrl = useMemo(() => {
     if (!draft.appointment.date || !draft.appointment.time || !center) return null
     const ics = generateIcs({
-      title: `Werkstatt-Termin · ${center.name}`,
+      title: t('success.icsTitle', { center: center.name }),
       description: [
-        `Buchung ${bookingId}`,
+        t('success.icsDescription', { id: bookingId }),
         selectedServices.length > 0
-          ? `Services: ${selectedServices.map((s) => s.name).join(', ')}`
+          ? `${t('step3.serviceSection')}: ${selectedServices.map((s) => s.name).join(', ')}`
           : '',
       ]
         .filter(Boolean)

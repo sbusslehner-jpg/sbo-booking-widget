@@ -764,7 +764,7 @@
         <div>
           <div class="preview-label">Live</div>
           <div class="preview-pane">
-            <button class="hero-cta" onclick="window.BookingWidget.open({ dealerId: 'senker' })">
+            <button class="hero-cta" onclick="window.openWidget({ dealerId: 'senker' })">
               Jetzt Termin buchen
             </button>
           </div>
@@ -1332,8 +1332,18 @@ BookingWidget.open({
         if (window.BookingWidget?.open) return cb()
         setTimeout(() => waitForWidget(cb), 50)
       }
-      document.getElementById('open-prefill-customer')?.addEventListener('click', () => {
+      // Helper: reicht aktuelle Sprache + Consent an jedes Open-Aufruf durch.
+      // So bleibt das Verhalten konsistent mit dem Inline-Widget oben.
+      function openWidget(opts) {
         waitForWidget(() => window.BookingWidget.open({
+          language: window.__sboLanguage || 'de',
+          consent: window.__sboConsent,
+          ...opts,
+        }))
+      }
+      window.openWidget = openWidget
+      document.getElementById('open-prefill-customer')?.addEventListener('click', () => {
+        openWidget({
           dealerId: 'senker',
           theme: 'vw',
           prefill: {
@@ -1348,10 +1358,10 @@ BookingWidget.open({
               city: 'Salzburg',
             },
           },
-        }))
+        })
       })
       document.getElementById('open-prefill-services')?.addEventListener('click', () => {
-        waitForWidget(() => window.BookingWidget.open({
+        openWidget({
           dealerId: 'senker',
           prefill: {
             vehicle: { brand: 'vw', model: 'polo', mileage: 87500 },
@@ -1359,7 +1369,7 @@ BookingWidget.open({
             appointment: { date: '2026-11-08', time: '10:00' },
             step: 2,
           },
-        }))
+        })
       })
       // -------- Consent-Switcher --------
       const consentToggle = document.getElementById('consent-toggle')
@@ -1390,10 +1400,15 @@ BookingWidget.open({
       const langToggle = document.getElementById('lang-toggle')
       langToggle?.addEventListener('click', e => {
         const btn = e.target.closest('button[data-lang]')
-        if (!btn || !inlineWidget) return
+        if (!btn) return
         langToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn))
-        inlineWidget.setAttribute('language', btn.dataset.lang)
+        const lang = btn.dataset.lang
+        window.__sboLanguage = lang
+        if (inlineWidget) inlineWidget.setAttribute('language', lang)
+        // Force re-mount des CTA-Buttons mit neuer Sprache.
+        window.dispatchEvent(new CustomEvent('sbo-language-change', { detail: { lang } }))
       })
+      window.__sboLanguage = 'de'
 
       // -------- dataLayer-Mirror --------
       const dlPanel = document.getElementById('datalayer-list')
@@ -1433,7 +1448,7 @@ BookingWidget.open({
           iat: Math.floor(Date.now() / 1000),
           exp: Math.floor(Date.now() / 1000) + 15 * 60,
           ...payload,
-        }))
+        })
         // Demo-Signatur: in Produktion vom Backend signiert + verifiziert.
         const signature = b64url('demo-only-not-a-real-signature-' + Math.random().toString(36))
         return `${header}.${body}.${signature}`
@@ -1456,15 +1471,15 @@ BookingWidget.open({
           },
           vehicle: { brand: 'vw', model: 'polo', mileage: 87500 },
         })
-        waitForWidget(() => window.BookingWidget.open({
+        openWidget({
           dealerId: 'senker',
           theme: 'vw',
           prefillToken: token,
-        }))
+        })
       })
 
       document.getElementById('open-prefill-full')?.addEventListener('click', () => {
-        waitForWidget(() => window.BookingWidget.open({
+        openWidget({
           dealerId: 'senker',
           theme: 'vw',
           prefill: {
@@ -1483,7 +1498,7 @@ BookingWidget.open({
             },
             step: 3,
           },
-        }))
+        })
       })
     </script>
   </body>

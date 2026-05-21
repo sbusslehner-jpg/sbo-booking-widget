@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from '../useMediaQuery'
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
 }
 
 export function OverlayWrapper({ open, onClose, children }: Props) {
+  const { t } = useTranslation()
   const isMobile = useMediaQuery('(max-width: 767px)')
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -69,7 +71,7 @@ export function OverlayWrapper({ open, onClose, children }: Props) {
         ref={containerRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Termin buchen"
+        aria-label={t('common.bookAppointmentAria')}
         className={
           isMobile
             ? 'absolute bottom-0 left-0 right-0 w-full h-[92vh] bg-surface rounded-t-lg shadow-widget overflow-hidden flex flex-col bw-anim-sheet'

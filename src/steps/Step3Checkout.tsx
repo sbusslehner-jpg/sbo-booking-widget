@@ -125,7 +125,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
       <div className="mb-6">
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent-blue/10 text-accent-blue text-[11px] font-semibold mb-3">
           <Sparkles className="w-3 h-3" aria-hidden="true" />
-          Schritt 3 von 3
+          {t('common.step', { current: 3, total: 3 })}
         </div>
         <h2 className="text-2xl font-semibold leading-tight mb-1">
           {t('step3.title')}
@@ -156,7 +156,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
                 ? '—'
                 : selectedServices.length === 1
                 ? selectedServices[0].name
-                : `${selectedServices.length} Services`
+                : t('cart.label', { count: selectedServices.length })
             }
             placeholder={selectedServices.length === 0}
           />
@@ -252,7 +252,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
               value={draft.serviceCenter.advisorId ?? ''}
               onChange={(e) => patch('serviceCenter', { advisorId: e.target.value })}
               options={advisorOptions}
-              placeholder="Bitte wählen"
+              placeholder={t('common.selectPlaceholder')}
             />
           )}
           <div className="relative">
@@ -307,7 +307,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
                     { value: 'ms', label: t('salutationOptions.ms') },
                     { value: 'neutral', label: t('salutationOptions.neutral') },
                   ]}
-                  placeholder="Bitte wählen"
+                  placeholder={t('common.selectPlaceholder')}
                   error={fieldError('salutation')}
                 />
               )}

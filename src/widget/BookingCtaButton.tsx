@@ -2,12 +2,31 @@ import { ButtonHTMLAttributes, CSSProperties, forwardRef } from 'react'
 import { openOverlay } from './customElement'
 import type { BookingWidgetProps } from './BookingWidget'
 
+type Locale = 'de' | 'en' | 'it'
+
+const CTA_DEFAULTS: Record<Locale, { title: string; subtitle: string }> = {
+  de: {
+    title: 'Werkstatt-Termin buchen',
+    subtitle: 'Online Ihren Wunschtermin sichern',
+  },
+  en: {
+    title: 'Book service appointment',
+    subtitle: 'Reserve your slot online',
+  },
+  it: {
+    title: 'Prenota appuntamento',
+    subtitle: 'Riserva il tuo slot online',
+  },
+}
+
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & {
   /** Pflichtangabe — wird an das geöffnete Widget weitergegeben. */
   dealerId: string
-  /** Optionale Überschreibung des Titels. Default: "Werkstatt-Termin buchen". */
+  /** Optionale Sprache für die Default-Texte. Default 'de'. */
+  locale?: Locale
+  /** Überschreibt den Default-Titel komplett. */
   title?: string
-  /** Optionale Unterzeile. Default: "Online Ihren Wunschtermin sichern". */
+  /** Überschreibt die Default-Unterzeile komplett. */
   subtitle?: string
   /** Weiteres Booking-Setup, z.B. service/storage/onBooked. */
   bookingOptions?: Omit<BookingWidgetProps, 'dealerId' | 'mode'>
@@ -24,8 +43,9 @@ export const BookingCtaButton = forwardRef<HTMLButtonElement, Props>(
   function BookingCtaButton(
     {
       dealerId,
-      title = 'Werkstatt-Termin buchen',
-      subtitle = 'Online Ihren Wunschtermin sichern',
+      locale = 'de',
+      title,
+      subtitle,
       bookingOptions,
       onClick,
       style,
@@ -34,12 +54,20 @@ export const BookingCtaButton = forwardRef<HTMLButtonElement, Props>(
     },
     ref,
   ) {
+    const defaults = CTA_DEFAULTS[locale] ?? CTA_DEFAULTS.de
+    const resolvedTitle = title ?? defaults.title
+    const resolvedSubtitle = subtitle ?? defaults.subtitle
+
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (onClick) {
         onClick(e)
         return
       }
-      openOverlay({ dealerId, ...(bookingOptions ?? {}) })
+      openOverlay({
+        dealerId,
+        language: locale,
+        ...(bookingOptions ?? {}),
+      })
     }
 
     return (
@@ -65,8 +93,8 @@ export const BookingCtaButton = forwardRef<HTMLButtonElement, Props>(
           <IconCalendarWrench />
         </span>
         <span style={textWrapStyle}>
-          <span style={titleStyle}>{title}</span>
-          <span style={subtitleStyle}>{subtitle}</span>
+          <span style={titleStyle}>{resolvedTitle}</span>
+          <span style={subtitleStyle}>{resolvedSubtitle}</span>
         </span>
         <span style={chevronWrapStyle} aria-hidden="true">
           <ChevronRight />

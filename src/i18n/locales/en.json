@@ -10,12 +10,18 @@
     "soon": "Coming soon",
     "from": "from",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "selectPlaceholder": "Please select",
+    "bookAppointmentAria": "Book appointment",
+    "countryCodeAria": "Country code",
+    "selectBrandFirst": "Please pick a brand first."
   },
   "carlog": {
     "title": "Sign in with carlog",
     "subtitle": "Automatically apply data from your account.",
-    "cta": "Sign in"
+    "cta": "Sign in",
+    "trustedTitle": "Details applied",
+    "trustedBody": "Your master data was loaded from carlog. You can still adjust the fields below if needed."
   },
   "step1": {
     "title": "Which vehicle are you bringing?",
@@ -128,6 +134,8 @@
     "appointmentSection": "Your appointment",
     "centerSection": "Your service center",
     "summarySection": "Your booking",
+    "icsTitle": "Service appointment · {{center}}",
+    "icsDescription": "Booking {{id}}",
     "nextStepsTitle": "What happens next",
     "nextSteps": [
       "You'll receive an email confirmation with all details.",
