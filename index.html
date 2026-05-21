@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -16,29 +16,83 @@
       body { margin: 0; font-family: 'Inter', system-ui, sans-serif; color: #111827; background: #ffffff; }
       button { background: red; color: yellow; }
       a { color: inherit; }
+
       .nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; border-bottom: 1px solid #e5e7eb; }
       .nav-brand { font-weight: 800; font-size: 24px; letter-spacing: -0.02em; }
       .nav-brand .accent { color: #c0102c; }
       .nav-links { display: flex; gap: 22px; font-size: 14px; color: #6b7280; }
+
       .hero { position: relative; height: 280px; background: linear-gradient(135deg, #15351f 0%, #2c5a3a 100%); overflow: hidden; }
       .hero-inner { padding: 56px 32px; color: #fff; max-width: 600px; }
       .hero h1 { font-size: 32px; font-weight: 700; margin: 0 0 8px 0; line-height: 1.2; }
       .hero p { margin: 0 0 16px 0; opacity: 0.85; font-size: 15px; }
       .hero-cta { display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #15351f; padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; border: none; }
+
       .info-section { padding: 48px 32px; }
       .info-card { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; background: #f0f4ff; border-radius: 12px; padding: 32px; max-width: 960px; margin: 0 auto; }
       .info-card h2 { margin: 0 0 12px 0; font-size: 22px; font-weight: 700; }
       .info-card ul { margin: 0 0 20px 0; padding-left: 18px; color: #4b5563; font-size: 14px; line-height: 1.6; }
       .info-card-cta { display: inline-flex; align-items: center; gap: 8px; background: #1a2332; color: #fff; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; }
       .info-art { width: 240px; height: 200px; background: linear-gradient(135deg, #1f2937, #374151); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 12px; }
-      .advantages { padding: 32px; max-width: 960px; margin: 0 auto; }
-      .advantages h2 { margin: 0 0 16px 0; font-size: 20px; font-weight: 700; }
-      .inline-demo { padding: 32px; max-width: 960px; margin: 0 auto 64px; }
-      .inline-demo h2 { margin: 0 0 16px 0; font-size: 20px; font-weight: 700; }
-      .inline-demo .desc { color: #6b7280; font-size: 14px; margin-bottom: 24px; }
-      .cta-demo { padding: 32px; max-width: 960px; margin: 0 auto; }
-      .cta-demo h2 { margin: 0 0 8px 0; font-size: 20px; font-weight: 700; }
-      .cta-demo .desc { color: #6b7280; font-size: 14px; margin-bottom: 24px; }
+
+      /* Demo-Sections mit Doku */
+      .demo-section { padding: 48px 32px; max-width: 1120px; margin: 0 auto; }
+      .demo-section + .demo-section { padding-top: 0; }
+      .demo-section h2 { margin: 0 0 6px 0; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+      .demo-section .lede { color: #6b7280; font-size: 14px; line-height: 1.55; margin: 0 0 24px 0; max-width: 720px; }
+
+      .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+      @media (max-width: 880px) { .demo-grid { grid-template-columns: 1fr; } }
+
+      .preview-pane {
+        background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 12px;
+        padding: 24px; min-height: 140px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .preview-pane.inline { padding: 0; background: transparent; border: none; }
+      .preview-label {
+        display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+        text-transform: uppercase; color: #6b7280; margin-bottom: 10px;
+      }
+
+      .docs-pane { display: flex; flex-direction: column; gap: 14px; }
+      .docs-pane p { font-size: 14px; color: #374151; line-height: 1.55; margin: 0 0 4px 0; }
+      .docs-pane h3 { margin: 0; font-size: 13px; font-weight: 600; color: #111827; letter-spacing: -0.005em; }
+
+      .snippet {
+        position: relative;
+        background: #0f172a; color: #e5e7eb;
+        border-radius: 10px; padding: 14px 16px;
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12.5px; line-height: 1.55;
+        overflow-x: auto;
+        white-space: pre;
+      }
+      .snippet .tag { color: #60a5fa; }
+      .snippet .attr { color: #a5b4fc; }
+      .snippet .str { color: #fbbf24; }
+      .snippet .com { color: #6b7280; font-style: italic; }
+      .snippet .kw  { color: #f472b6; }
+      .copy-btn {
+        position: absolute; top: 8px; right: 8px;
+        font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+        background: rgba(255,255,255,0.08); color: #e5e7eb; border: 1px solid rgba(255,255,255,0.12);
+        padding: 4px 10px; border-radius: 6px; cursor: pointer;
+        transition: background 120ms ease;
+      }
+      .copy-btn:hover { background: rgba(255,255,255,0.15); }
+      .copy-btn.copied { background: #10b981; color: #06281d; border-color: transparent; }
+
+      .tabs { display: inline-flex; gap: 4px; background: #e5e7eb; padding: 3px; border-radius: 8px; margin-bottom: 2px; }
+      .tab {
+        background: transparent; color: #374151;
+        padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+        cursor: pointer; border: none;
+      }
+      .tab.active { background: #ffffff; color: #111827; box-shadow: 0 1px 2px rgba(15,23,42,0.06); }
+      .tab-panel { display: none; }
+      .tab-panel.active { display: block; }
+
       #sbo-cta-slot { display: inline-block; }
     </style>
   </head>
@@ -77,25 +131,268 @@
       </div>
     </section>
 
-    <section class="cta-demo">
-      <h2>CTA-Button</h2>
-      <p class="desc">
-        Fertig gestylter Call-to-Action — kann ohne weitere Konfiguration auf jeder Seite eingesetzt werden
-        und öffnet das Widget direkt als Overlay.
+    <!-- ============================== OVERLAY (eigener Trigger) ============================== -->
+    <section class="demo-section" id="overlay-docs">
+      <h2>Variante 1 · Overlay über bestehende Buttons</h2>
+      <p class="lede">
+        Du hast bereits einen "Termin buchen"-Button auf der Seite (wie oben im Hero oder in der Info-Card)
+        und möchtest, dass ein Klick darauf das Widget als Overlay öffnet. Ein einzelner Script-Tag plus
+        ein onclick-Handler reichen.
       </p>
-      <div id="sbo-cta-slot"></div>
+      <div class="demo-grid">
+        <div>
+          <div class="preview-label">Live</div>
+          <div class="preview-pane">
+            <button class="hero-cta" onclick="window.BookingWidget.open({ dealerId: 'senker' })">
+              Jetzt Termin buchen
+            </button>
+          </div>
+        </div>
+        <div class="docs-pane">
+          <div class="preview-label">So bindest du das ein</div>
+          <div class="tabs" data-tabgroup="overlay">
+            <button class="tab active" data-tab="overlay-html">Script-Tag</button>
+            <button class="tab" data-tab="overlay-react">React / NPM</button>
+          </div>
+          <div class="tab-panel active" id="overlay-html">
+            <div class="snippet">
+<span class="com">&lt;!-- Einmal im &lt;head&gt; oder vor &lt;/body&gt; --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://sbo-booking-widget.netlify.app/booking-widget.umd.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="com">&lt;!-- Beliebiger Button auf der Seite --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="str">"BookingWidget.open({ dealerId: 'senker' })"</span><span class="tag">&gt;</span>
+  Termin buchen
+<span class="tag">&lt;/button&gt;</span><button class="copy-btn" data-copy="overlay-html-code">Kopieren</button>
+            </div>
+            <textarea id="overlay-html-code" hidden>&lt;script src="https://sbo-booking-widget.netlify.app/booking-widget.umd.js"&gt;&lt;/script&gt;
+
+&lt;button onclick="BookingWidget.open({ dealerId: 'senker' })"&gt;
+  Termin buchen
+&lt;/button&gt;</textarea>
+            <p>
+              Das UMD-Bundle registriert <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">window.BookingWidget</code>.
+              Funktioniert auf jeder Seite, unabhängig vom CMS oder Framework.
+            </p>
+          </div>
+          <div class="tab-panel" id="overlay-react">
+            <div class="snippet">
+<span class="kw">import</span> { BookingWidget } <span class="kw">from</span> <span class="str">'@dealer/booking-widget'</span>
+
+<span class="kw">function</span> <span class="attr">TerminButton</span>() {
+  <span class="kw">const</span> [open, setOpen] = useState(<span class="kw">false</span>)
+  <span class="kw">return</span> (
+    <span class="tag">&lt;&gt;</span>
+      <span class="tag">&lt;button</span> <span class="attr">onClick</span>={() =&gt; setOpen(<span class="kw">true</span>)}<span class="tag">&gt;</span>Termin buchen<span class="tag">&lt;/button&gt;</span>
+      <span class="tag">&lt;BookingWidget</span>
+        <span class="attr">mode</span>=<span class="str">"overlay"</span>
+        <span class="attr">dealerId</span>=<span class="str">"senker"</span>
+        <span class="attr">open</span>={open}
+        <span class="attr">onClose</span>={() =&gt; setOpen(<span class="kw">false</span>)}
+      <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/&gt;</span>
+  )
+}<button class="copy-btn" data-copy="overlay-react-code">Kopieren</button>
+            </div>
+            <textarea id="overlay-react-code" hidden>import { BookingWidget } from '@dealer/booking-widget'
+
+function TerminButton() {
+  const [open, setOpen] = useState(false)
+  return (
+    &lt;&gt;
+      &lt;button onClick={() =&gt; setOpen(true)}&gt;Termin buchen&lt;/button&gt;
+      &lt;BookingWidget
+        mode="overlay"
+        dealerId="senker"
+        open={open}
+        onClose={() =&gt; setOpen(false)}
+      /&gt;
+    &lt;/&gt;
+  )
+}</textarea>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="inline-demo">
-      <h2>Inline-Einbettung</h2>
-      <p class="desc">
-        Das Widget kann ebenso als statisches Element direkt in eine Seite eingebunden werden —
-        ohne Modal-Overlay. Es teilt denselben State und denselben Mock-Service.
+    <!-- ============================== CTA-BUTTON ============================== -->
+    <section class="demo-section" id="cta-docs">
+      <h2>Variante 2 · Fertiger CTA-Button</h2>
+      <p class="lede">
+        Wenn du keinen eigenen Button stylen möchtest, kannst du den vorgefertigten Pill-CTA verwenden.
+        Er bringt sein gesamtes Styling inline mit, funktioniert in jedem CSS-Kontext und öffnet beim
+        Klick automatisch das Overlay.
       </p>
-      <!-- Custom-Element-Variante (Script-Tag-Stil) -->
-      <booking-widget dealer-id="senker" mode="inline" language="de"></booking-widget>
+      <div class="demo-grid">
+        <div>
+          <div class="preview-label">Live</div>
+          <div class="preview-pane">
+            <div id="sbo-cta-slot"></div>
+          </div>
+        </div>
+        <div class="docs-pane">
+          <div class="preview-label">So bindest du das ein</div>
+          <div class="tabs" data-tabgroup="cta">
+            <button class="tab active" data-tab="cta-react">React / NPM</button>
+            <button class="tab" data-tab="cta-html">Script-Tag</button>
+          </div>
+          <div class="tab-panel active" id="cta-react">
+            <div class="snippet">
+<span class="kw">import</span> { BookingCtaButton } <span class="kw">from</span> <span class="str">'@dealer/booking-widget'</span>
+
+<span class="tag">&lt;BookingCtaButton</span> <span class="attr">dealerId</span>=<span class="str">"senker"</span> <span class="tag">/&gt;</span>
+
+<span class="com">// Optional anpassbar:</span>
+<span class="tag">&lt;BookingCtaButton</span>
+  <span class="attr">dealerId</span>=<span class="str">"senker"</span>
+  <span class="attr">title</span>=<span class="str">"Service-Termin reservieren"</span>
+  <span class="attr">subtitle</span>=<span class="str">"In 60 Sekunden online"</span>
+  <span class="attr">bookingOptions</span>={{ <span class="attr">onBooked</span>: (id) =&gt; track(id) }}
+<span class="tag">/&gt;</span><button class="copy-btn" data-copy="cta-react-code">Kopieren</button>
+            </div>
+            <textarea id="cta-react-code" hidden>import { BookingCtaButton } from '@dealer/booking-widget'
+
+&lt;BookingCtaButton dealerId="senker" /&gt;
+
+// Optional anpassbar:
+&lt;BookingCtaButton
+  dealerId="senker"
+  title="Service-Termin reservieren"
+  subtitle="In 60 Sekunden online"
+  bookingOptions={{ onBooked: (id) =&gt; track(id) }}
+/&gt;</textarea>
+            <p>
+              Der CTA-Button ist eine React-Komponente und damit für React-/Next.js-Seiten gedacht. Für
+              reine HTML-Seiten nutze stattdessen den Script-Tag mit eigenem Button-Styling (siehe Variante 1).
+            </p>
+          </div>
+          <div class="tab-panel" id="cta-html">
+            <div class="snippet">
+<span class="com">&lt;!-- Variante für Nicht-React-Seiten: Eigener Button im CTA-Stil --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://sbo-booking-widget.netlify.app/booking-widget.umd.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="str">"sbo-cta"</span>
+        <span class="attr">onclick</span>=<span class="str">"BookingWidget.open({ dealerId: 'senker' })"</span><span class="tag">&gt;</span>
+  Werkstatt-Termin buchen
+<span class="tag">&lt;/button&gt;</span><button class="copy-btn" data-copy="cta-html-code">Kopieren</button>
+            </div>
+            <textarea id="cta-html-code" hidden>&lt;script src="https://sbo-booking-widget.netlify.app/booking-widget.umd.js"&gt;&lt;/script&gt;
+
+&lt;button class="sbo-cta"
+        onclick="BookingWidget.open({ dealerId: 'senker' })"&gt;
+  Werkstatt-Termin buchen
+&lt;/button&gt;</textarea>
+            <p>
+              Sag Bescheid, wenn du eine vanilla-HTML/CSS-Version mit Icon + Subtitle brauchst — ich
+              liefere einen reinen HTML+CSS-Snippet ohne React-Dependency nach.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== INLINE ============================== -->
+    <section class="demo-section" id="inline-docs">
+      <h2>Variante 3 · Inline-Einbettung</h2>
+      <p class="lede">
+        Statt eines Overlays kann das Widget auch direkt in den Seitenfluss eingebettet werden — als
+        statische Komponente, die sofort sichtbar ist. State und Persistenz bleiben identisch zum
+        Overlay-Modus.
+      </p>
+      <div class="demo-grid">
+        <div>
+          <div class="preview-label">Live</div>
+          <div class="preview-pane inline">
+            <booking-widget dealer-id="senker" mode="inline" language="de"></booking-widget>
+          </div>
+        </div>
+        <div class="docs-pane">
+          <div class="preview-label">So bindest du das ein</div>
+          <div class="tabs" data-tabgroup="inline">
+            <button class="tab active" data-tab="inline-html">Script-Tag</button>
+            <button class="tab" data-tab="inline-react">React / NPM</button>
+          </div>
+          <div class="tab-panel active" id="inline-html">
+            <div class="snippet">
+<span class="com">&lt;!-- Script einmalig auf der Seite einbinden --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">type</span>=<span class="str">"module"</span>
+        <span class="attr">src</span>=<span class="str">"https://sbo-booking-widget.netlify.app/booking-widget.es.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+
+<span class="com">&lt;!-- Beliebig oft auf der Seite verwendbar --&gt;</span>
+<span class="tag">&lt;booking-widget</span>
+  <span class="attr">dealer-id</span>=<span class="str">"senker"</span>
+  <span class="attr">mode</span>=<span class="str">"inline"</span>
+  <span class="attr">language</span>=<span class="str">"de"</span>
+<span class="tag">&gt;&lt;/booking-widget&gt;</span><button class="copy-btn" data-copy="inline-html-code">Kopieren</button>
+            </div>
+            <textarea id="inline-html-code" hidden>&lt;script type="module" src="https://sbo-booking-widget.netlify.app/booking-widget.es.js"&gt;&lt;/script&gt;
+
+&lt;booking-widget
+  dealer-id="senker"
+  mode="inline"
+  language="de"
+&gt;&lt;/booking-widget&gt;</textarea>
+            <p>
+              <strong>Custom Element</strong>: das Tag <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">&lt;booking-widget&gt;</code>
+              wird vom Bundle automatisch registriert. Alles läuft im Shadow DOM, dein Seiten-CSS bleibt
+              unberührt.
+            </p>
+          </div>
+          <div class="tab-panel" id="inline-react">
+            <div class="snippet">
+<span class="kw">import</span> { BookingWidget } <span class="kw">from</span> <span class="str">'@dealer/booking-widget'</span>
+
+<span class="kw">function</span> <span class="attr">ServicePage</span>() {
+  <span class="kw">return</span> (
+    <span class="tag">&lt;BookingWidget</span>
+      <span class="attr">mode</span>=<span class="str">"inline"</span>
+      <span class="attr">dealerId</span>=<span class="str">"senker"</span>
+      <span class="attr">language</span>=<span class="str">"de"</span>
+    <span class="tag">/&gt;</span>
+  )
+}<button class="copy-btn" data-copy="inline-react-code">Kopieren</button>
+            </div>
+            <textarea id="inline-react-code" hidden>import { BookingWidget } from '@dealer/booking-widget'
+
+function ServicePage() {
+  return (
+    &lt;BookingWidget
+      mode="inline"
+      dealerId="senker"
+      language="de"
+    /&gt;
+  )
+}</textarea>
+          </div>
+        </div>
+      </div>
     </section>
 
     <script type="module" src="/src/demo/main.tsx"></script>
+    <script>
+      // Tab-Wechsel
+      document.querySelectorAll('.tabs').forEach(group => {
+        group.addEventListener('click', e => {
+          const btn = e.target.closest('.tab')
+          if (!btn) return
+          const tabId = btn.dataset.tab
+          group.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === btn))
+          const parent = group.closest('.docs-pane')
+          parent.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === tabId))
+        })
+      })
+      // Copy-to-clipboard
+      document.addEventListener('click', e => {
+        const btn = e.target.closest('.copy-btn')
+        if (!btn) return
+        const source = document.getElementById(btn.dataset.copy)
+        if (!source) return
+        navigator.clipboard.writeText(source.value).then(() => {
+          const original = btn.textContent
+          btn.textContent = 'Kopiert!'
+          btn.classList.add('copied')
+          setTimeout(() => { btn.textContent = original; btn.classList.remove('copied') }, 1500)
+        })
+      })
+    </script>
   </body>
 </html>
