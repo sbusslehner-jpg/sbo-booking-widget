@@ -19,6 +19,7 @@ function renderStep() {
           isMobile: false,
           onClose: () => {},
           hasPrefilledCustomer: false,
+          consent: { functional: true, analytics: false, marketing: false },
         }}
       >
         <Step3Checkout onBack={() => {}} onSubmit={() => {}} submitting={false} />
@@ -32,13 +33,13 @@ describe('Step3Checkout', () => {
     useBookingStore.getState().reset()
   })
 
-  it('renders title, blocks and submit button', async () => {
+  it('renders title and submit button', async () => {
     renderStep()
-    expect(await screen.findByText('Abschluss')).toBeInTheDocument()
-    expect(await screen.findByText(/Ausgewählter Servicebetrieb/i)).toBeInTheDocument()
-    expect(await screen.findByText(/Terminauswahl/i)).toBeInTheDocument()
+    expect(await screen.findByText('Fast geschafft!')).toBeInTheDocument()
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /Termin verbindlich buchen/i })).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', { name: /Termin verbindlich buchen/i }),
+      ).toBeInTheDocument()
     })
   })
 

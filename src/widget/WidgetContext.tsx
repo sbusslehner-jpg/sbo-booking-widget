@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import type { BookingService } from '../types'
+import type { ConsentState } from '../state/consent'
 
 type WidgetContextValue = {
   service: BookingService
@@ -12,6 +13,8 @@ type WidgetContextValue = {
   onClose: () => void
   /** Kundendaten kommen via Prefill (carlog/E-Mail-Einladung) — Banner ausblenden. */
   hasPrefilledCustomer: boolean
+  /** Aktueller Consent-State der Trägerseite — für gated Third-Party-Embeds. */
+  consent: ConsentState
 }
 
 const WidgetContext = createContext<WidgetContextValue | null>(null)

@@ -57,8 +57,9 @@
     "tireStoragePrice": "+ 45 € je Saison"
   },
   "step3": {
-    "title": "Abschluss",
-    "subtitle": "Überprüfen Sie bitte Ihre Angaben und schließen Sie ihre Buchung ab.",
+    "title": "Fast geschafft!",
+    "subtitle": "Letzte Angaben — und Ihr Termin ist gebucht.",
+    "almostDoneNote": "Nur noch ein paar Sekunden — Ihre Daten werden für künftige Buchungen nicht im Browser gespeichert.",
     "centerSection": "Ausgewählter Servicebetrieb",
     "contactlessToggle": "Kontaktlose Serviceannahme",
     "centerNote": "Nachricht von {{name}}:",
@@ -117,9 +118,26 @@
     "terms": "Bitte AGB akzeptieren."
   },
   "success": {
-    "title": "Vielen Dank!",
-    "subtitle": "Ihre Buchung wurde übermittelt. Sie erhalten in Kürze eine Bestätigung per E-Mail.",
-    "bookingId": "Buchungsnummer: {{id}}",
-    "close": "Schließen"
+    "titlePersonal": "Vielen Dank, {{name}}!",
+    "titleGeneric": "Termin gebucht!",
+    "subtitle": "Wir haben Ihre Buchung übermittelt. Eine Bestätigung kommt in Kürze per E-Mail.",
+    "bookingId": "Buchungsnummer {{id}}",
+    "close": "Schließen",
+    "addToCalendar": "Zum Kalender hinzufügen",
+    "print": "Drucken",
+    "appointmentSection": "Ihr Termin",
+    "centerSection": "Ihr Servicebetrieb",
+    "summarySection": "Ihre Buchung",
+    "nextStepsTitle": "Wie es weitergeht",
+    "nextSteps": [
+      "Sie erhalten eine E-Mail-Bestätigung mit allen Details.",
+      "Ein Tag vor Ihrem Termin senden wir eine Erinnerung.",
+      "Bringen Sie bitte Ihren Zulassungsschein mit."
+    ]
+  },
+  "map": {
+    "consentRequiredTitle": "Karte ausgeblendet",
+    "consentRequiredBody": "Für die Anzeige der Google-Maps-Karte werden funktionale Cookies benötigt. Bitte passen Sie Ihre Cookie-Einstellungen an.",
+    "openExternal": "In Google Maps öffnen"
   }
 }

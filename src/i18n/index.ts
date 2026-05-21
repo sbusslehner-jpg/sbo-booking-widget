@@ -1,6 +1,16 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import de from './locales/de.json'
+import en from './locales/en.json'
+import it from './locales/it.json'
+
+const resources = {
+  de: { translation: de },
+  en: { translation: en },
+  it: { translation: it },
+}
+
+export const availableLanguages = Object.keys(resources) as Array<keyof typeof resources>
 
 let initialized = false
 
@@ -10,9 +20,9 @@ export function initI18n(language: string = 'de') {
     return i18n
   }
   void i18n.use(initReactI18next).init({
-    resources: { de: { translation: de } },
+    resources,
     lng: language,
-    fallbackLng: 'de',
+    fallbackLng: 'en',
     interpolation: { escapeValue: false },
     react: { useSuspense: false },
   })

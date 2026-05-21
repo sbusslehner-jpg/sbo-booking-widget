@@ -1,0 +1,143 @@
+{
+  "common": {
+    "close": "Close",
+    "back": "Back",
+    "next": "Continue to checkout",
+    "submit": "Confirm booking",
+    "step": "Step {{current}} of {{total}}",
+    "change": "Change",
+    "loading": "Loading…",
+    "soon": "Coming soon",
+    "from": "from",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "carlog": {
+    "title": "Sign in with carlog",
+    "subtitle": "Automatically apply data from your account.",
+    "cta": "Sign in"
+  },
+  "step1": {
+    "title": "Which vehicle are you bringing?",
+    "brandSection": "Vehicle brand",
+    "detailSection": "Vehicle details",
+    "modelPlaceholder": "Search models",
+    "modelLabel": "Model",
+    "modelMissing": "Can't find your model?",
+    "modelMissingCta": "Enter manually",
+    "noResults": "No models found."
+  },
+  "step2": {
+    "title": "Choose your service",
+    "heroBadge": "WE RECOMMEND",
+    "heroTitle": "Personalised service check",
+    "heroSubtitle": "We analyse your vehicle data and recommend the matching service.",
+    "finLabel": "Vehicle identification number",
+    "finPlaceholder": "e.g. VW2ZZZ6KX",
+    "finHelp": "The vehicle identification number (VIN) is a 17-character, globally unique identifier.",
+    "finHelpTitle": "Where to find the VIN?",
+    "finHelpBody": "You'll find the VIN on your vehicle registration document or on the data plate — usually in the door frame or under the windscreen.",
+    "scanCta": "Upload or scan VIN",
+    "mileageLabel": "Current mileage",
+    "recommendCta": "Get recommendation",
+    "recommending": "Analysing…",
+    "advisorAltCta": "Price quote from advisor",
+    "moreServices": "Show more services",
+    "lessServices": "Show fewer services",
+    "stickyTotal": "Estimated total",
+    "recommendation": {
+      "title": "Your {{vehicle}}",
+      "subtitle": "Based on your VIN and mileage we recommend the following services.",
+      "total": "Estimated total",
+      "hint": "Your service advisor will inform you about exact costs before the appointment.",
+      "back": "Back",
+      "apply": "Apply services"
+    },
+    "tireStorageQuestion": "Store the wheels in our depot?",
+    "tireStoragePrice": "+ € 45 per season"
+  },
+  "step3": {
+    "title": "Almost there!",
+    "subtitle": "Just a few details — and your appointment is booked.",
+    "almostDoneNote": "A few more seconds — your details won't be saved in this browser.",
+    "centerSection": "Service center",
+    "contactlessToggle": "Contactless drop-off",
+    "centerNote": "Note from {{name}}:",
+    "advisorSection": "Service advisor",
+    "advisorRandom": "Random selection",
+    "advisorMessageLabel": "Message to your advisor",
+    "advisorMessagePlaceholder": "Optional",
+    "appointmentSection": "Appointment",
+    "appointmentDate": "Date",
+    "appointmentTime": "Time",
+    "nextSlots": "Next available slots",
+    "replacementCar": "Replacement vehicle required",
+    "dataSection": "Your details",
+    "salutation": "Salutation",
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone",
+    "address": "Address",
+    "zip": "ZIP",
+    "city": "City",
+    "country": "Country",
+    "terms": "I accept the <agb>terms and conditions</agb> and the <privacy>privacy policy</privacy>.",
+    "summarySection": "Your booking",
+    "topcardToggle": "I have a Topcard.",
+    "serviceSection": "Service",
+    "tireStorageTitle": "Tyre storage",
+    "tireStorageSubtitle": "+ € 45 per season",
+    "detailsSection": "Details",
+    "details": {
+      "plate": "Plate",
+      "mileage": "Mileage",
+      "replacementCar": "Replacement vehicle",
+      "date": "Date",
+      "time": "Time",
+      "dropoff": "Drop-off",
+      "pickup": "Pick-up"
+    },
+    "totalLabel": "Total (incl. VAT)",
+    "salutations": {
+      "mr": "Mr",
+      "ms": "Ms",
+      "neutral": "Other"
+    }
+  },
+  "salutationOptions": {
+    "mr": "Mr",
+    "ms": "Ms",
+    "neutral": "Other"
+  },
+  "validation": {
+    "required": "Required",
+    "email": "Please enter a valid email address.",
+    "phone": "Please enter a valid phone number.",
+    "zip": "ZIP must be 4 digits.",
+    "terms": "Please accept the terms."
+  },
+  "success": {
+    "titlePersonal": "Thank you, {{name}}!",
+    "titleGeneric": "Appointment booked!",
+    "subtitle": "Your booking has been submitted. A confirmation will arrive by email shortly.",
+    "bookingId": "Booking ID {{id}}",
+    "close": "Close",
+    "addToCalendar": "Add to calendar",
+    "print": "Print",
+    "appointmentSection": "Your appointment",
+    "centerSection": "Your service center",
+    "summarySection": "Your booking",
+    "nextStepsTitle": "What happens next",
+    "nextSteps": [
+      "You'll receive an email confirmation with all details.",
+      "We'll send a reminder one day before your appointment.",
+      "Please bring your vehicle registration document."
+    ]
+  },
+  "map": {
+    "consentRequiredTitle": "Map hidden",
+    "consentRequiredBody": "Loading the Google Maps view requires functional cookies. Please adjust your cookie preferences.",
+    "openExternal": "Open in Google Maps"
+  }
+}

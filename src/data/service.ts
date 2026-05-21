@@ -7,6 +7,7 @@ import type {
   Service,
   ServiceCenter,
   Slot,
+  TenantConfig,
 } from '../types'
 import { brands } from './mocks/brands'
 import { models } from './mocks/models'
@@ -25,6 +26,33 @@ function delay<T>(value: T, ms: number = LATENCY): Promise<T> {
  * Tausch gegen ein HTTP-Backend ist eine reine Dependency-Injection.
  */
 export class MockBookingService implements BookingService {
+  async getTenantConfig(dealerId: string): Promise<TenantConfig> {
+    // Phase-2-Mock: ein einzelnes Senker-Profil. In Produktion liefert das
+    // Backend pro Dealer eine eigene Antwort.
+    return delay({
+      dealerId,
+      displayName: 'Autohaus Senker',
+      country: 'AT',
+      defaultLanguage: 'de',
+      currency: 'EUR',
+      theme: 'neutral',
+      enabledBrands: ['audi', 'cupra', 'skoda', 'seat', 'vw', 'vw-nutz', 'porsche', 'bentley'],
+      serviceCenters,
+      legalLinks: {
+        de: { terms: 'https://senker.at/agb', privacy: 'https://senker.at/datenschutz' },
+        en: { terms: 'https://senker.at/en/terms', privacy: 'https://senker.at/en/privacy' },
+      },
+      features: {
+        carlogLogin: true,
+        serviceRecommendation: true,
+        vinScan: false,
+        topcard: true,
+        tireStorage: true,
+      },
+      zipPattern: '^\\d{4}$',
+    })
+  }
+
   getBrands(): Promise<Brand[]> {
     return delay(brands)
   }

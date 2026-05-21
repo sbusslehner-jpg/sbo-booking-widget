@@ -105,7 +105,54 @@ export type SubmitContext = {
   prefillToken?: string
 }
 
+/**
+ * Mandanten-spezifische Konfiguration, die das Widget zur Laufzeit vom
+ * Backend-Bootstrap holt. Dieser Vertrag macht ein zukünftiges Multi-Tenant-
+ * Roll-out möglich, ohne das Frontend pro Händler neu zu deployen.
+ *
+ * Phase-2-API. v1 nutzt sie noch nicht aktiv — die Mock-Service-Daten
+ * (Brands, Services, Centers) bleiben aktuell hardcoded; die Bootstrap-Antwort
+ * würde sie in Produktion ersetzen.
+ */
+export type TenantConfig = {
+  dealerId: string
+  /** Anzeigename, wird in Mails und Headern verwendet. */
+  displayName: string
+  /** ISO-2-Länderkennzeichen. Steuert PLZ-/Telefon-Validierung. */
+  country: 'AT' | 'DE' | 'CH' | 'IT' | 'FR' | 'ES'
+  /** Default-Locale für das Widget. Konsument kann überschreiben. */
+  defaultLanguage: 'de' | 'en' | 'it' | 'fr' | 'es'
+  /** Währung für Preisanzeige. */
+  currency: 'EUR' | 'CHF'
+  /** Mandanten-Theme — kann ein registriertes Preset oder ein Custom-Objekt sein. */
+  theme: string | Record<string, string>
+  /** Aktive Marken — Whitelist gegen die globale Brand-Liste. */
+  enabledBrands: string[]
+  /** Service-Center dieses Mandanten (kann mehrere haben). */
+  serviceCenters: ServiceCenter[]
+  /** Links zu rechtlichen Texten — pro Locale. */
+  legalLinks: Partial<Record<'de' | 'en' | 'it' | 'fr' | 'es', { terms: string; privacy: string }>>
+  /** Feature-Flags, die der Backend-Admin pro Mandant schaltet. */
+  features: {
+    carlogLogin: boolean
+    serviceRecommendation: boolean
+    vinScan: boolean
+    topcard: boolean
+    tireStorage: boolean
+  }
+  /** PLZ-Regex pro Land — sonst Default 4-stellig (AT). */
+  zipPattern?: string
+}
+
 export type BookingService = {
+  /**
+   * Phase 2 — Mandanten-Bootstrap.
+   * In Produktion: GET /api/tenant-config?dealerId=...
+   * Liefert pro-Dealer Konfiguration (Marken-Whitelist, Service-Center,
+   * Theme, Locale, Feature-Flags, ...). v1-Mock liefert ein synthetisches
+   * Senker-Profil, später echtes Backend.
+   */
+  getTenantConfig(dealerId: string): Promise<TenantConfig>
   getBrands(): Promise<Brand[]>
   getModels(brandId: string): Promise<Model[]>
   getServices(modelId?: string): Promise<Service[]>

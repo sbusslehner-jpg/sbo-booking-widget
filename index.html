@@ -128,6 +128,14 @@
         padding: 5px 12px; border-radius: 6px; cursor: pointer;
       }
       .consent-toggle button.active { background: #ffffff; color: #0f172a; box-shadow: 0 1px 2px rgba(15,23,42,0.08); }
+      .lang-toggle { display: inline-flex; gap: 4px; padding: 3px; background: #f1f5f9; border-radius: 8px; }
+      .lang-toggle button {
+        background: transparent; color: #475569; border: none;
+        font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700;
+        padding: 5px 12px; border-radius: 6px; cursor: pointer;
+        text-transform: uppercase; letter-spacing: 0.05em;
+      }
+      .lang-toggle button.active { background: #ffffff; color: #0f172a; box-shadow: 0 1px 2px rgba(15,23,42,0.08); }
 
       .datalayer-panel {
         position: fixed; right: 16px; bottom: 16px; z-index: 100;
@@ -161,6 +169,13 @@
         <button data-consent="all" class="active">+ Functional + Analytics</button>
       </div>
       <span id="consent-status" style="color: #6b7280; font-size: 12px;">Aktiv: functional + analytics</span>
+      <span style="flex: 1"></span>
+      <span><strong>Sprache:</strong></span>
+      <div class="lang-toggle" id="lang-toggle">
+        <button data-lang="de" class="active">DE</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="it">IT</button>
+      </div>
     </div>
 
     <nav class="nav">
@@ -830,6 +845,15 @@ BookingWidget.open({
       })
       // Initial-State auf den inline-Widget anwenden, sobald gemountet.
       setTimeout(() => applyConsent('all'), 0)
+
+      // -------- Sprach-Switcher --------
+      const langToggle = document.getElementById('lang-toggle')
+      langToggle?.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-lang]')
+        if (!btn || !inlineWidget) return
+        langToggle.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn))
+        inlineWidget.setAttribute('language', btn.dataset.lang)
+      })
 
       // -------- dataLayer-Mirror --------
       const dlPanel = document.getElementById('datalayer-list')

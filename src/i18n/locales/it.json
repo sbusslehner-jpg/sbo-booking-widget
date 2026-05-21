@@ -1,0 +1,143 @@
+{
+  "common": {
+    "close": "Chiudi",
+    "back": "Indietro",
+    "next": "Vai al riepilogo",
+    "submit": "Conferma prenotazione",
+    "step": "Passaggio {{current}} di {{total}}",
+    "change": "Modifica",
+    "loading": "Caricamento…",
+    "soon": "Prossimamente",
+    "from": "da",
+    "yes": "Sì",
+    "no": "No"
+  },
+  "carlog": {
+    "title": "Accedi con carlog",
+    "subtitle": "Importa automaticamente i dati dal tuo account.",
+    "cta": "Accedi"
+  },
+  "step1": {
+    "title": "Con quale veicolo verrai da noi?",
+    "brandSection": "Marca del veicolo",
+    "detailSection": "Dettagli del veicolo",
+    "modelPlaceholder": "Cerca modello",
+    "modelLabel": "Modello",
+    "modelMissing": "Il tuo modello non è nell'elenco?",
+    "modelMissingCta": "Inserisci manualmente",
+    "noResults": "Nessun modello trovato."
+  },
+  "step2": {
+    "title": "Scegli il tuo servizio",
+    "heroBadge": "CONSIGLIATO",
+    "heroTitle": "Service-check personalizzato",
+    "heroSubtitle": "Analizziamo i dati del tuo veicolo e suggeriamo il servizio adatto.",
+    "finLabel": "Numero di telaio",
+    "finPlaceholder": "es. VW2ZZZ6KX",
+    "finHelp": "Il numero di telaio (VIN) è un identificatore unico di 17 caratteri.",
+    "finHelpTitle": "Dove trovo il VIN?",
+    "finHelpBody": "Il VIN è riportato sul libretto di circolazione o sulla targhetta dati, di solito vicino al montante portiera o sotto il parabrezza.",
+    "scanCta": "Carica o scansiona VIN",
+    "mileageLabel": "Chilometraggio attuale",
+    "recommendCta": "Ricevi la raccomandazione",
+    "recommending": "Analisi in corso…",
+    "advisorAltCta": "Preventivo da un consulente",
+    "moreServices": "Mostra altri servizi",
+    "lessServices": "Mostra meno servizi",
+    "stickyTotal": "Totale stimato",
+    "recommendation": {
+      "title": "La tua {{vehicle}}",
+      "subtitle": "In base al VIN e al chilometraggio consigliamo i seguenti servizi.",
+      "total": "Totale stimato",
+      "hint": "Il consulente ti informerà sui costi esatti prima dell'appuntamento.",
+      "back": "Indietro",
+      "apply": "Seleziona servizi"
+    },
+    "tireStorageQuestion": "Vuoi il deposito pneumatici?",
+    "tireStoragePrice": "+ € 45 a stagione"
+  },
+  "step3": {
+    "title": "Ci siamo quasi!",
+    "subtitle": "Ancora qualche dato — e l'appuntamento è prenotato.",
+    "almostDoneNote": "Ancora pochi secondi — i tuoi dati non saranno salvati nel browser.",
+    "centerSection": "Centro di servizio",
+    "contactlessToggle": "Consegna senza contatto",
+    "centerNote": "Messaggio da {{name}}:",
+    "advisorSection": "Consulente di servizio",
+    "advisorRandom": "Selezione casuale",
+    "advisorMessageLabel": "Messaggio per il consulente",
+    "advisorMessagePlaceholder": "Facoltativo",
+    "appointmentSection": "Appuntamento",
+    "appointmentDate": "Data",
+    "appointmentTime": "Ora",
+    "nextSlots": "Prossimi slot disponibili",
+    "replacementCar": "Auto sostitutiva necessaria",
+    "dataSection": "I tuoi dati",
+    "salutation": "Titolo",
+    "email": "E-mail",
+    "firstName": "Nome",
+    "lastName": "Cognome",
+    "phone": "Telefono",
+    "address": "Indirizzo",
+    "zip": "CAP",
+    "city": "Città",
+    "country": "Paese",
+    "terms": "Accetto le <agb>condizioni</agb> e la <privacy>privacy policy</privacy>.",
+    "summarySection": "La tua prenotazione",
+    "topcardToggle": "Possiedo una Topcard.",
+    "serviceSection": "Servizio",
+    "tireStorageTitle": "Deposito pneumatici",
+    "tireStorageSubtitle": "+ € 45 a stagione",
+    "detailsSection": "Dettagli",
+    "details": {
+      "plate": "Targa",
+      "mileage": "Chilometri",
+      "replacementCar": "Auto sostitutiva",
+      "date": "Data",
+      "time": "Ora",
+      "dropoff": "Consegna",
+      "pickup": "Ritiro"
+    },
+    "totalLabel": "Totale (IVA inclusa)",
+    "salutations": {
+      "mr": "Sig.",
+      "ms": "Sig.ra",
+      "neutral": "Altro"
+    }
+  },
+  "salutationOptions": {
+    "mr": "Sig.",
+    "ms": "Sig.ra",
+    "neutral": "Altro"
+  },
+  "validation": {
+    "required": "Campo obbligatorio",
+    "email": "Inserisci un'e-mail valida.",
+    "phone": "Inserisci un numero di telefono valido.",
+    "zip": "Il CAP deve avere 4 cifre.",
+    "terms": "Accetta le condizioni."
+  },
+  "success": {
+    "titlePersonal": "Grazie, {{name}}!",
+    "titleGeneric": "Appuntamento prenotato!",
+    "subtitle": "La tua prenotazione è stata inviata. A breve riceverai una conferma via e-mail.",
+    "bookingId": "Codice prenotazione {{id}}",
+    "close": "Chiudi",
+    "addToCalendar": "Aggiungi al calendario",
+    "print": "Stampa",
+    "appointmentSection": "Il tuo appuntamento",
+    "centerSection": "Il tuo centro di servizio",
+    "summarySection": "La tua prenotazione",
+    "nextStepsTitle": "I prossimi passi",
+    "nextSteps": [
+      "Riceverai una conferma via e-mail con tutti i dettagli.",
+      "Un giorno prima dell'appuntamento ti invieremo un promemoria.",
+      "Porta con te il libretto di circolazione."
+    ]
+  },
+  "map": {
+    "consentRequiredTitle": "Mappa nascosta",
+    "consentRequiredBody": "Per visualizzare Google Maps sono necessari i cookie funzionali. Adatta le preferenze cookie.",
+    "openExternal": "Apri in Google Maps"
+  }
+}

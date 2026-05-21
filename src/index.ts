@@ -49,7 +49,10 @@ export type {
   Slot,
   Recommendation,
   Advisor,
+  TenantConfig,
+  SubmitContext,
 } from './types'
+export { availableLanguages } from './i18n'
 
 // Globale Surface für Script-Tag-/SPA-Konsumenten: `BookingWidget.open(...)`.
 export const open = openOverlay

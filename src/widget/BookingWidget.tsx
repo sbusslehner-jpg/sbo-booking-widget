@@ -189,6 +189,7 @@ export function BookingWidget({
             onClose: handleClose,
             hasPrefilledCustomer:
               !!resolvedPrefill?.customer?.email || !!decodedToken,
+            consent,
           }}
         >
           {mode === 'overlay' ? (
@@ -231,22 +232,26 @@ function BookingFlow({
   const draft = useBookingStore((s) => s.draft)
   const setStep = useBookingStore((s) => s.setStep)
   const [submitting, setSubmitting] = useState(false)
-  const [bookingId, setBookingId] = useState<string | null>(null)
+  const [confirmed, setConfirmed] = useState<{
+    bookingId: string
+    draft: typeof draft
+  } | null>(null)
   const { service, dealerId } = useWidget()
   const track = useTrack()
 
   const handleSubmit = async () => {
     setSubmitting(true)
+    const snapshot = draft
     track({
       event: 'sbo_booking_submit_attempt',
       dealer: dealerId,
-      services_count: draft.services.selected.length,
-      total_eur: 0, // Total wird im Step berechnet — vereinfacht hier.
+      services_count: snapshot.services.selected.length,
+      total_eur: 0,
     })
     try {
-      const result = await service.submitBooking(draft, { prefillToken })
+      const result = await service.submitBooking(snapshot, { prefillToken })
+      setConfirmed({ bookingId: result.bookingId, draft: snapshot })
       await clearDraft(adapter)
-      setBookingId(result.bookingId)
       track({
         event: 'sbo_booking_success',
         booking_id: result.bookingId,
@@ -267,8 +272,8 @@ function BookingFlow({
     }
   }
 
-  if (bookingId) {
-    return <SuccessView bookingId={bookingId} />
+  if (confirmed) {
+    return <SuccessView bookingId={confirmed.bookingId} draft={confirmed.draft} />
   }
 
   switch (draft.step) {
