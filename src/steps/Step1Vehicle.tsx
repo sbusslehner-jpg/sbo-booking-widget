@@ -69,13 +69,13 @@ export function Step1Vehicle({ onNext }: Props) {
         </div>
       }
     >
-      <h2 className="text-xl font-semibold mb-5">{t('step1.title')}</h2>
+      <h2 className="text-xl font-semibold leading-tight mb-6">{t('step1.title')}</h2>
 
-      <section className="mb-6">
-        <h3 className="text-sm font-medium text-text-muted mb-3">
+      <section className="mb-8">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">
           {t('step1.brandSection')}
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           {brands.map((b) => (
             <BrandTile
               key={b.id}
@@ -91,16 +91,16 @@ export function Step1Vehicle({ onNext }: Props) {
         </div>
       </section>
 
-      <div className="mb-6">
+      <div className="mb-8">
         <CarlogBanner />
       </div>
 
       <section>
-        <h3 className="text-sm font-medium text-text-muted mb-3">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">
           {t('step1.detailSection')}
         </h3>
 
-        <div className="relative flex items-center rounded-md border border-border bg-surface focus-within:border-primary transition-colors mb-3">
+        <div className="relative flex items-center rounded-md border border-border bg-surface focus-within:border-primary transition-colors mb-2">
           <Search className="w-4 h-4 ml-3 text-text-muted" aria-hidden="true" />
           <input
             type="text"
@@ -108,19 +108,17 @@ export function Step1Vehicle({ onNext }: Props) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('step1.modelPlaceholder')}
             aria-label={t('step1.modelLabel')}
-            className="flex-1 bg-transparent px-3 py-3 text-text outline-none"
+            className="flex-1 bg-transparent px-3 py-2.5 text-sm text-text outline-none placeholder:text-text-muted"
             disabled={!draft.vehicle.brand}
           />
         </div>
 
-        <div className="text-sm text-text-muted mb-3">
-          {t('step1.modelMissing')}
-        </div>
+        <div className="text-xs text-text-muted mb-4">{t('step1.modelMissing')}</div>
 
         <div className="space-y-2">
           {!draft.vehicle.brand && (
-            <div className="text-sm text-text-muted py-6 text-center">
-              {t('step1.brandSection')} …
+            <div className="text-sm text-text-muted py-6 text-center border border-dashed border-border rounded-md">
+              Bitte zuerst eine Marke wählen.
             </div>
           )}
           {draft.vehicle.brand && loadingModels && (

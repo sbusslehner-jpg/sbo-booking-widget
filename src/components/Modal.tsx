@@ -38,12 +38,12 @@ export function Modal({ open, onClose, title, children, className }: Props) {
             type="button"
             onClick={onClose}
             aria-label="Schließen"
-            className="p-1 -m-1 text-text-muted hover:text-text bw-focus"
+            className="p-1.5 -m-1.5 text-text-muted hover:text-text rounded-md hover:bg-surface-muted transition-colors bw-focus"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
-        <div className="px-5 py-4">{children}</div>
+        <div className="px-5 py-5">{children}</div>
       </div>
     </div>
   )

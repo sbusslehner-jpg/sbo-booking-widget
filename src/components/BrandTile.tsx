@@ -15,17 +15,14 @@ export function BrandTile({ brand, selected, onSelect }: Props) {
       aria-pressed={selected}
       aria-label={brand.name}
       className={cn(
-        'group flex flex-col items-center justify-center aspect-[3/2] w-full rounded-md border transition-all bw-focus',
+        'group relative flex items-center justify-center aspect-[4/3] w-full rounded-md border-2 transition-all bw-focus',
         selected
-          ? 'bg-primary border-primary text-primary-fg shadow-card'
-          : 'bg-surface border-border text-text hover:border-primary/40',
+          ? 'bg-primary border-primary text-primary-fg'
+          : 'bg-surface border-border text-text-muted hover:border-primary/40 hover:text-text',
       )}
     >
       <div
-        className={cn(
-          'w-3/4 flex items-center justify-center',
-          selected ? 'text-primary-fg' : 'text-text',
-        )}
+        className="w-1/2 max-w-[80px] flex items-center justify-center [&_svg]:w-full [&_svg]:h-auto"
         dangerouslySetInnerHTML={{ __html: brand.logo ?? brand.name }}
       />
     </button>

@@ -67,7 +67,6 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
     return sum + (draft.services.tireStorage ? TIRE_STORAGE_PRICE : 0)
   }, [selectedServices, draft.services.tireStorage])
 
-  // react-hook-form mit Default-Werten aus Draft. Synced bidirektional.
   const {
     control,
     handleSubmit,
@@ -80,7 +79,6 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
     defaultValues: { ...draft.customer } as CustomerInput,
   })
 
-  // Form-Werte → Store synchronisieren (debounced via Store-Update)
   const watched = watch()
   useEffect(() => {
     patch('customer', watched)
@@ -111,10 +109,10 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
       step={3}
       onBack={onBack}
       footer={
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-4">
           <div>
             <div className="text-xs text-text-muted">{t('step3.totalLabel')}</div>
-            <div className="text-lg font-semibold">{formatEUR(total)}</div>
+            <div className="text-lg font-semibold leading-tight">{formatEUR(total)}</div>
           </div>
           <Button onClick={handleFormSubmit} disabled={!isValid || submitting}>
             {submitting ? t('common.loading') : t('common.submit')}
@@ -122,18 +120,18 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
         </div>
       }
     >
-      <h2 className="text-xl font-semibold mb-1">{t('step3.title')}</h2>
-      <p className="text-sm text-text-muted mb-5">{t('step3.subtitle')}</p>
+      <h2 className="text-xl font-semibold leading-tight mb-1">{t('step3.title')}</h2>
+      <p className="text-sm text-text-muted mb-7">{t('step3.subtitle')}</p>
 
       {/* Servicebetrieb */}
       <Section title={t('step3.centerSection')}>
         <div className="p-4 rounded-md border border-border bg-surface flex items-start gap-3 mb-3">
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-surface-muted shrink-0">
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-surface-muted shrink-0">
             <MapPin className="w-4 h-4 text-text" aria-hidden="true" />
           </span>
-          <div className="flex-1">
-            <div className="font-semibold">{center?.name ?? '—'}</div>
-            <div className="text-sm text-text-muted">
+          <div className="flex-1 min-w-0">
+            <div className="font-semibold leading-tight">{center?.name ?? '—'}</div>
+            <div className="text-sm text-text-muted mt-0.5">
               {center ? `${center.address}, ${center.zip} ${center.city}` : ''}
             </div>
           </div>
@@ -144,9 +142,9 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
           onChange={(v) => patch('serviceCenter', { contactlessDropoff: v })}
         />
         {center && (
-          <div className="mt-3 p-3 rounded-md bg-info-bg text-sm flex gap-2">
+          <div className="mt-3 p-3 rounded-md bg-info-bg text-sm flex gap-2.5">
             <Mail className="w-4 h-4 text-text mt-0.5 shrink-0" aria-hidden="true" />
-            <div>
+            <div className="leading-snug">
               <span className="text-text-muted">
                 {t('step3.centerNote', { name: center.name })}{' '}
               </span>
@@ -170,9 +168,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
             <Select
               label={t('step3.advisorSection')}
               value={draft.serviceCenter.advisorId ?? ''}
-              onChange={(e) =>
-                patch('serviceCenter', { advisorId: e.target.value })
-              }
+              onChange={(e) => patch('serviceCenter', { advisorId: e.target.value })}
               options={advisorOptions}
               placeholder="Bitte wählen"
             />
@@ -187,7 +183,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
               patch('serviceCenter', { messageToAdvisor: e.target.value })
             }
             placeholder={t('step3.advisorMessageLabel')}
-            className="w-full p-3 rounded-md border border-border bg-surface text-text resize-none outline-none focus:border-primary transition-colors"
+            className="w-full p-3 rounded-md border border-border bg-surface text-sm text-text placeholder:text-text-muted resize-none outline-none focus:border-primary transition-colors"
           />
           <div className="absolute bottom-2 right-3 text-xs text-text-muted">
             {draft.serviceCenter.messageToAdvisor.length} / 250
@@ -211,8 +207,10 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
             onChange={(e) => patch('appointment', { time: e.target.value })}
           />
         </div>
-        <div className="mt-3">
-          <div className="text-xs text-text-muted mb-2">{t('step3.nextSlots')}</div>
+        <div className="mt-4">
+          <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-2">
+            {t('step3.nextSlots')}
+          </div>
           <div className="flex flex-wrap gap-2">
             {nextSlots.map((s) => {
               const active =
@@ -221,9 +219,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
                 <button
                   key={`${s.date}-${s.time}`}
                   type="button"
-                  onClick={() =>
-                    patch('appointment', { date: s.date, time: s.time })
-                  }
+                  onClick={() => patch('appointment', { date: s.date, time: s.time })}
                   className={cn(
                     'text-xs px-3 py-1.5 rounded-md border transition-colors bw-focus',
                     active
@@ -231,7 +227,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
                       : 'border-border bg-surface hover:border-primary/40',
                   )}
                 >
-                  {formatDate(s.date)} | {s.time}
+                  {formatDate(s.date)} · {s.time}
                 </button>
               )
             })}
@@ -248,7 +244,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
 
       {/* Ihre Daten */}
       <Section title={t('step3.dataSection')}>
-        <div className="mb-3">
+        <div className="mb-4">
           <CarlogBanner />
         </div>
         <form onSubmit={handleFormSubmit} className="space-y-3" noValidate>
@@ -340,7 +336,7 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
               error={fieldError('country')}
             />
           </div>
-          <div className="flex items-start gap-3 mt-2">
+          <div className="flex items-start gap-3 mt-3">
             <Controller
               control={control}
               name="acceptedTerms"
@@ -350,11 +346,11 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
                   id="bw-terms"
                   checked={!!field.value}
                   onChange={(e) => field.onChange(e.target.checked)}
-                  className="w-5 h-5 mt-0.5 accent-[color:var(--color-primary)] bw-focus"
+                  className="w-4 h-4 mt-0.5 accent-[color:var(--color-primary)] bw-focus"
                 />
               )}
             />
-            <label htmlFor="bw-terms" className="text-sm">
+            <label htmlFor="bw-terms" className="text-sm leading-snug">
               <Trans
                 i18nKey="step3.terms"
                 components={{
@@ -395,23 +391,31 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
 
       {/* Service */}
       <Section title={t('step3.serviceSection')}>
-        <ul className="space-y-2">
-          {selectedServices.map((s) => (
-            <li
-              key={s.id}
-              className="flex items-center justify-between p-3 rounded-md border border-border"
-            >
-              <span className="text-sm">1× {s.name}</span>
-              <span className="text-sm font-medium">
-                {s.price ? formatEUR(s.price) : '—'}
-              </span>
-            </li>
-          ))}
-        </ul>
+        {selectedServices.length === 0 ? (
+          <div className="text-sm text-text-muted py-3">
+            Noch keine Services ausgewählt.
+          </div>
+        ) : (
+          <ul className="space-y-2">
+            {selectedServices.map((s) => (
+              <li
+                key={s.id}
+                className="flex items-center justify-between px-3 py-2.5 rounded-md border border-border"
+              >
+                <span className="text-sm">1× {s.name}</span>
+                <span className="text-sm font-semibold">
+                  {s.price ? formatEUR(s.price) : '—'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
         <div className="mt-3 flex items-start gap-3 p-3 rounded-md border-2 border-accent-blue bg-info-bg">
-          <div className="flex-1">
-            <div className="font-medium text-text">{t('step3.tireStorageTitle')}</div>
-            <div className="text-xs text-text-muted">
+          <div className="flex-1 min-w-0">
+            <div className="font-medium text-text leading-tight">
+              {t('step3.tireStorageTitle')}
+            </div>
+            <div className="text-xs text-text-muted mt-0.5">
               {t('step3.tireStorageSubtitle')}
             </div>
           </div>
@@ -424,29 +428,37 @@ export function Step3Checkout({ onBack, onSubmit, submitting }: Props) {
 
       {/* Details */}
       <Section title={t('step3.detailsSection')}>
-        <DetailRow label={t('step3.details.plate')} value="—" />
-        <DetailRow
-          label={t('step3.details.mileage')}
-          value={
-            draft.vehicle.mileage
-              ? `${draft.vehicle.mileage.toLocaleString('de-AT')} km`
-              : '—'
-          }
-        />
-        <DetailRow
-          label={t('step3.details.replacementCar')}
-          value={draft.appointment.needsReplacementCar ? t('common.yes') : t('common.no')}
-        />
-        <DetailRow
-          label={t('step3.details.date')}
-          value={formatDate(draft.appointment.date)}
-        />
-        <DetailRow
-          label={t('step3.details.time')}
-          value={draft.appointment.time ?? '—'}
-        />
-        <DetailRow label={t('step3.details.dropoff')} value={center?.name ?? '—'} />
-        <DetailRow label={t('step3.details.pickup')} value={center?.name ?? '—'} />
+        <div className="rounded-md border border-border overflow-hidden">
+          <DetailRow label={t('step3.details.plate')} value="—" />
+          <DetailRow
+            label={t('step3.details.mileage')}
+            value={
+              draft.vehicle.mileage
+                ? `${draft.vehicle.mileage.toLocaleString('de-AT')} km`
+                : '—'
+            }
+          />
+          <DetailRow
+            label={t('step3.details.replacementCar')}
+            value={
+              draft.appointment.needsReplacementCar ? t('common.yes') : t('common.no')
+            }
+          />
+          <DetailRow
+            label={t('step3.details.date')}
+            value={formatDate(draft.appointment.date)}
+          />
+          <DetailRow
+            label={t('step3.details.time')}
+            value={draft.appointment.time ?? '—'}
+          />
+          <DetailRow label={t('step3.details.dropoff')} value={center?.name ?? '—'} />
+          <DetailRow
+            label={t('step3.details.pickup')}
+            value={center?.name ?? '—'}
+            last
+          />
+        </div>
       </Section>
     </WidgetShell>
   )
@@ -463,9 +475,11 @@ function Section({
 }) {
   const { t } = useTranslation()
   return (
-    <section className="mb-6">
+    <section className="mb-7">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold text-text">{title}</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-text-muted">
+          {title}
+        </h3>
         {change && (
           <a
             href="#"
@@ -491,16 +505,29 @@ function ToggleRow({
   onChange: (v: boolean) => void
 }) {
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-md border border-border">
       <span className="text-sm">{label}</span>
       <Toggle checked={checked} onChange={onChange} label={label} />
     </div>
   )
 }
 
-function DetailRow({ label, value }: { label: string; value: string }) {
+function DetailRow({
+  label,
+  value,
+  last,
+}: {
+  label: string
+  value: string
+  last?: boolean
+}) {
   return (
-    <div className="flex items-center justify-between py-2 border-b last:border-b-0 border-border">
+    <div
+      className={cn(
+        'flex items-center justify-between px-3 py-2.5',
+        !last && 'border-b border-border',
+      )}
+    >
       <span className="text-sm text-text-muted">{label}</span>
       <span className="text-sm font-medium">{value}</span>
     </div>

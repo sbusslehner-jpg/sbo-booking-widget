@@ -33,7 +33,7 @@ export const FormField = forwardRef<HTMLInputElement, Props>(function FormField(
           ref={ref}
           placeholder=" "
           className={cn(
-            'peer w-full bg-transparent px-3 pt-5 pb-2 text-text outline-none',
+            'peer w-full bg-transparent px-3 pt-4 pb-1.5 text-sm text-text outline-none',
             className,
           )}
           {...rest}
@@ -41,9 +41,9 @@ export const FormField = forwardRef<HTMLInputElement, Props>(function FormField(
         <label
           htmlFor={inputId}
           className={cn(
-            'pointer-events-none absolute left-3 top-2 text-xs text-text-muted transition-all',
-            'peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base',
-            'peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-primary',
+            'pointer-events-none absolute left-3 top-1.5 text-[11px] text-text-muted transition-all',
+            'peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm',
+            'peer-focus:top-1.5 peer-focus:translate-y-0 peer-focus:text-[11px] peer-focus:text-primary',
           )}
         >
           {label}

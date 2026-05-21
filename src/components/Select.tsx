@@ -32,7 +32,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>(function Select(
           ref={ref}
           value={value}
           className={cn(
-            'peer w-full bg-transparent px-3 pt-5 pb-2 pr-9 text-text outline-none appearance-none cursor-pointer',
+            'peer w-full bg-transparent px-3 pt-4 pb-1.5 pr-9 text-sm text-text outline-none appearance-none cursor-pointer',
             className,
           )}
           {...rest}
@@ -52,7 +52,9 @@ export const Select = forwardRef<HTMLSelectElement, Props>(function Select(
           htmlFor={inputId}
           className={cn(
             'pointer-events-none absolute left-3 transition-all',
-            hasValue ? 'top-2 text-xs text-text-muted' : 'top-1/2 -translate-y-1/2 text-text-muted',
+            hasValue
+              ? 'top-1.5 text-[11px] text-text-muted'
+              : 'top-1/2 -translate-y-1/2 text-sm text-text-muted',
           )}
         >
           {label}

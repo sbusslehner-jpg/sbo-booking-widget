@@ -6,7 +6,7 @@ type Props = {
 
 export function InlineWrapper({ children }: Props) {
   return (
-    <div className="w-full max-w-widget mx-auto bg-surface border border-border rounded-lg shadow-card overflow-hidden flex flex-col min-h-[640px]">
+    <div className="w-full max-w-widget mx-auto bg-surface border border-border rounded-lg shadow-card overflow-hidden flex flex-col min-h-[720px]">
       {children}
     </div>
   )

@@ -42,8 +42,8 @@ export function PhoneInput({
           error ? 'border-red-500' : 'border-border focus-within:border-primary',
         )}
       >
-        <label className="flex items-center gap-2 pl-3 pr-2 border-r border-border bg-surface-muted">
-          <span aria-hidden="true">{selected.flag}</span>
+        <label className="flex items-center gap-1.5 pl-3 pr-2 border-r border-border bg-surface-muted">
+          <span aria-hidden="true" className="text-sm">{selected.flag}</span>
           <select
             aria-label="Ländervorwahl"
             value={country}
@@ -64,14 +64,14 @@ export function PhoneInput({
             value={number}
             onChange={(e) => onNumberChange(e.target.value)}
             placeholder=" "
-            className="peer w-full bg-transparent px-3 pt-5 pb-2 text-text outline-none"
+            className="peer w-full bg-transparent px-3 pt-4 pb-1.5 text-sm text-text outline-none"
           />
           <label
             htmlFor="phone"
             className={cn(
-              'pointer-events-none absolute left-3 top-2 text-xs text-text-muted transition-all',
-              'peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base',
-              'peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-primary',
+              'pointer-events-none absolute left-3 top-1.5 text-[11px] text-text-muted transition-all',
+              'peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm',
+              'peer-focus:top-1.5 peer-focus:translate-y-0 peer-focus:text-[11px] peer-focus:text-primary',
             )}
           >
             {label}
