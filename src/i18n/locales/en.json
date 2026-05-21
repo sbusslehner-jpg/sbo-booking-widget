@@ -135,6 +135,13 @@
       "Please bring your vehicle registration document."
     ]
   },
+  "cart": {
+    "label": "{{count}} service",
+    "label_plural": "{{count}} services",
+    "empty": "No services selected yet",
+    "remove": "Remove",
+    "tireStorage": "Tyre storage"
+  },
   "map": {
     "consentRequiredTitle": "Map hidden",
     "consentRequiredBody": "Loading the Google Maps view requires functional cookies. Please adjust your cookie preferences.",

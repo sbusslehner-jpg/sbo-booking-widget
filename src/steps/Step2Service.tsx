@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronDown, ChevronUp, Info, Camera, ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../components/Button'
@@ -6,7 +6,7 @@ import { Modal } from '../components/Modal'
 import { ServiceCard } from '../components/ServiceCard'
 import { Slider } from '../components/Slider'
 import { Toggle } from '../components/Toggle'
-import { formatEUR, cn } from '../components/util'
+import { cn, formatEUR } from '../components/util'
 import { useBookingStore } from '../state/store'
 import { useWidget } from '../widget/WidgetContext'
 import { WidgetShell } from '../widget/WidgetShell'
@@ -17,8 +17,6 @@ type Props = {
   onNext: () => void
   onBack: () => void
 }
-
-const TIRE_STORAGE_PRICE = 45
 
 export function Step2Service({ onNext, onBack }: Props) {
   const { t } = useTranslation()
@@ -47,13 +45,6 @@ export function Step2Service({ onNext, onBack }: Props) {
 
   const mainServices = services.filter((s) => !s.extra)
   const extraServices = services.filter((s) => s.extra)
-
-  const total = useMemo(() => {
-    const servicesTotal = services
-      .filter((s) => draft.services.selected.includes(s.id))
-      .reduce((sum, s) => sum + (s.price ?? 0), 0)
-    return servicesTotal + (draft.services.tireStorage ? TIRE_STORAGE_PRICE : 0)
-  }, [services, draft.services])
 
   const canContinue = draft.services.selected.length > 0
 
@@ -111,24 +102,8 @@ export function Step2Service({ onNext, onBack }: Props) {
     <WidgetShell
       step={2}
       onBack={onBack}
-      belowBody={
-        isMobile && total > 0 ? (
-          <div className="border-t border-border bg-surface px-6 py-3 flex items-center justify-between text-sm">
-            <span className="text-text-muted">{t('step2.stickyTotal')}</span>
-            <span className="font-semibold text-text">{formatEUR(total)}</span>
-          </div>
-        ) : null
-      }
       footer={
-        <div className="flex items-center justify-between gap-3">
-          {!isMobile && total > 0 ? (
-            <div>
-              <div className="text-xs text-text-muted">{t('step2.stickyTotal')}</div>
-              <div className="text-base font-semibold">{formatEUR(total)}</div>
-            </div>
-          ) : (
-            <div />
-          )}
+        <div className="flex justify-end">
           <Button onClick={onNext} disabled={!canContinue}>
             {t('common.next')}
           </Button>

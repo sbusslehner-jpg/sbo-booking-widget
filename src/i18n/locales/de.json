@@ -135,6 +135,13 @@
       "Bringen Sie bitte Ihren Zulassungsschein mit."
     ]
   },
+  "cart": {
+    "label": "{{count}} Service",
+    "label_plural": "{{count}} Services",
+    "empty": "Noch keine Services ausgewählt",
+    "remove": "Entfernen",
+    "tireStorage": "Reifeneinlagerung"
+  },
   "map": {
     "consentRequiredTitle": "Karte ausgeblendet",
     "consentRequiredBody": "Für die Anzeige der Google-Maps-Karte werden funktionale Cookies benötigt. Bitte passen Sie Ihre Cookie-Einstellungen an.",

@@ -72,8 +72,8 @@ export function OverlayWrapper({ open, onClose, children }: Props) {
         aria-label="Termin buchen"
         className={
           isMobile
-            ? 'absolute bottom-0 left-0 right-0 w-full max-h-[95vh] h-[95vh] bg-surface rounded-t-lg shadow-widget overflow-hidden flex flex-col bw-anim-sheet'
-            : 'relative w-full max-w-widget max-h-[90vh] bg-surface rounded-lg shadow-widget overflow-hidden flex flex-col bw-anim-slide'
+            ? 'absolute bottom-0 left-0 right-0 w-full h-[92vh] bg-surface rounded-t-lg shadow-widget overflow-hidden flex flex-col bw-anim-sheet'
+            : 'relative w-full max-w-widget h-[min(720px,90vh)] bg-surface rounded-lg shadow-widget overflow-hidden flex flex-col bw-anim-slide'
         }
       >
         {isMobile && (

@@ -135,6 +135,13 @@
       "Porta con te il libretto di circolazione."
     ]
   },
+  "cart": {
+    "label": "{{count}} servizio",
+    "label_plural": "{{count}} servizi",
+    "empty": "Nessun servizio selezionato",
+    "remove": "Rimuovi",
+    "tireStorage": "Deposito pneumatici"
+  },
   "map": {
     "consentRequiredTitle": "Mappa nascosta",
     "consentRequiredBody": "Per visualizzare Google Maps sono necessari i cookie funzionali. Adatta le preferenze cookie.",

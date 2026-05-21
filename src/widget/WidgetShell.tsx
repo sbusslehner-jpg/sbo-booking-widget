@@ -3,25 +3,33 @@ import { ArrowLeft, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ProgressBar } from '../components/ProgressBar'
 import { useWidget } from './WidgetContext'
+import { ShoppingCartBar } from './ShoppingCart'
 
 type Props = {
   step: 1 | 2 | 3
   onBack?: () => void
-  /** Optionaler Sticky-Footer. */
+  /** Sticky-Footer (z.B. Weiter-Button + ggf. Subtotal). */
   footer?: ReactNode
-  /** Bottom-Bereich unter dem Body, oberhalb des Footers. */
-  belowBody?: ReactNode
+  /** Wenn false, wird die Sticky-Shopping-Cart in diesem Schritt nicht gezeigt. */
+  showCart?: boolean
   children: ReactNode
 }
 
-export function WidgetShell({ step, onBack, footer, belowBody, children }: Props) {
+export function WidgetShell({
+  step,
+  onBack,
+  footer,
+  showCart = true,
+  children,
+}: Props) {
   const { t } = useTranslation()
   const { isOverlay, onClose } = useWidget()
   const showBack = !!onBack && step > 1
 
   return (
-    <div className="flex flex-col h-full max-h-full bg-surface text-text">
-      <div className="px-6 pt-5 pb-4">
+    <div className="flex flex-col h-full max-h-full min-h-0 bg-surface text-text">
+      {/* Header — shrink-0 sorgt dafür, dass er bei knappem Platz nicht zusammengedrückt wird */}
+      <div className="px-6 pt-5 pb-4 shrink-0">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2 min-w-0">
             {showBack ? (
@@ -58,12 +66,17 @@ export function WidgetShell({ step, onBack, footer, belowBody, children }: Props
         <ProgressBar current={step} total={3} />
       </div>
 
-      <div className="flex-1 overflow-y-auto bw-scroll px-6 pb-6">{children}</div>
+      {/* Body — min-h-0 ist kritisch, sonst respektiert flex-1 die Mindesthöhe der Kinder */}
+      <div className="flex-1 min-h-0 overflow-y-auto bw-scroll px-6 pb-6">{children}</div>
 
-      {belowBody}
+      {/* Sticky Shopping-Cart — hidet sich self-managed wenn leer */}
+      {showCart && <ShoppingCartBar />}
 
+      {/* Footer — shrink-0, sodass Weiter-Button immer sichtbar bleibt */}
       {footer && (
-        <div className="border-t border-border bg-surface px-6 py-4">{footer}</div>
+        <div className="border-t border-border bg-surface px-6 py-4 shrink-0">
+          {footer}
+        </div>
       )}
     </div>
   )
