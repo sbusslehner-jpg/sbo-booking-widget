@@ -28,12 +28,21 @@ export type {
   Advisor,
 } from './types'
 
-// Globale UMD-API: `BookingWidget.open(...)` ist über das UMD-Namespace-Objekt
-// erreichbar (Rollup setzt window.BookingWidget = { ...allExports }).
+// Globale Surface für Script-Tag-/SPA-Konsumenten: `BookingWidget.open(...)`.
 export const open = openOverlay
 export const close = closeOverlay
 
-// Browser-seitig: Custom Element registrieren.
 if (typeof window !== 'undefined') {
   registerCustomElement()
+  // UMD setzt `window.BookingWidget` via Rollup-Output automatisch.
+  // Für ESM/SPA-Konsumenten machen wir das hier explizit, sonst gibt es
+  // keinen Global-Hook für inline-onClick="BookingWidget.open(...)".
+  const existing = (window as unknown as Record<string, unknown>).BookingWidget as
+    | Record<string, unknown>
+    | undefined
+  ;(window as unknown as Record<string, unknown>).BookingWidget = {
+    ...(existing ?? {}),
+    open: openOverlay,
+    close: closeOverlay,
+  }
 }
