@@ -15,6 +15,9 @@ export { EmbeddedBookingWidget as BookingWidget }
 export type { BookingWidgetProps }
 export { BookingCtaButton } from './widget/BookingCtaButton'
 export { LocalStorageAdapter } from './state/storage/LocalStorageAdapter'
+export type { ThemeInput, ThemeName, ThemeTokens } from './widget/themes'
+export { availableThemes } from './widget/themes'
+export type { PrefillData } from './state/prefill'
 export type { StorageAdapter } from './state/storage/StorageAdapter'
 export { MockBookingService, defaultBookingService } from './data/service'
 export type {

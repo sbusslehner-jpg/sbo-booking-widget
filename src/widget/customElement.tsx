@@ -2,6 +2,9 @@ import { createRoot, type Root } from 'react-dom/client'
 import { BookingWidget, type BookingWidgetProps } from './BookingWidget'
 import { ShadowRootPortal } from './ShadowRootPortal'
 import { useEffect, useState } from 'react'
+import type { PrefillData } from '../state/prefill'
+import type { ThemeName, ThemeInput } from './themes'
+import { availableThemes } from './themes'
 
 const CE_TAG = 'booking-widget'
 
@@ -10,6 +13,8 @@ type CEAttrs = {
   mode?: 'inline' | 'overlay'
   language?: string
   open?: string
+  theme?: string
+  prefill?: string
 }
 
 /**
@@ -20,13 +25,11 @@ class BookingWidgetElement extends HTMLElement {
   private root: Root | null = null
 
   static get observedAttributes(): string[] {
-    return ['dealer-id', 'mode', 'language', 'open']
+    return ['dealer-id', 'mode', 'language', 'open', 'theme', 'prefill']
   }
 
   connectedCallback() {
     if (!this.root) {
-      // Wir mounten React in das Host-Element selbst — ShadowRootPortal
-      // erzeugt den Shadow Root und mountet darin.
       const container = document.createElement('div')
       this.appendChild(container)
       this.root = createRoot(container)
@@ -51,6 +54,8 @@ class BookingWidgetElement extends HTMLElement {
       mode: (this.getAttribute('mode') as 'inline' | 'overlay') ?? 'inline',
       language: this.getAttribute('language') ?? 'de',
       open: this.getAttribute('open') ?? 'true',
+      theme: this.getAttribute('theme') ?? undefined,
+      prefill: this.getAttribute('prefill') ?? undefined,
     }
     const props: BookingWidgetProps = {
       dealerId: attrs['dealer-id'] || 'default',
@@ -58,21 +63,49 @@ class BookingWidgetElement extends HTMLElement {
       language: attrs.language,
       open: attrs.open !== 'false',
       onClose: () => this.removeAttribute('open'),
+      theme: parseThemeAttr(attrs.theme),
+      prefill: parsePrefillAttr(attrs.prefill),
     }
     this.root?.render(<CEHost host={this} props={props} />)
   }
 }
 
+function parseThemeAttr(raw: string | undefined): ThemeInput | undefined {
+  if (!raw) return undefined
+  const trimmed = raw.trim()
+  if (trimmed.startsWith('{')) {
+    try {
+      return JSON.parse(trimmed) as ThemeInput
+    } catch {
+      return undefined
+    }
+  }
+  if ((availableThemes as ReadonlyArray<string>).includes(trimmed)) {
+    return trimmed as ThemeName
+  }
+  return undefined
+}
+
+function parsePrefillAttr(raw: string | undefined): PrefillData | undefined {
+  if (!raw) return undefined
+  try {
+    return JSON.parse(raw) as PrefillData
+  } catch {
+    // Schlecht formatiertes JSON — leise ignorieren, sonst bricht der Mount.
+    return undefined
+  }
+}
+
 function CEHost({ host, props }: { host: HTMLElement; props: BookingWidgetProps }) {
-  // Re-render wenn host bekannt ist (immer der Fall — host ist das CE selbst).
   const [ready, setReady] = useState(false)
   useEffect(() => {
     setReady(true)
   }, [])
   if (!ready) return null
+  const { theme, ...rest } = props
   return (
-    <ShadowRootPortal host={host}>
-      <BookingWidget {...props} />
+    <ShadowRootPortal host={host} theme={theme}>
+      <BookingWidget {...rest} />
     </ShadowRootPortal>
   )
 }

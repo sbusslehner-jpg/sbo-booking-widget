@@ -10,6 +10,8 @@ type WidgetContextValue = {
   isMobile: boolean
   /** Schließt das Overlay (no-op im Inline-Modus). */
   onClose: () => void
+  /** Kundendaten kommen via Prefill (carlog/E-Mail-Einladung) — Banner ausblenden. */
+  hasPrefilledCustomer: boolean
 }
 
 const WidgetContext = createContext<WidgetContextValue | null>(null)

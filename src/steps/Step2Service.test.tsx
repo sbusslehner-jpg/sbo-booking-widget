@@ -18,6 +18,7 @@ function renderStep() {
           isOverlay: false,
           isMobile: false,
           onClose: () => {},
+          hasPrefilledCustomer: false,
         }}
       >
         <Step2Service onNext={() => {}} onBack={() => {}} />

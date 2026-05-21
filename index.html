@@ -94,6 +94,26 @@
       .tab-panel.active { display: block; }
 
       #sbo-cta-slot { display: inline-block; }
+
+      .theme-switcher { display: inline-flex; gap: 6px; padding: 4px; background: #f1f5f9; border-radius: 8px; margin-bottom: 14px; }
+      .theme-switcher button {
+        background: transparent; color: #475569; border: none;
+        font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+        padding: 6px 14px; border-radius: 6px; cursor: pointer;
+        transition: all 120ms ease;
+      }
+      .theme-switcher button.active { background: #ffffff; color: #0f172a; box-shadow: 0 1px 2px rgba(15,23,42,0.08); }
+
+      .prefill-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+      .prefill-actions button {
+        background: #1a2332; color: #ffffff; border: none;
+        font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+        padding: 9px 16px; border-radius: 8px; cursor: pointer;
+        transition: background 120ms ease, transform 120ms ease;
+      }
+      .prefill-actions button:hover { background: #2a3a5a; transform: translateY(-1px); }
+      .prefill-actions button.secondary { background: #ffffff; color: #0f172a; border: 1px solid #e5e7eb; }
+      .prefill-actions button.secondary:hover { border-color: #94a3b8; }
     </style>
   </head>
   <body>
@@ -301,8 +321,12 @@ function TerminButton() {
       <div class="demo-grid">
         <div>
           <div class="preview-label">Live</div>
+          <div class="theme-switcher" id="inline-theme-switcher">
+            <button data-theme="neutral" class="active">Neutral</button>
+            <button data-theme="vw">VW</button>
+          </div>
           <div class="preview-pane inline">
-            <booking-widget dealer-id="senker" mode="inline" language="de"></booking-widget>
+            <booking-widget id="inline-widget" dealer-id="senker" mode="inline" language="de"></booking-widget>
           </div>
         </div>
         <div class="docs-pane">
@@ -322,6 +346,7 @@ function TerminButton() {
   <span class="attr">dealer-id</span>=<span class="str">"senker"</span>
   <span class="attr">mode</span>=<span class="str">"inline"</span>
   <span class="attr">language</span>=<span class="str">"de"</span>
+  <span class="attr">theme</span>=<span class="str">"vw"</span>     <span class="com">&lt;!-- optional: "neutral" | "vw" --&gt;</span>
 <span class="tag">&gt;&lt;/booking-widget&gt;</span><button class="copy-btn" data-copy="inline-html-code">Kopieren</button>
             </div>
             <textarea id="inline-html-code" hidden>&lt;script type="module" src="https://sbo-booking-widget.netlify.app/booking-widget.es.js"&gt;&lt;/script&gt;
@@ -330,6 +355,7 @@ function TerminButton() {
   dealer-id="senker"
   mode="inline"
   language="de"
+  theme="vw"
 &gt;&lt;/booking-widget&gt;</textarea>
             <p>
               <strong>Custom Element</strong>: das Tag <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">&lt;booking-widget&gt;</code>
@@ -347,6 +373,7 @@ function TerminButton() {
       <span class="attr">mode</span>=<span class="str">"inline"</span>
       <span class="attr">dealerId</span>=<span class="str">"senker"</span>
       <span class="attr">language</span>=<span class="str">"de"</span>
+      <span class="attr">theme</span>=<span class="str">"vw"</span>
     <span class="tag">/&gt;</span>
   )
 }<button class="copy-btn" data-copy="inline-react-code">Kopieren</button>
@@ -359,9 +386,134 @@ function ServicePage() {
       mode="inline"
       dealerId="senker"
       language="de"
+      theme="vw"
     /&gt;
   )
 }</textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== PREFILL / URL-PARAMS ============================== -->
+    <section class="demo-section" id="prefill-docs">
+      <h2>Variante 4 · Prefill &amp; URL-Parameter</h2>
+      <p class="lede">
+        Daten von der Trägerseite ins Widget durchreichen — typische Anwendungen:
+        die Trägerseite hat eine carlog-Session aufgelöst und kennt die Kundendaten,
+        oder eine E-Mail-Einladung enthält Link-Parameter mit vorausgewählten Services
+        und einem Termin. Reihenfolge: persistierter Draft &lt; URL-Params &lt; explizites <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">prefill</code>-Prop.
+      </p>
+      <div class="demo-grid">
+        <div>
+          <div class="preview-label">Live ausprobieren</div>
+          <div class="preview-pane" style="flex-direction: column; gap: 14px;">
+            <div class="prefill-actions">
+              <button id="open-prefill-customer">Mit Kundendaten öffnen</button>
+              <button id="open-prefill-services" class="secondary">Mit Services + Termin</button>
+              <button id="open-prefill-full" class="secondary">Voll vorbefüllt</button>
+            </div>
+            <a id="prefill-url-link" href="?bw_email=max@example.com&bw_first_name=Max&bw_services=raederwechsel,oelwechsel"
+               style="font-size: 12.5px; color: #2563eb; text-decoration: underline;">
+              … oder URL mit <code>?bw_*</code>-Parametern in einem neuen Tab öffnen
+            </a>
+          </div>
+        </div>
+        <div class="docs-pane">
+          <div class="preview-label">So bindest du das ein</div>
+          <div class="tabs" data-tabgroup="prefill">
+            <button class="tab active" data-tab="prefill-react">React (Prefill)</button>
+            <button class="tab" data-tab="prefill-html">Script-Tag (Prefill)</button>
+            <button class="tab" data-tab="prefill-url">URL-Parameter</button>
+          </div>
+          <div class="tab-panel active" id="prefill-react">
+            <div class="snippet">
+<span class="com">// Trägerseite hat carlog-Session aufgelöst und kennt den Kunden.</span>
+<span class="tag">&lt;BookingWidget</span>
+  <span class="attr">dealerId</span>=<span class="str">"senker"</span>
+  <span class="attr">theme</span>=<span class="str">"vw"</span>
+  <span class="attr">prefill</span>={{
+    <span class="attr">customer</span>: { <span class="attr">email</span>: <span class="str">'max@example.com'</span>, <span class="attr">firstName</span>: <span class="str">'Max'</span> },
+    <span class="attr">vehicle</span>: { <span class="attr">brand</span>: <span class="str">'vw'</span>, <span class="attr">model</span>: <span class="str">'polo'</span> },
+    <span class="attr">services</span>: { <span class="attr">selected</span>: [<span class="str">'raederwechsel'</span>, <span class="str">'oelwechsel'</span>] },
+    <span class="attr">step</span>: 3,
+  }}
+<span class="tag">/&gt;</span><button class="copy-btn" data-copy="prefill-react-code">Kopieren</button>
+            </div>
+            <textarea id="prefill-react-code" hidden>&lt;BookingWidget
+  dealerId="senker"
+  theme="vw"
+  prefill={{
+    customer: { email: 'max@example.com', firstName: 'Max' },
+    vehicle: { brand: 'vw', model: 'polo' },
+    services: { selected: ['raederwechsel', 'oelwechsel'] },
+    step: 3,
+  }}
+/&gt;</textarea>
+            <p>
+              Übergebene Felder überschreiben den persistierten Draft. Wenn <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">customer.email</code>
+              gesetzt ist, blendet das Widget den carlog-Login-Banner aus und zeigt stattdessen "Daten übernommen".
+            </p>
+          </div>
+          <div class="tab-panel" id="prefill-html">
+            <div class="snippet">
+<span class="com">&lt;!-- Prefill als JSON-Attribut --&gt;</span>
+<span class="tag">&lt;booking-widget</span>
+  <span class="attr">dealer-id</span>=<span class="str">"senker"</span>
+  <span class="attr">theme</span>=<span class="str">"vw"</span>
+  <span class="attr">prefill</span>=<span class="str">'{"customer":{"email":"max@example.com"},"services":{"selected":["raederwechsel"]}}'</span>
+<span class="tag">&gt;&lt;/booking-widget&gt;</span>
+
+<span class="com">// Oder via JS-API für das Overlay:</span>
+BookingWidget.open({
+  <span class="attr">dealerId</span>: <span class="str">'senker'</span>,
+  <span class="attr">theme</span>: <span class="str">'vw'</span>,
+  <span class="attr">prefill</span>: { <span class="attr">customer</span>: { <span class="attr">email</span>: <span class="str">'max@example.com'</span> } }
+})<button class="copy-btn" data-copy="prefill-html-code">Kopieren</button>
+            </div>
+            <textarea id="prefill-html-code" hidden>&lt;booking-widget
+  dealer-id="senker"
+  theme="vw"
+  prefill='{"customer":{"email":"max@example.com"},"services":{"selected":["raederwechsel"]}}'
+&gt;&lt;/booking-widget&gt;
+
+// Oder via JS-API für das Overlay:
+BookingWidget.open({
+  dealerId: 'senker',
+  theme: 'vw',
+  prefill: { customer: { email: 'max@example.com' } }
+})</textarea>
+          </div>
+          <div class="tab-panel" id="prefill-url">
+            <div class="snippet">
+<span class="com">// E-Mail-Versand baut einen Link mit bw_*-Parametern:</span>
+https://senker.at/service-buchen
+  ?<span class="attr">bw_email</span>=max@example.com
+  &amp;<span class="attr">bw_first_name</span>=Max
+  &amp;<span class="attr">bw_brand</span>=vw
+  &amp;<span class="attr">bw_model</span>=polo
+  &amp;<span class="attr">bw_services</span>=raederwechsel,oelwechsel
+  &amp;<span class="attr">bw_date</span>=2026-11-08
+  &amp;<span class="attr">bw_time</span>=10:00
+  &amp;<span class="attr">bw_step</span>=3
+
+<span class="com">// Das Widget liest sie automatisch beim Mount.</span>
+<span class="com">// Deaktivieren: readUrlParams={false}</span>
+<span class="com">// Eigener Präfix:  urlParamPrefix="senker_"</span><button class="copy-btn" data-copy="prefill-url-code">Kopieren</button>
+            </div>
+            <textarea id="prefill-url-code" hidden>https://senker.at/service-buchen
+  ?bw_email=max@example.com
+  &amp;bw_first_name=Max
+  &amp;bw_brand=vw
+  &amp;bw_model=polo
+  &amp;bw_services=raederwechsel,oelwechsel
+  &amp;bw_date=2026-11-08
+  &amp;bw_time=10:00
+  &amp;bw_step=3</textarea>
+            <p>
+              <strong>Unterstützte Parameter:</strong>
+              <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;font-family:inherit;font-size:12.5px">bw_brand, bw_model, bw_vin, bw_mileage, bw_services, bw_tire_storage, bw_date, bw_time, bw_replacement_car, bw_email, bw_first_name, bw_last_name, bw_phone, bw_address, bw_zip, bw_city, bw_country, bw_salutation, bw_message, bw_advisor, bw_step</code>.
+            </p>
           </div>
         </div>
       </div>
@@ -392,6 +544,78 @@ function ServicePage() {
           btn.classList.add('copied')
           setTimeout(() => { btn.textContent = original; btn.classList.remove('copied') }, 1500)
         })
+      })
+
+      // Theme-Switcher: setzt das `theme`-Attribute am Inline-Widget reaktiv.
+      const themeSwitcher = document.getElementById('inline-theme-switcher')
+      const inlineWidget = document.getElementById('inline-widget')
+      themeSwitcher?.addEventListener('click', e => {
+        const btn = e.target.closest('button[data-theme]')
+        if (!btn || !inlineWidget) return
+        themeSwitcher.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn))
+        const theme = btn.dataset.theme
+        if (theme === 'neutral') {
+          inlineWidget.removeAttribute('theme')
+        } else {
+          inlineWidget.setAttribute('theme', theme)
+        }
+      })
+
+      // Prefill-Demo-Buttons: öffnen das Overlay mit unterschiedlichen Vorbefüllungen.
+      function waitForWidget(cb) {
+        if (window.BookingWidget?.open) return cb()
+        setTimeout(() => waitForWidget(cb), 50)
+      }
+      document.getElementById('open-prefill-customer')?.addEventListener('click', () => {
+        waitForWidget(() => window.BookingWidget.open({
+          dealerId: 'senker',
+          theme: 'vw',
+          prefill: {
+            customer: {
+              salutation: 'mr',
+              email: 'max.mustermann@example.com',
+              firstName: 'Max',
+              lastName: 'Mustermann',
+              phone: '660 1234567',
+              address: 'Hauptplatz 12',
+              zip: '5020',
+              city: 'Salzburg',
+            },
+          },
+        }))
+      })
+      document.getElementById('open-prefill-services')?.addEventListener('click', () => {
+        waitForWidget(() => window.BookingWidget.open({
+          dealerId: 'senker',
+          prefill: {
+            vehicle: { brand: 'vw', model: 'polo', mileage: 87500 },
+            services: { selected: ['raederwechsel', 'oelwechsel'] },
+            appointment: { date: '2026-11-08', time: '10:00' },
+            step: 2,
+          },
+        }))
+      })
+      document.getElementById('open-prefill-full')?.addEventListener('click', () => {
+        waitForWidget(() => window.BookingWidget.open({
+          dealerId: 'senker',
+          theme: 'vw',
+          prefill: {
+            vehicle: { brand: 'vw', model: 'polo', mileage: 87500, vin: 'WVWZZZ6KZAW123456' },
+            services: { selected: ['raederwechsel', 'oelwechsel', 'pollenfilter'], tireStorage: true },
+            appointment: { date: '2026-11-08', time: '10:00', needsReplacementCar: true },
+            customer: {
+              salutation: 'mr',
+              email: 'max.mustermann@example.com',
+              firstName: 'Max',
+              lastName: 'Mustermann',
+              phone: '660 1234567',
+              address: 'Hauptplatz 12',
+              zip: '5020',
+              city: 'Salzburg',
+            },
+            step: 3,
+          },
+        }))
       })
     </script>
   </body>

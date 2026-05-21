@@ -15,6 +15,12 @@ import type { StorageAdapter } from '../state/storage/StorageAdapter'
 import { useMediaQuery } from './useMediaQuery'
 import { defaultBookingService } from '../data/service'
 import type { BookingService } from '../types'
+import {
+  mergePrefills,
+  parseUrlPrefill,
+  type PrefillData,
+} from '../state/prefill'
+import type { ThemeInput } from './themes'
 
 export type BookingWidgetProps = {
   dealerId: string
@@ -27,6 +33,24 @@ export type BookingWidgetProps = {
   draftTtlMs?: number
   language?: string
   onBooked?: (bookingId: string) => void
+  /**
+   * Vorbefüllung — überschreibt persistierte Draft-Felder selektiv.
+   * Typischer Use-Case: Trägerseite löst carlog-Session auf und übergibt
+   * die Kundendaten, oder E-Mail-Einladung enthält ausgewählte Services.
+   */
+  prefill?: PrefillData
+  /**
+   * Wenn true (Default), parsed das Widget URL-Parameter mit Präfix
+   * `urlParamPrefix` (Default `bw_`) und merged sie als zusätzliches
+   * Prefill ein. Reihenfolge: persistierter Draft < URL-Params < `prefill`.
+   */
+  readUrlParams?: boolean
+  urlParamPrefix?: string
+  /**
+   * Theme — als Preset-Name (`'neutral'` | `'vw'`) oder als eigenes Objekt mit
+   * CSS-Variablen für vollständiges Custom Branding.
+   */
+  theme?: ThemeInput
 }
 
 export function BookingWidget({
@@ -39,6 +63,9 @@ export function BookingWidget({
   draftTtlMs,
   language = 'de',
   onBooked,
+  prefill,
+  readUrlParams = true,
+  urlParamPrefix = 'bw_',
 }: BookingWidgetProps) {
   const i18n = useMemo(() => initI18n(language), [language])
   const resolvedService = service ?? defaultBookingService
@@ -49,6 +76,16 @@ export function BookingWidget({
   const isMobile = useMediaQuery('(max-width: 767px)')
   const handleClose = onClose ?? (() => {})
 
+  // URL-Parameter und explizites Prefill mergen — Prefill gewinnt.
+  const resolvedPrefill = useMemo<PrefillData | undefined>(() => {
+    const fromUrl =
+      readUrlParams && typeof window !== 'undefined'
+        ? parseUrlPrefill(window.location.search, urlParamPrefix)
+        : undefined
+    if (!fromUrl && !prefill) return undefined
+    return mergePrefills(fromUrl, prefill)
+  }, [prefill, readUrlParams, urlParamPrefix])
+
   return (
     <I18nextProvider i18n={i18n}>
       <WidgetProvider
@@ -58,15 +95,24 @@ export function BookingWidget({
           isOverlay: mode === 'overlay',
           isMobile,
           onClose: handleClose,
+          hasPrefilledCustomer: !!resolvedPrefill?.customer?.email,
         }}
       >
         {mode === 'overlay' ? (
           <OverlayWrapper open={open} onClose={handleClose}>
-            <BookingFlow adapter={adapter} onBooked={onBooked} />
+            <BookingFlow
+              adapter={adapter}
+              onBooked={onBooked}
+              prefill={resolvedPrefill}
+            />
           </OverlayWrapper>
         ) : (
           <InlineWrapper>
-            <BookingFlow adapter={adapter} onBooked={onBooked} />
+            <BookingFlow
+              adapter={adapter}
+              onBooked={onBooked}
+              prefill={resolvedPrefill}
+            />
           </InlineWrapper>
         )}
       </WidgetProvider>
@@ -77,11 +123,13 @@ export function BookingWidget({
 function BookingFlow({
   adapter,
   onBooked,
+  prefill,
 }: {
   adapter: StorageAdapter
   onBooked?: (bookingId: string) => void
+  prefill?: PrefillData
 }) {
-  useDraftPersistence(adapter)
+  useDraftPersistence(adapter, prefill)
   const draft = useBookingStore((s) => s.draft)
   const setStep = useBookingStore((s) => s.setStep)
   const [submitting, setSubmitting] = useState(false)
