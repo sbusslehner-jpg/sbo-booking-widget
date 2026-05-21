@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Senker · Werkstatt-Termin online buchen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* GLOBAL test: Wir setzen bewusst aggressives Styling auf <button>,
+         um zu prüfen, dass das Widget mit Shadow DOM nicht leakt. */
+      body { margin: 0; font-family: 'Inter', system-ui, sans-serif; color: #111827; background: #ffffff; }
+      button { background: red; color: yellow; }
+      a { color: inherit; }
+      .nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; border-bottom: 1px solid #e5e7eb; }
+      .nav-brand { font-weight: 800; font-size: 24px; letter-spacing: -0.02em; }
+      .nav-brand .accent { color: #c0102c; }
+      .nav-links { display: flex; gap: 22px; font-size: 14px; color: #6b7280; }
+      .hero { position: relative; height: 280px; background: linear-gradient(135deg, #15351f 0%, #2c5a3a 100%); overflow: hidden; }
+      .hero-inner { padding: 56px 32px; color: #fff; max-width: 600px; }
+      .hero h1 { font-size: 32px; font-weight: 700; margin: 0 0 8px 0; line-height: 1.2; }
+      .hero p { margin: 0 0 16px 0; opacity: 0.85; font-size: 15px; }
+      .hero-cta { display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #15351f; padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; border: none; }
+      .info-section { padding: 48px 32px; }
+      .info-card { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; background: #f0f4ff; border-radius: 12px; padding: 32px; max-width: 960px; margin: 0 auto; }
+      .info-card h2 { margin: 0 0 12px 0; font-size: 22px; font-weight: 700; }
+      .info-card ul { margin: 0 0 20px 0; padding-left: 18px; color: #4b5563; font-size: 14px; line-height: 1.6; }
+      .info-card-cta { display: inline-flex; align-items: center; gap: 8px; background: #1a2332; color: #fff; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; }
+      .info-art { width: 240px; height: 200px; background: linear-gradient(135deg, #1f2937, #374151); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 12px; }
+      .advantages { padding: 32px; max-width: 960px; margin: 0 auto; }
+      .advantages h2 { margin: 0 0 16px 0; font-size: 20px; font-weight: 700; }
+      .inline-demo { padding: 32px; max-width: 960px; margin: 0 auto 64px; }
+      .inline-demo h2 { margin: 0 0 16px 0; font-size: 20px; font-weight: 700; }
+      .inline-demo .desc { color: #6b7280; font-size: 14px; margin-bottom: 24px; }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="nav-brand"><span class="accent">Sen</span>ker</div>
+      <div class="nav-links">
+        <span>Neuwagen</span>
+        <span>Gebrauchtwagen</span>
+        <span>Service &amp; Zubehör</span>
+        <span>Kontakt</span>
+        <strong style="color: #1a2332">Termin buchen</strong>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Autohaus Senker<br />Werkstatt-Termin</h1>
+        <p>Buchen Sie ihren Wartungstermin online in drei Schritten.</p>
+        <button class="hero-cta" id="open-widget-hero">Jetzt Termin buchen</button>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="info-card">
+        <div>
+          <h2>Was ist die Onlinebuchung?</h2>
+          <ul>
+            <li>Buchen Sie Ihren Werkstatttermin rund um die Uhr und ortsunabhängig.</li>
+            <li>Egal ob Pickerl, Inspektion oder Reifenservice — wählen Sie aus unseren Leistungen.</li>
+            <li>Erhalten Sie eine sofortige Bestätigung samt Erinnerung per E-Mail.</li>
+          </ul>
+          <button class="info-card-cta" id="open-widget-info">Termin buchen</button>
+        </div>
+        <div class="info-art">Phone-Mockup</div>
+      </div>
+    </section>
+
+    <section class="inline-demo">
+      <h2>Inline-Einbettung</h2>
+      <p class="desc">
+        Das Widget kann ebenso als statisches Element direkt in eine Seite eingebunden werden —
+        ohne Modal-Overlay. Es teilt denselben State und denselben Mock-Service.
+      </p>
+      <!-- Custom-Element-Variante (Script-Tag-Stil) -->
+      <booking-widget dealer-id="senker" mode="inline" language="de"></booking-widget>
+    </section>
+
+    <script type="module" src="/src/demo/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+# Netlify-Konfiguration für SBO Booking Widget
+#
+# Build-Pipeline:
+#   1. Library-Build (tsc + Vite lib mode) → dist/
+#   2. Demo-Build (Vite SPA mode)          → dist-demo/
+#   3. Library-Bundles in dist-demo/ kopieren, damit beide URLs erreichbar sind
+#
+# Erreichbar nach Deploy:
+#   https://<site>.netlify.app/                       → Senker-Landing mit Overlay + Inline-Embed
+#   https://<site>.netlify.app/booking-widget.umd.js  → Script-Tag-Bundle
+#   https://<site>.netlify.app/booking-widget.es.js   → ESM-Bundle
+
+[build]
+  command = "npm run build:netlify"
+  publish = "dist-demo"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# Library-Bundles dürfen aggressiv gecached werden — sie sind durch das
+# Versions-Hashing in package.json an den jeweiligen Deploy gebunden.
+[[headers]]
+  for = "/booking-widget.*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+# SPA-Fallback: alle unbekannten Pfade auf die Demo-Seite.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

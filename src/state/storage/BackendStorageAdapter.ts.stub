@@ -1,0 +1,41 @@
+// TODO: Backend-Persistenz für Booking-Drafts.
+//
+// Drop-in-Ersatz für LocalStorageAdapter sobald ein Endpoint existiert.
+// Endpoint-Beispiel:
+//   POST   /api/booking-drafts        → { id }
+//   GET    /api/booking-drafts/:id    → BookingDraft
+//   DELETE /api/booking-drafts/:id
+//
+// Authentication via Bearer-Token oder Session-Cookie (vom Konsumenten gesetzt).
+
+import type { BookingDraft } from '../../types'
+import type { StorageAdapter } from './StorageAdapter'
+
+export type BackendStorageAdapterOptions = {
+  baseUrl: string
+  dealerId: string
+  /** Optional: token oder function, die einen aktuellen Token zurückgibt. */
+  getToken?: () => Promise<string | null>
+  /** ID des aktuellen Drafts, sobald angelegt — wird intern verwaltet. */
+}
+
+export class BackendStorageAdapter implements StorageAdapter {
+  private draftId: string | null = null
+
+  constructor(private readonly opts: BackendStorageAdapterOptions) {}
+
+  async save(draft: BookingDraft): Promise<void> {
+    // TODO: fetch(`${baseUrl}/booking-drafts/${this.draftId || ''}`, { method: ..., body: JSON.stringify(draft) })
+    throw new Error('BackendStorageAdapter ist noch nicht implementiert.')
+  }
+
+  async load(): Promise<BookingDraft | null> {
+    // TODO: fetch(`${baseUrl}/booking-drafts/${this.draftId}`)
+    throw new Error('BackendStorageAdapter ist noch nicht implementiert.')
+  }
+
+  async clear(): Promise<void> {
+    // TODO: fetch(`${baseUrl}/booking-drafts/${this.draftId}`, { method: 'DELETE' })
+    throw new Error('BackendStorageAdapter ist noch nicht implementiert.')
+  }
+}

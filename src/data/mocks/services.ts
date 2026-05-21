@@ -1,0 +1,73 @@
+import type { Service } from '../../types'
+
+export const services: Service[] = [
+  {
+    id: 'pickerl',
+    name: 'Pickerl §57a',
+    description: 'Prüfung nach gesetzlichen Vorgaben.',
+    price: null,
+    icon: 'BadgeCheck',
+  },
+  {
+    id: 'raederwechsel',
+    name: 'Räderwechsel',
+    description: 'Abnehmen und Aufstecken der Räder.',
+    price: 66,
+    icon: 'CircleDot',
+  },
+  {
+    id: 'service-hersteller',
+    name: 'Service lt. Herstellervorschrift',
+    description: 'Prüfung nach Vorgaben des Herstellers.',
+    price: null,
+    icon: 'Wrench',
+  },
+  {
+    id: 'oelwechsel',
+    name: 'Ölwechsel',
+    description: 'Frisches Öl und neuer Filter für längere Lebensdauer.',
+    price: 89,
+    icon: 'Droplet',
+    extra: true,
+  },
+  {
+    id: 'pollenfilter',
+    name: 'Pollenfilter tauschen',
+    description: 'Frische Luft im Innenraum.',
+    price: 39,
+    icon: 'Filter',
+    extra: true,
+  },
+  {
+    id: 'bremsen',
+    name: 'Bremsencheck',
+    description: 'Vollständige Sichtprüfung von Bremsbelägen und Scheiben.',
+    price: 0,
+    icon: 'Disc',
+    extra: true,
+  },
+  {
+    id: 'klima',
+    name: 'Klimaservice',
+    description: 'Reinigung und Befüllung der Klimaanlage.',
+    price: 119,
+    icon: 'Snowflake',
+    extra: true,
+  },
+  {
+    id: 'scheibe',
+    name: 'Steinschlagreparatur',
+    description: 'Reparatur kleiner Schäden an der Frontscheibe.',
+    price: 49,
+    icon: 'ShieldCheck',
+    extra: true,
+  },
+  {
+    id: 'inspektion',
+    name: 'Inspektion 30.000 km',
+    description: 'Komplettcheck inkl. Verschleißteile.',
+    price: 299,
+    icon: 'ClipboardCheck',
+    extra: true,
+  },
+]

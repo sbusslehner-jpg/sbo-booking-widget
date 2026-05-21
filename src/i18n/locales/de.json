@@ -1,0 +1,125 @@
+{
+  "common": {
+    "close": "Schließen",
+    "back": "Zurück",
+    "next": "Weiter zum Abschluss",
+    "submit": "Termin verbindlich buchen",
+    "step": "Schritt {{current}} von {{total}}",
+    "change": "Ändern",
+    "loading": "Lädt …",
+    "soon": "Demnächst verfügbar",
+    "from": "ab",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "carlog": {
+    "title": "Mit carlog anmelden",
+    "subtitle": "Übernehmen Sie automatisch ihre Daten aus ihrem Konto.",
+    "cta": "Jetzt anmelden"
+  },
+  "step1": {
+    "title": "Mit welchem Fahrzeug kommen Sie zu uns?",
+    "brandSection": "Fahrzeugmarke",
+    "detailSection": "Fahrzeugdetails angeben",
+    "modelPlaceholder": "Bitte suchen",
+    "modelLabel": "Modell",
+    "modelMissing": "Ihr Modell ist nicht aufgeführt?",
+    "modelMissingCta": "Manuell eingeben",
+    "noResults": "Keine Modelle gefunden."
+  },
+  "step2": {
+    "title": "Wählen Sie ihren Service",
+    "heroBadge": "WIR EMPFEHLEN",
+    "heroTitle": "Personalisierter Service-Check",
+    "heroSubtitle": "Wir analysieren ihre Fahrzeugdaten und empfehlen den passenden Service.",
+    "finLabel": "Fahrgestellnummer",
+    "finPlaceholder": "z.B. VW2ZZZ6KX",
+    "finHelp": "Die Fahrzeugidentifikationsnummer (FIN) ist eine 17-stellige, weltweit eindeutige Nummer.",
+    "finHelpTitle": "Wo finde ich die FIN?",
+    "finHelpBody": "Die Fahrzeugidentifikationsnummer (FIN, VIN) finden Sie in der Zulassungsbescheinigung oder auf dem Typenschild — meist in der Türöffnung oder unter der Windschutzscheibe.",
+    "scanCta": "VIN hochladen oder scannen",
+    "mileageLabel": "Aktueller Kilometerstand",
+    "recommendCta": "Empfehlung erhalten",
+    "recommending": "Wir analysieren …",
+    "advisorAltCta": "Preisauskunft durch Serviceberater",
+    "moreServices": "Weitere Serviceoptionen anzeigen",
+    "lessServices": "Weniger Serviceoptionen",
+    "stickyTotal": "Vorläufige Summe",
+    "recommendation": {
+      "title": "Ihr {{vehicle}}",
+      "subtitle": "Wir empfehlen folgende Services basierend auf ihrer FIN und Kilometerleistung.",
+      "total": "Vorläufige Summe",
+      "hint": "Ihr Serviceberater wird Sie vor ihrem Termin über die Kosten informieren.",
+      "back": "Zurück",
+      "apply": "Service auswählen"
+    },
+    "tireStorageQuestion": "Möchten Sie die Räder einlagern?",
+    "tireStoragePrice": "+ 45 € je Saison"
+  },
+  "step3": {
+    "title": "Abschluss",
+    "subtitle": "Überprüfen Sie bitte Ihre Angaben und schließen Sie ihre Buchung ab.",
+    "centerSection": "Ausgewählter Servicebetrieb",
+    "contactlessToggle": "Kontaktlose Serviceannahme",
+    "centerNote": "Nachricht von {{name}}:",
+    "advisorSection": "Serviceberater",
+    "advisorRandom": "Zufällige Auswahl",
+    "advisorMessageLabel": "Mitteilung an ihren Serviceberater",
+    "advisorMessagePlaceholder": "Optional",
+    "appointmentSection": "Terminauswahl",
+    "appointmentDate": "Datum",
+    "appointmentTime": "Uhrzeit",
+    "nextSlots": "Demnächst verfügbare Termine",
+    "replacementCar": "Ersatzmobilität notwendig",
+    "dataSection": "Ihre Daten",
+    "salutation": "Anrede",
+    "email": "E-Mail",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "phone": "Telefonnummer",
+    "address": "Adresse",
+    "zip": "PLZ",
+    "city": "Stadt",
+    "country": "Land",
+    "terms": "Ich bin mit der Verwendung meiner Daten einverstanden und akzeptiere die <agb>AGB</agb> sowie die <privacy>Datenschutzerklärung</privacy>.",
+    "summarySection": "Buchungsübersicht",
+    "topcardToggle": "Ich besitze eine Topcard.",
+    "serviceSection": "Service",
+    "tireStorageTitle": "Reifeneinlagerung",
+    "tireStorageSubtitle": "+ 45 € je Saison",
+    "detailsSection": "Details",
+    "details": {
+      "plate": "Kennzeichen",
+      "mileage": "Kilometerstand",
+      "replacementCar": "Ersatzmobilität",
+      "date": "Datum",
+      "time": "Uhrzeit",
+      "dropoff": "Anlieferung",
+      "pickup": "Abholung"
+    },
+    "totalLabel": "Gesamt (inkl. MwSt.)",
+    "salutations": {
+      "mr": "Herr",
+      "ms": "Frau",
+      "neutral": "Divers"
+    }
+  },
+  "salutationOptions": {
+    "mr": "Herr",
+    "ms": "Frau",
+    "neutral": "Divers"
+  },
+  "validation": {
+    "required": "Pflichtfeld",
+    "email": "Bitte eine gültige E-Mail-Adresse eingeben.",
+    "phone": "Bitte eine gültige Telefonnummer eingeben.",
+    "zip": "PLZ muss 4-stellig sein.",
+    "terms": "Bitte AGB akzeptieren."
+  },
+  "success": {
+    "title": "Vielen Dank!",
+    "subtitle": "Ihre Buchung wurde übermittelt. Sie erhalten in Kürze eine Bestätigung per E-Mail.",
+    "bookingId": "Buchungsnummer: {{id}}",
+    "close": "Schließen"
+  }
+}
