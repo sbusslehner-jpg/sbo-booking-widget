@@ -23,14 +23,11 @@ declare global {
 }
 
 function bindOverlayTriggers() {
-  const ids = ['open-widget-hero', 'open-widget-info']
-  ids.forEach((id) => {
-    const btn = document.getElementById(id)
-    if (!btn) return
-    btn.addEventListener('click', () => {
-      // openWidget helper aus index.html reicht Sprache + Consent durch.
-      window.openWidget?.({ dealerId: 'senker' })
-    })
+  const btn = document.getElementById('open-widget-info')
+  if (!btn) return
+  btn.addEventListener('click', () => {
+    // openWidget-Helper aus index.html reicht Sprache + Consent durch.
+    window.openWidget?.({ dealerId: 'senker' })
   })
 }
 
