@@ -141,6 +141,36 @@
       }
       .lang-toggle button.active { background: #ffffff; color: #0f172a; box-shadow: 0 1px 2px rgba(15,23,42,0.08); }
 
+      /* Produkt-Navigation: Booking-Widget + E-Mail-Templates */
+      .product-nav {
+        position: sticky; top: 0; z-index: 49;
+        background: #0f172a; color: #e5e7eb;
+        display: flex; align-items: center; gap: 6px;
+        padding: 0 32px; height: 50px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .product-nav__brand {
+        font-size: 13px; font-weight: 700; letter-spacing: 0.01em; color: #ffffff;
+        margin-right: 18px; display: inline-flex; align-items: center; gap: 8px;
+      }
+      .product-nav__brand .glyph { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg,#3b82f6,#22d3ee); display: inline-grid; place-items: center; font-size: 12px; color: #06283d; }
+      .product-nav__item {
+        font-size: 13px; font-weight: 600; color: #c5d2ea; text-decoration: none;
+        padding: 7px 14px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px;
+        transition: background 120ms ease, color 120ms ease;
+      }
+      .product-nav__item:hover { background: rgba(255,255,255,0.08); color: #ffffff; }
+      .product-nav__item.is-active { background: rgba(255,255,255,0.14); color: #ffffff; }
+      .product-nav__item .badge-new { font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #06283d; background: #22d3ee; padding: 2px 6px; border-radius: 999px; }
+      .product-nav__spacer { flex: 1; }
+      .product-nav__hint { font-size: 11.5px; color: #7e8db0; }
+      @media (max-width: 640px) {
+        .product-nav { padding: 0 16px; gap: 2px; }
+        .product-nav__brand { margin-right: 8px; }
+        .product-nav__hint { display: none; }
+        .product-nav__item { padding: 7px 10px; }
+      }
+
       /* Architekten-Guide */
       .arch-hero {
         background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
@@ -269,6 +299,15 @@
       </div>
     </div>
 
+    <!-- ============================== PRODUKT-NAVIGATION ============================== -->
+    <nav class="product-nav" aria-label="Produktbereiche">
+      <span class="product-nav__brand"><span class="glyph">✦</span> Service Booking Online</span>
+      <a href="#senker-demo" class="product-nav__item is-active">Booking-Widget</a>
+      <a href="email-templates.html" class="product-nav__item">E-Mail-Templates <span class="badge-new">Neu</span></a>
+      <span class="product-nav__spacer"></span>
+      <span class="product-nav__hint">Konfiguration · brand-spezifisch</span>
+    </nav>
+
     <!-- ============================== ARCHITEKTEN-HERO ============================== -->
     <section class="arch-hero">
       <div class="arch-hero-inner">
@@ -295,6 +334,7 @@
           <a href="#checklist">Pilot-Checkliste</a>
           <a href="#senker-demo">Live-Demo</a>
           <a href="#overlay-docs">Integration-Snippets</a>
+          <a href="email-templates.html">E-Mail-Templates ↗</a>
         </div>
         <a href="#senker-demo" class="skip-link">↓ Direkt zur Live-Demo</a>
       </div>

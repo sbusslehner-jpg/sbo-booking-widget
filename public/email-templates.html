@@ -1,0 +1,1316 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>E-Mail-Templates · Service Booking Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     CLARITY DESIGN — E-Mail-Template-Assistent
+     Prinzip: einfach · verständlich · sicher · nicht-technisch.
+     Die App-Oberfläche ist bewusst ruhig und neutral. Nur die
+     E-Mail-VORSCHAU trägt das jeweilige Marken-Design (VW / Audi).
+     ============================================================ */
+  :root {
+    --c-bg: #eef1f6;
+    --c-surface: #ffffff;
+    --c-surface-2: #f7f9fc;
+    --c-border: #e2e8f0;
+    --c-border-strong: #cbd5e1;
+    --c-text: #0f172a;
+    --c-text-muted: #64748b;
+    --c-text-soft: #94a3b8;
+    --c-primary: #2563eb;
+    --c-primary-d: #1d4ed8;
+    --c-primary-soft: #eff4ff;
+    --c-success: #15a06a;
+    --c-success-soft: #e7f6ef;
+    --c-warn: #d97706;
+    --c-warn-soft: #fdf3e3;
+    --c-danger: #dc2626;
+    --c-danger-soft: #fdecec;
+    --c-lock: #8b95a6;
+    --c-lock-soft: #f1f3f7;
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 16px;
+    --shadow-sm: 0 1px 2px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.04);
+    --shadow-md: 0 6px 20px -6px rgba(15,23,42,.16);
+    --shadow-lg: 0 24px 60px -20px rgba(15,23,42,.35);
+    --font: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  * , *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--c-bg);
+    color: var(--c-text);
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  a { color: var(--c-primary); }
+
+  /* ---------- App-Bar ---------- */
+  .appbar {
+    position: sticky; top: 0; z-index: 40;
+    background: #0f1b33;
+    color: #fff;
+    display: flex; align-items: center; gap: 18px;
+    padding: 0 20px; height: 56px;
+  }
+  .appbar__logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; letter-spacing: .2px; }
+  .appbar__logo .dot { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg,#3b82f6,#22d3ee); display: grid; place-items: center; font-size: 13px; }
+  .appbar__crumbs { color: #9fb0cc; font-size: 12.5px; display: flex; gap: 8px; align-items: center; }
+  .appbar__crumbs b { color: #e8eefb; font-weight: 600; }
+  .appbar__spacer { flex: 1; }
+  .appbar__role { display: flex; align-items: center; gap: 0; background: rgba(255,255,255,.08); border-radius: 999px; padding: 3px; }
+  .appbar__role button {
+    border: 0; background: transparent; color: #c5d2ea; font-size: 12px; font-weight: 600;
+    padding: 6px 13px; border-radius: 999px; display: inline-flex; gap: 6px; align-items: center;
+  }
+  .appbar__role button.active { background: #fff; color: #0f1b33; box-shadow: var(--shadow-sm); }
+  .appbar__role button .ic { font-size: 13px; }
+  .who { display:flex; align-items:center; gap:8px; }
+  .who .avatar { width:30px;height:30px;border-radius:50%;background:#22304d;display:grid;place-items:center;font-size:12px;font-weight:700;color:#bcd0f0; }
+
+  /* ---------- Context-Bar ---------- */
+  .ctxbar {
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+    padding: 10px 20px;
+    display: flex; gap: 22px; align-items: center; flex-wrap: wrap;
+  }
+  .ctx-group { display: flex; flex-direction: column; gap: 4px; }
+  .ctx-group > label { font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--c-text-soft); }
+  .seg { display: inline-flex; background: var(--c-surface-2); border: 1px solid var(--c-border); border-radius: var(--r-sm); padding: 2px; }
+  .seg button { border: 0; background: transparent; color: var(--c-text-muted); font-size: 12.5px; font-weight: 600; padding: 5px 11px; border-radius: 6px; }
+  .seg button.active { background: var(--c-surface); color: var(--c-text); box-shadow: var(--shadow-sm); }
+  .pill-instance { display:inline-flex; align-items:center; gap:8px; background: var(--c-surface-2); border:1px solid var(--c-border); border-radius: var(--r-sm); padding: 7px 12px; font-weight:600; font-size:13px; }
+  .pill-instance .ph { color: var(--c-text-soft); font-weight:500; }
+  .ctxbar__spacer { flex:1; }
+  .saved-state { display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color: var(--c-text-muted); }
+  .saved-state .blip { width:8px;height:8px;border-radius:50%; background: var(--c-text-soft); }
+  .saved-state.dirty .blip { background: var(--c-warn); }
+  .saved-state.saved .blip { background: var(--c-success); }
+
+  /* ---------- Layout ---------- */
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 22px 20px 80px; }
+  .page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom: 18px; flex-wrap: wrap; }
+  .page-head h1 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
+  .page-head p { margin: 4px 0 0; color: var(--c-text-muted); font-size: 13.5px; max-width: 640px; }
+  .help-link { font-size:13px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(420px, 560px); gap: 22px; align-items: start; }
+  @media (max-width: 1080px) { .grid { grid-template-columns: 1fr; } }
+
+  .col-editor { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .col-preview { position: sticky; top: 78px; }
+  @media (max-width: 1080px) { .col-preview { position: static; } }
+
+  .card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); }
+  .card__head { padding: 14px 18px; border-bottom: 1px solid var(--c-border); display: flex; align-items: center; gap: 10px; }
+  .card__head h2 { margin: 0; font-size: 14.5px; font-weight: 700; }
+  .card__head .sub { color: var(--c-text-muted); font-size: 12.5px; font-weight: 500; }
+  .card__body { padding: 16px 18px; }
+
+  /* ---------- Template-Auswahl ---------- */
+  .tpl-picker { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .tpl {
+    text-align: left; border: 1.5px solid var(--c-border); background: var(--c-surface); border-radius: var(--r-md);
+    padding: 14px 14px; display: flex; gap: 12px; align-items: flex-start; transition: border-color .12s, box-shadow .12s, background .12s;
+  }
+  .tpl:hover { border-color: var(--c-border-strong); }
+  .tpl.active { border-color: var(--c-primary); background: var(--c-primary-soft); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+  .tpl.soon { opacity: .6; cursor: not-allowed; }
+  .tpl__ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 19px; flex: 0 0 auto; background: var(--c-surface-2); }
+  .tpl.active .tpl__ic { background: #fff; }
+  .tpl__t { font-weight: 700; font-size: 13.5px; }
+  .tpl__d { color: var(--c-text-muted); font-size: 12px; margin-top: 2px; }
+  .tpl__tag { display:inline-block; margin-top:8px; font-size: 10.5px; font-weight: 700; letter-spacing:.04em; text-transform: uppercase; color: var(--c-text-soft); }
+  .tpl.active .tpl__tag { color: var(--c-primary-d); }
+
+  /* ---------- Betreff ---------- */
+  .field-label { font-size: 12px; font-weight: 700; color: var(--c-text-muted); margin-bottom: 7px; display:flex; align-items:center; gap:8px; }
+  .req-dot { color: var(--c-danger); }
+  .subject-input {
+    width: 100%; border: 1.5px solid var(--c-border); border-radius: var(--r-sm); padding: 10px 12px;
+    font: inherit; font-size: 14px; color: var(--c-text); background: var(--c-surface-2);
+  }
+  .subject-input:focus { outline: none; border-color: var(--c-primary); background:#fff; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+
+  /* ---------- Bausteine ---------- */
+  .blocks { display: flex; flex-direction: column; gap: 12px; }
+  .block { border: 1.5px solid var(--c-border); border-radius: var(--r-md); overflow: hidden; background: var(--c-surface); }
+  .block__bar { display: flex; align-items: center; gap: 10px; padding: 10px 13px; background: var(--c-surface-2); border-bottom: 1px solid var(--c-border); }
+  .block__ic { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-size: 14px; background: #fff; border: 1px solid var(--c-border); }
+  .block__title { font-weight: 700; font-size: 13px; }
+  .block__meta { font-size: 11.5px; color: var(--c-text-muted); }
+  .block__bar .spacer { flex: 1; }
+  .tag-lock { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; color: var(--c-lock); background: var(--c-lock-soft); border:1px solid var(--c-border); padding:3px 9px; border-radius:999px; }
+  .tag-req { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; color: var(--c-warn); background: var(--c-warn-soft); padding:3px 9px; border-radius:999px; }
+  .tag-edit { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; color: var(--c-success); background: var(--c-success-soft); padding:3px 9px; border-radius:999px; }
+  .block.locked { background: var(--c-lock-soft); }
+  .block.locked .block__body { color: var(--c-text-muted); }
+  .block__body { padding: 12px 13px; }
+  .block textarea {
+    width: 100%; border: 1px solid var(--c-border); border-radius: var(--r-sm); padding: 10px 11px;
+    font: inherit; font-size: 13.5px; line-height: 1.55; color: var(--c-text); resize: vertical; min-height: 64px; background: #fff;
+  }
+  .block textarea:focus { outline: none; border-color: var(--c-primary); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+  .locked-preview { font-size: 13px; line-height: 1.55; white-space: pre-wrap; color: var(--c-text-muted); }
+  .locked-hint { margin-top:8px; font-size:11.5px; color: var(--c-text-soft); display:flex; gap:6px; align-items:flex-start; }
+
+  /* Buchungsdaten-Block (geschützte Struktur, schaltbare Zeilen) */
+  .data-rows { display: flex; flex-direction: column; gap: 6px; }
+  .data-row { display:flex; align-items:center; gap:10px; padding: 7px 9px; border:1px solid var(--c-border); border-radius: var(--r-sm); background:#fff; }
+  .data-row .k { font-size: 12.5px; font-weight: 600; color: var(--c-text); width: 150px; flex:0 0 auto; }
+  .data-row .v { font-size: 12.5px; color: var(--c-text-muted); flex:1; min-width:0; }
+  .data-row .v code { background: var(--c-lock-soft); padding: 1px 6px; border-radius: 5px; font-size: 11.5px; color: #475569; }
+  .data-row .toggle { margin-left:auto; }
+  .data-row.off { opacity: .5; }
+  .switch { position: relative; width: 36px; height: 20px; display:inline-block; }
+  .switch input { opacity:0; width:0; height:0; position:absolute; }
+  .switch .track { position:absolute; inset:0; background: var(--c-border-strong); border-radius:999px; transition: background .15s; }
+  .switch .track::before { content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; background:#fff; border-radius:50%; transition: transform .15s; box-shadow: var(--shadow-sm); }
+  .switch input:checked + .track { background: var(--c-success); }
+  .switch input:checked + .track::before { transform: translateX(16px); }
+  .switch input:disabled + .track { opacity: .5; }
+
+  /* AI-Leiste je Baustein */
+  .ai-bar { display:flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; align-items:center; }
+  .ai-bar .ai-label { font-size: 11px; font-weight: 700; color: #7c3aed; display:inline-flex; align-items:center; gap:5px; }
+  .ai-btn {
+    border: 1px solid #e6dcfb; background: #f6f1ff; color: #6d28d9; font-size: 11.5px; font-weight: 600;
+    padding: 5px 10px; border-radius: 999px; display:inline-flex; align-items:center; gap:5px;
+  }
+  .ai-btn:hover { background: #efe6ff; }
+  .ai-btn.has-menu { padding-right: 8px; }
+
+  /* Platzhalter-Palette */
+  .chips-card .card__body { padding-top: 6px; }
+  .chips-help { font-size: 12.5px; color: var(--c-text-muted); margin: 0 0 12px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    border: 1px solid #d6e0f5; background: #f1f6ff; color: #1e40af; font-size: 12px; font-weight: 600;
+    padding: 6px 11px; border-radius: 999px; display:inline-flex; align-items:center; gap:6px; position: relative;
+  }
+  .chip:hover { background: #e3edff; border-color: #b9ccef; }
+  .chip .ins { font-size: 13px; opacity:.7; }
+  .chip[data-req="1"]::after { content:""; width:6px; height:6px; border-radius:50%; background: var(--c-danger); }
+  .chip .tip {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: #0f1b33; color:#fff; font-size: 11.5px; font-weight:500; white-space: nowrap;
+    padding: 6px 9px; border-radius: 7px; opacity: 0; pointer-events:none; transition: opacity .12s; z-index: 5;
+    box-shadow: var(--shadow-md);
+  }
+  .chip .tip code { color:#7fd1ff; }
+  .chip:hover .tip { opacity: 1; }
+
+  /* ---------- Validierung ---------- */
+  .valid { display:flex; flex-direction: column; gap: 9px; }
+  .valid-row { display:flex; gap:10px; align-items:flex-start; font-size: 13px; padding: 9px 11px; border-radius: var(--r-sm); border:1px solid var(--c-border); }
+  .valid-row .vic { font-size: 15px; line-height: 1.2; flex:0 0 auto; }
+  .valid-row.ok { background: var(--c-success-soft); border-color: #bfe9d4; color: #0f6e49; }
+  .valid-row.err { background: var(--c-danger-soft); border-color: #f4c7c7; color: #9b1c1c; }
+  .valid-row.warn { background: var(--c-warn-soft); border-color: #f3dcae; color: #9a5b09; }
+  .valid-row b { font-weight: 700; }
+  .valid-row code { background: rgba(255,255,255,.6); padding: 0 5px; border-radius: 4px; }
+
+  /* ---------- Aktionsleiste ---------- */
+  .actionbar {
+    position: sticky; bottom: 0; z-index: 30; margin-top: 4px;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+    border: 1px solid var(--c-border); border-radius: var(--r-lg); box-shadow: var(--shadow-md);
+    padding: 12px 14px; display:flex; align-items:center; gap: 10px; flex-wrap: wrap;
+  }
+  .btn { border: 1px solid var(--c-border); background: #fff; color: var(--c-text); font-size: 13px; font-weight: 600; padding: 9px 14px; border-radius: var(--r-sm); display:inline-flex; align-items:center; gap:7px; }
+  .btn:hover { border-color: var(--c-border-strong); background: var(--c-surface-2); }
+  .btn.primary { background: var(--c-primary); border-color: var(--c-primary); color:#fff; }
+  .btn.primary:hover { background: var(--c-primary-d); }
+  .btn.ghost { border-color: transparent; background: transparent; color: var(--c-text-muted); }
+  .btn.ghost:hover { background: var(--c-surface-2); color: var(--c-text); }
+  .btn.danger { color: var(--c-danger); }
+  .btn.danger:hover { background: var(--c-danger-soft); border-color: #f4c7c7; }
+  .btn[disabled] { opacity: .45; cursor: not-allowed; }
+  .actionbar .spacer { flex: 1; }
+  .role-note { font-size: 12px; color: var(--c-text-muted); display:flex; align-items:center; gap:6px; }
+
+  /* ---------- E-Mail-Vorschau ---------- */
+  .preview-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); overflow:hidden; }
+  .preview-top { padding: 12px 14px; border-bottom: 1px solid var(--c-border); display:flex; align-items:center; gap:10px; flex-wrap: wrap; }
+  .preview-top h2 { margin:0; font-size: 13px; font-weight: 700; flex:0 0 auto; }
+  .preview-top .spacer { flex:1; }
+  .brand-seg button { display:inline-flex; align-items:center; gap:6px; }
+  .device-seg button { width: 34px; justify-content:center; }
+  .preview-scroll { background: #e9edf3; padding: 18px; max-height: calc(100vh - 230px); overflow:auto; }
+  @media (max-width: 1080px){ .preview-scroll { max-height: none; } }
+
+  .mailmeta { background:#fff; border:1px solid var(--c-border); border-radius: 10px 10px 0 0; padding: 11px 14px; font-size: 12.5px; color: var(--c-text-muted); display:flex; flex-direction:column; gap:3px; }
+  .mailmeta .subj { color: var(--c-text); font-weight: 700; font-size: 13.5px; }
+  .mailmeta .row span { color: var(--c-text); font-weight:600; }
+
+  .email-frame { margin: 0 auto; background:#fff; transition: max-width .2s; }
+  .email-frame.desktop { max-width: 600px; }
+  .email-frame.mobile { max-width: 360px; }
+
+  /* dynamische Platzhalter im Preview hervorheben */
+  .ph-val { border-bottom: 1px dashed currentColor; opacity:.95; }
+
+  /* ===== Marken-Skin: VOLKSWAGEN ===== */
+  .email.brand-vw { font-family: 'Inter', Arial, sans-serif; color:#1a1a1a; }
+  .email.brand-vw .e-header { background:#001e50; color:#fff; padding: 22px 28px; display:flex; align-items:center; gap:12px; }
+  .email.brand-vw .e-noreply { background:#e3f2fd; color:#024; font-size:12px; padding: 9px 28px; text-align:center; }
+  .email.brand-vw .e-body { padding: 26px 28px; font-size: 14px; line-height: 1.62; }
+  .email.brand-vw h1.e-h { font-size: 19px; font-weight: 700; color:#001e50; margin: 0 0 4px; }
+  .email.brand-vw .e-data { border:1px solid #dbe3ef; border-radius: 10px; overflow:hidden; margin: 18px 0; }
+  .email.brand-vw .e-data .dr { display:flex; padding: 10px 14px; border-bottom:1px solid #eef2f8; font-size:13px; }
+  .email.brand-vw .e-data .dr:last-child { border-bottom:0; }
+  .email.brand-vw .e-data .dr .dk { width: 150px; color:#5b6b86; font-weight:600; flex:0 0 auto; }
+  .email.brand-vw .e-data .dr .dv { color:#1a1a1a; font-weight:600; }
+  .email.brand-vw .e-btn { display:inline-block; background:#001e50; color:#fff !important; text-decoration:none; font-weight:700; font-size:14px; padding: 13px 24px; border-radius: 6px; }
+  .email.brand-vw .e-accent { color:#007bc0; }
+  .email.brand-vw .e-sign { margin-top: 22px; padding-top: 18px; border-top:1px solid #eef2f8; font-size: 13.5px; line-height:1.55; }
+  .email.brand-vw .e-footer { background:#f3f6fb; color:#6b7891; font-size: 11.5px; padding: 18px 28px; line-height:1.6; }
+  .email.brand-vw .e-pdf { display:flex; align-items:center; gap:10px; background:#f3f6fb; border:1px solid #dbe3ef; border-radius:8px; padding:11px 14px; font-size:13px; margin: 16px 0; }
+
+  /* ===== Marken-Skin: AUDI ===== */
+  .email.brand-audi { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; color:#000; }
+  .email.brand-audi .e-header { background:#fff; padding: 24px 30px 16px; border-bottom: 3px solid #000; display:flex; align-items:center; justify-content:space-between; }
+  .email.brand-audi .e-accentbar { height: 4px; background:#bb0a30; }
+  .email.brand-audi .e-noreply { background:#000; color:#fff; font-size:11px; letter-spacing:.04em; padding: 8px 30px; text-align:center; text-transform: uppercase; }
+  .email.brand-audi .e-body { padding: 30px; font-size: 14px; line-height: 1.66; color:#1a1a1a; }
+  .email.brand-audi h1.e-h { font-size: 22px; font-weight: 800; letter-spacing:-.01em; color:#000; margin: 0 0 6px; }
+  .email.brand-audi .e-kicker { font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#bb0a30; margin-bottom:14px; }
+  .email.brand-audi .e-data { border-top:2px solid #000; margin: 20px 0; }
+  .email.brand-audi .e-data .dr { display:flex; padding: 11px 2px; border-bottom:1px solid #e2e2e2; font-size:13px; }
+  .email.brand-audi .e-data .dr .dk { width: 150px; color:#000; font-weight:700; text-transform:uppercase; font-size:11px; letter-spacing:.06em; flex:0 0 auto; padding-top:2px; }
+  .email.brand-audi .e-data .dr .dv { color:#1a1a1a; font-weight:500; }
+  .email.brand-audi .e-btn { display:inline-block; background:#000; color:#fff !important; text-decoration:none; font-weight:700; font-size:13px; letter-spacing:.03em; text-transform:uppercase; padding: 14px 28px; }
+  .email.brand-audi .e-btn:hover { background:#bb0a30; }
+  .email.brand-audi .e-accent { color:#bb0a30; }
+  .email.brand-audi .e-sign { margin-top: 26px; padding-top: 18px; border-top:2px solid #000; font-size: 13px; line-height:1.55; }
+  .email.brand-audi .e-footer { background:#000; color:#9a9a9a; font-size: 11px; padding: 22px 30px; line-height:1.7; }
+  .email.brand-audi .e-footer a { color:#fff; }
+  .email.brand-audi .e-pdf { display:flex; align-items:center; gap:10px; background:#f4f4f4; border-left:3px solid #bb0a30; padding:12px 14px; font-size:13px; margin: 18px 0; }
+  .rings { display:flex; align-items:center; }
+
+  /* ---------- Toast ---------- */
+  .toasts { position: fixed; right: 18px; bottom: 18px; z-index: 200; display:flex; flex-direction:column; gap:10px; }
+  .toast { background:#0f1b33; color:#fff; border-radius: var(--r-md); box-shadow: var(--shadow-lg); padding: 12px 15px; font-size: 13px; display:flex; gap:11px; align-items:flex-start; max-width: 360px; animation: slideup .22s ease; }
+  .toast .tic { font-size: 16px; }
+  .toast.ok { border-left: 3px solid var(--c-success); }
+  .toast.warn { border-left: 3px solid var(--c-warn); }
+  .toast.info { border-left: 3px solid var(--c-primary); }
+  .toast b { display:block; margin-bottom:2px; }
+  .toast small { color:#aebbd4; }
+  @keyframes slideup { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
+
+  /* ---------- Modal ---------- */
+  .scrim { position: fixed; inset:0; background: rgba(15,27,51,.45); z-index: 100; display:grid; place-items:center; padding: 20px; }
+  .modal { background:#fff; border-radius: var(--r-lg); box-shadow: var(--shadow-lg); width: 100%; max-width: 460px; overflow:hidden; }
+  .modal.wide { max-width: 560px; }
+  .modal__head { padding: 18px 20px 0; }
+  .modal__head h3 { margin:0; font-size: 17px; font-weight: 800; }
+  .modal__head p { margin: 6px 0 0; color: var(--c-text-muted); font-size: 13px; }
+  .modal__body { padding: 16px 20px; }
+  .modal__foot { padding: 14px 20px; border-top:1px solid var(--c-border); display:flex; gap:10px; justify-content:flex-end; background: var(--c-surface-2); }
+  .input { width:100%; border:1.5px solid var(--c-border); border-radius: var(--r-sm); padding: 10px 12px; font: inherit; font-size:14px; }
+  .input:focus { outline:none; border-color: var(--c-primary); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+  .otp { display:flex; gap:8px; justify-content:center; }
+  .otp input { width: 46px; height: 54px; text-align:center; font-size: 22px; font-weight: 700; border:1.5px solid var(--c-border); border-radius: var(--r-sm); }
+  .otp input:focus { outline:none; border-color: var(--c-primary); box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+  .warn-box { display:flex; gap:11px; background: var(--c-warn-soft); border:1px solid #f3dcae; border-radius: var(--r-sm); padding: 11px 13px; font-size: 13px; color:#8a5208; margin-bottom: 14px; }
+
+  /* Versions-Drawer */
+  .ver-item { display:flex; gap:12px; padding: 12px 13px; border:1px solid var(--c-border); border-radius: var(--r-md); margin-bottom:10px; align-items:flex-start; }
+  .ver-item.current { border-color: var(--c-primary); background: var(--c-primary-soft); }
+  .ver-dot { width:9px; height:9px; border-radius:50%; background: var(--c-text-soft); margin-top:5px; flex:0 0 auto; }
+  .ver-item.current .ver-dot { background: var(--c-primary); }
+  .ver-main { flex:1; min-width:0; }
+  .ver-main .vt { font-weight:700; font-size:13px; }
+  .ver-main .vm { font-size:12px; color: var(--c-text-muted); margin-top:2px; }
+  .ver-badge { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color: var(--c-success); background: var(--c-success-soft); padding:2px 8px; border-radius:999px; }
+
+  .diff-add { background:#e7f6ef; color:#0f6e49; border-radius:3px; padding:0 2px; }
+  .ai-result { border:1px solid #e6dcfb; background:#faf7ff; border-radius: var(--r-sm); padding: 12px; font-size:13px; line-height:1.55; }
+  .ai-result h4 { margin:0 0 8px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#7c3aed; display:flex; align-items:center; gap:6px; }
+
+  .hidden { display:none !important; }
+  .menu { position:absolute; z-index: 20; background:#fff; border:1px solid var(--c-border); border-radius: var(--r-sm); box-shadow: var(--shadow-md); padding:5px; min-width: 170px; }
+  .menu button { display:flex; width:100%; text-align:left; border:0; background:transparent; padding:8px 10px; border-radius:6px; font-size:13px; gap:8px; align-items:center; }
+  .menu button:hover { background: var(--c-surface-2); }
+</style>
+</head>
+<body>
+
+<!-- ============================ APP-BAR ============================ -->
+<header class="appbar">
+  <div class="appbar__logo"><span class="dot">✦</span> Service Booking Online</div>
+  <div class="appbar__crumbs">Konfiguration <span>›</span> <b>E-Mail-Templates</b></div>
+  <div class="appbar__spacer"></div>
+  <div class="appbar__role" id="roleSwitch" role="tablist" aria-label="Rolle">
+    <button data-role="dealer" class="active"><span class="ic">🧰</span> Händler</button>
+    <button data-role="keyuser"><span class="ic">🔑</span> Key-User</button>
+    <button data-role="admin"><span class="ic">🛡️</span> Admin</button>
+  </div>
+  <div class="who"><span class="avatar" id="who">SB</span></div>
+</header>
+
+<!-- ============================ CONTEXT-BAR ============================ -->
+<div class="ctxbar">
+  <div class="ctx-group">
+    <label>Instanz</label>
+    <div class="pill-instance">🏢 Autohaus Senker <span class="ph">· DE-Salzburg</span></div>
+  </div>
+  <div class="ctx-group">
+    <label>Marken-Design</label>
+    <div class="seg" id="brandCtx">
+      <button data-brand="vw" class="active">VW</button>
+      <button data-brand="audi">Audi</button>
+      <button data-brand="neutral">Neutral</button>
+    </div>
+  </div>
+  <div class="ctx-group">
+    <label>Sprache</label>
+    <div class="seg" id="langCtx">
+      <button data-lang="de" class="active">Deutsch</button>
+      <button data-lang="en">English</button>
+    </div>
+  </div>
+  <div class="ctxbar__spacer"></div>
+  <div class="saved-state" id="savedState"><span class="blip"></span><span class="txt">Veröffentlicht · aktuelle Version</span></div>
+</div>
+
+<main class="wrap">
+  <div class="page-head">
+    <div>
+      <h1>E-Mail-Templates</h1>
+      <p>Passen Sie die Texte Ihrer Kunden-E-Mails an — geführt, sicher und ohne HTML. Geschützte Inhalte bleiben automatisch erhalten.</p>
+    </div>
+    <a class="help-link" href="#" id="howto">ⓘ So funktioniert's</a>
+  </div>
+
+  <div class="grid">
+    <!-- ============ EDITOR-SPALTE ============ -->
+    <div class="col-editor">
+
+      <!-- Template-Auswahl -->
+      <section class="card">
+        <div class="card__head"><h2>1 · Welche E-Mail möchten Sie bearbeiten?</h2></div>
+        <div class="card__body">
+          <div class="tpl-picker" id="tplPicker">
+            <button class="tpl active" data-tpl="confirmation">
+              <span class="tpl__ic">✅</span>
+              <span><span class="tpl__t">Terminbestätigung</span><span class="tpl__d">Geht direkt nach der Buchung an den Kunden.</span><span class="tpl__tag">Aktiv · zuletzt 12.06.2026</span></span>
+            </button>
+            <button class="tpl" data-tpl="cancellation">
+              <span class="tpl__ic">🚫</span>
+              <span><span class="tpl__t">Terminstornierung</span><span class="tpl__d">Bestätigt dem Kunden die Absage eines Termins.</span><span class="tpl__tag">Aktiv · zuletzt 03.05.2026</span></span>
+            </button>
+            <button class="tpl soon" disabled>
+              <span class="tpl__ic">⏰</span>
+              <span><span class="tpl__t">Terminerinnerung</span><span class="tpl__d">Erinnerung 24 h vor dem Termin.</span><span class="tpl__tag">Bald verfügbar</span></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Betreff -->
+      <section class="card">
+        <div class="card__head"><h2>2 · Betreffzeile</h2><span class="sub">— erscheint im Postfach des Kunden</span></div>
+        <div class="card__body">
+          <div class="field-label">Betreff <span class="req-dot" title="Pflichtfeld">●</span></div>
+          <input class="subject-input" id="subject" data-field="subject" />
+        </div>
+      </section>
+
+      <!-- Bausteine -->
+      <section class="card">
+        <div class="card__head"><h2>3 · Bausteine der E-Mail</h2><span class="sub">— bearbeitbar oder 🔒 geschützt</span></div>
+        <div class="card__body">
+          <div class="blocks" id="blocks"></div>
+        </div>
+      </section>
+
+      <!-- Platzhalter -->
+      <section class="card chips-card">
+        <div class="card__head"><h2>Platzhalter einfügen</h2><span class="sub">— werden beim Versand automatisch befüllt</span></div>
+        <div class="card__body">
+          <p class="chips-help">Klicken Sie in einen Textbaustein und dann auf einen Platzhalter, um ihn an der Cursor-Position einzufügen. <b>●</b> = Pflicht-Platzhalter für dieses Template.</p>
+          <div class="chips" id="chips"></div>
+        </div>
+      </section>
+
+      <!-- Validierung -->
+      <section class="card">
+        <div class="card__head"><h2>4 · Prüfung</h2><span class="sub">— läuft automatisch vor dem Speichern</span></div>
+        <div class="card__body"><div class="valid" id="valid"></div></div>
+      </section>
+
+      <!-- Aktionen -->
+      <div class="actionbar">
+        <button class="btn danger" id="btnReset">↺ Auf Standard zurücksetzen</button>
+        <button class="btn" id="btnVersions">🕑 Versionen</button>
+        <div class="spacer"></div>
+        <span class="role-note" id="roleNote"></span>
+        <button class="btn" id="btnTest">✉️ Testmail senden</button>
+        <button class="btn" id="btnSave">Speichern</button>
+        <button class="btn primary" id="btnPublish">Veröffentlichen</button>
+      </div>
+    </div>
+
+    <!-- ============ VORSCHAU-SPALTE ============ -->
+    <div class="col-preview">
+      <div class="preview-card">
+        <div class="preview-top">
+          <h2>Live-Vorschau</h2>
+          <div class="spacer"></div>
+          <div class="seg brand-seg" id="brandPreview">
+            <button data-brand="vw" class="active">VW</button>
+            <button data-brand="audi">Audi</button>
+          </div>
+          <div class="seg device-seg" id="devicePreview">
+            <button data-device="desktop" class="active" title="Desktop">🖥</button>
+            <button data-device="mobile" title="Mobil">📱</button>
+          </div>
+        </div>
+        <div class="preview-scroll">
+          <div class="mailmeta">
+            <div class="row">Von: <span id="mFrom">Autohaus Senker &lt;service@autohaus-senker.at&gt;</span></div>
+            <div class="row">An: <span>max.mustermann@example.com</span></div>
+            <div class="subj" id="mSubject"></div>
+          </div>
+          <div class="email-frame desktop" id="emailFrame">
+            <div class="email brand-vw" id="emailRender"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="toasts" id="toasts"></div>
+<div id="modalRoot"></div>
+
+<script>
+/* ============================================================
+   DATEN — Platzhalter, Beispiele, Marken, Templates/Bausteine
+   ============================================================ */
+const PH = {
+  BOOKINGNUMBER:        { label:'Buchungsnummer',   sample:'WS-2026-004812' },
+  SALUTATION:           { label:'Anrede',           sample:'Sehr geehrter' },
+  CUSTOMER_TITLE:       { label:'Titel',            sample:'Dr.' },
+  CUSTOMER_FIRSTNAME:   { label:'Vorname',          sample:'Max' },
+  CUSTOMER_LASTNAME:    { label:'Nachname',         sample:'Mustermann' },
+  APPOINTMENT_DATE:     { label:'Termin-Datum',     sample:'08.07.2026' },
+  APPOINTMENT_TIME:     { label:'Termin-Uhrzeit',   sample:'10:00 Uhr' },
+  DIRECT_LINK:          { label:'Link zur Buchung', sample:'https://servicebooking.digital/b/WS-2026-004812' },
+  BOOKED_SERVICES:      { label:'Gebuchte Leistungen', sample:'Inspektion, Räderwechsel, Pollenfilter' },
+  RETURN_TIME:          { label:'Abholzeit',        sample:'16:30 Uhr' },
+  RECEPTION_TYPE:       { label:'Annahmeart',       sample:'Persönliche Annahme' },
+  SERVICE_ADVISOR:      { label:'Serviceberater',   sample:'Frau Sabine Berger' },
+  REPLACEMENT_VEHICLE:  { label:'Ersatzfahrzeug',   sample:'VW Polo (reserviert)' },
+  DEALER_NAME:          { label:'Händlername',      sample:'Autohaus Senker' },
+  VEHICLE_VIN:          { label:'FIN (VIN)',        sample:'WVWZZZ6KZAW123456' },
+  VEHICLE_LICENCEPLATE: { label:'Kennzeichen',      sample:'SL-AB 123' },
+};
+
+const BRANDS = {
+  vw:   { name:'Volkswagen', from:'Autohaus Senker &lt;service@autohaus-senker.at&gt;' },
+  audi: { name:'Audi',       from:'Audi Zentrum Senker &lt;service@audi-senker.at&gt;' },
+  neutral: { name:'Neutral', from:'Autohaus Senker &lt;service@autohaus-senker.at&gt;' },
+};
+
+/* Bausteintypen:
+   text   – frei bearbeitbarer Textbaustein (Händler darf editieren)
+   data   – Buchungsdaten, geschützte Struktur mit schaltbaren Zeilen
+   link   – Button mit fixem Pflicht-Link (Label editierbar, URL geschützt)
+   system – geschützter Systemblock (No-Reply, Recht, PDF) – nur Admin    */
+function defaults() {
+  return {
+    confirmation: {
+      name: 'Terminbestätigung',
+      subject: 'Ihre Terminbestätigung ${BOOKINGNUMBER} – ${DEALER_NAME}',
+      required: ['BOOKINGNUMBER','APPOINTMENT_DATE','APPOINTMENT_TIME','DEALER_NAME','DIRECT_LINK'],
+      pdf: true,
+      blocks: [
+        { id:'noreply', type:'system', icon:'🔕', title:'No-Reply-Hinweis', meta:'Vom Hersteller vorgegeben',
+          content:'Dies ist eine automatische Informationsmitteilung. Bitte antworten Sie nicht auf diese E-Mail – auf eingehende Nachrichten kann nicht geantwortet werden.' },
+        { id:'greeting', type:'text', icon:'👋', title:'Begrüßung', meta:'Anrede des Kunden',
+          content:'Hallo ${SALUTATION} ${CUSTOMER_FIRSTNAME} ${CUSTOMER_LASTNAME},' },
+        { id:'intro', type:'text', icon:'📝', title:'Einleitung', meta:'Dank & Kontext',
+          content:'vielen Dank für Ihre Terminbuchung. Hiermit erhalten Sie eine Zusammenfassung Ihres Werkstatt-Termins. Bei Rückfragen geben Sie uns bitte einfach Ihre Buchungsnummer an.' },
+        { id:'data', type:'data', icon:'📅', title:'Buchungsdaten', meta:'Geschützte Struktur · Zeilen schaltbar',
+          rows:[
+            { key:'Buchungsnummer', token:'BOOKINGNUMBER', on:true, locked:true },
+            { key:'Datum',          token:'APPOINTMENT_DATE', on:true, locked:true },
+            { key:'Uhrzeit',        token:'APPOINTMENT_TIME', on:true, locked:true },
+            { key:'Leistungen',     token:'BOOKED_SERVICES', on:true },
+            { key:'Annahmeart',     token:'RECEPTION_TYPE', on:true },
+            { key:'Serviceberater', token:'SERVICE_ADVISOR', on:true },
+            { key:'Ersatzfahrzeug', token:'REPLACEMENT_VEHICLE', on:false },
+            { key:'Abholzeit',      token:'RETURN_TIME', on:false },
+            { key:'Fahrzeug (FIN)', token:'VEHICLE_VIN', on:false },
+            { key:'Kennzeichen',    token:'VEHICLE_LICENCEPLATE', on:true },
+          ]},
+        { id:'link', type:'link', icon:'🔗', title:'Meine-Buchung-Link', meta:'Button · URL geschützt',
+          content:'Termin ansehen oder ändern', token:'DIRECT_LINK' },
+        { id:'signature', type:'text', icon:'✍️', title:'Händler-Signatur', meta:'Ihre Grußformel',
+          content:'Wir freuen uns auf Ihren Besuch.\n\nIhr Serviceteam\n${DEALER_NAME}\nTel. +43 662 12345 · service@autohaus-senker.at' },
+        { id:'pdf', type:'system', icon:'📎', title:'PDF-Terminbestätigung', meta:'Anhang · vom Hersteller vorgegeben',
+          content:'Diese E-Mail enthält Ihre Terminbestätigung zusätzlich als PDF im Anhang.' },
+        { id:'legal', type:'system', icon:'⚖️', title:'Rechtlicher Footer', meta:'Impressum & Datenschutz · gesetzlich',
+          content:'${DEALER_NAME} · Servicestraße 1, 5020 Salzburg · FN 123456a, LG Salzburg\nDatenschutz: servicebooking.digital/datenschutz · Impressum: autohaus-senker.at/impressum' },
+      ],
+    },
+    cancellation: {
+      name: 'Terminstornierung',
+      subject: 'Ihr Termin ${BOOKINGNUMBER} wurde storniert – ${DEALER_NAME}',
+      required: ['BOOKINGNUMBER','DEALER_NAME'],
+      pdf: false,
+      blocks: [
+        { id:'noreply', type:'system', icon:'🔕', title:'No-Reply-Hinweis', meta:'Vom Hersteller vorgegeben',
+          content:'Dies ist eine automatische Informationsmitteilung. Bitte antworten Sie nicht auf diese E-Mail – auf eingehende Nachrichten kann nicht geantwortet werden.' },
+        { id:'greeting', type:'text', icon:'👋', title:'Begrüßung', meta:'Anrede des Kunden',
+          content:'Hallo ${SALUTATION} ${CUSTOMER_FIRSTNAME} ${CUSTOMER_LASTNAME},' },
+        { id:'cancel', type:'text', icon:'🚫', title:'Stornohinweis', meta:'Kernaussage der Absage',
+          content:'Ihr Werkstatt-Termin mit der Buchungsnummer ${BOOKINGNUMBER} wurde storniert. Falls Sie den Termin nicht selbst abgesagt haben, kontaktieren Sie uns bitte.' },
+        { id:'data', type:'data', icon:'📅', title:'Stornierter Termin', meta:'Geschützte Struktur · Zeilen schaltbar',
+          rows:[
+            { key:'Buchungsnummer', token:'BOOKINGNUMBER', on:true, locked:true },
+            { key:'Datum',          token:'APPOINTMENT_DATE', on:true },
+            { key:'Uhrzeit',        token:'APPOINTMENT_TIME', on:true },
+            { key:'Leistungen',     token:'BOOKED_SERVICES', on:true },
+            { key:'Kennzeichen',    token:'VEHICLE_LICENCEPLATE', on:false },
+          ]},
+        { id:'rebook', type:'text', icon:'📆', title:'Neuer-Termin-Hinweis', meta:'Einladung zur Neubuchung',
+          content:'Gerne können Sie jederzeit einen neuen Termin vereinbaren – online rund um die Uhr oder telefonisch zu unseren Öffnungszeiten.' },
+        { id:'link', type:'link', icon:'🔗', title:'Neuen-Termin-Link', meta:'Button · URL geschützt',
+          content:'Neuen Termin buchen', token:'DIRECT_LINK' },
+        { id:'signature', type:'text', icon:'✍️', title:'Händler-Signatur', meta:'Ihre Grußformel',
+          content:'Mit freundlichen Grüßen\n\nIhr Serviceteam\n${DEALER_NAME}\nTel. +43 662 12345 · service@autohaus-senker.at' },
+        { id:'legal', type:'system', icon:'⚖️', title:'Rechtlicher Footer', meta:'Impressum & Datenschutz · gesetzlich',
+          content:'${DEALER_NAME} · Servicestraße 1, 5020 Salzburg · FN 123456a, LG Salzburg\nDatenschutz: servicebooking.digital/datenschutz · Impressum: autohaus-senker.at/impressum' },
+      ],
+    },
+  };
+}
+
+/* Kuratierte KI-Varianten je bearbeitbarem Baustein (Mock-„Modell") */
+const AI = {
+  intro: {
+    improve:'vielen herzlichen Dank für Ihre Terminbuchung! Nachfolgend finden Sie alle wichtigen Eckdaten Ihres Werkstatt-Termins übersichtlich zusammengefasst. Sollten Fragen offen sein, nennen Sie uns bitte einfach Ihre Buchungsnummer – wir helfen Ihnen gerne weiter.',
+    shorten:'vielen Dank für Ihre Buchung. Hier die Zusammenfassung Ihres Termins.',
+    en:'thank you very much for booking your appointment. Below you will find a summary of your workshop appointment. For any questions, simply quote your booking number.',
+    audi:'vielen Dank, dass Sie sich für unseren Audi Service entschieden haben. Nachfolgend finden Sie die Details Ihres Termins im Überblick.',
+  },
+  cancel: {
+    improve:'wir bestätigen Ihnen die Stornierung Ihres Werkstatt-Termins mit der Buchungsnummer ${BOOKINGNUMBER}. Sollten Sie diese Absage nicht selbst veranlasst haben, melden Sie sich bitte kurz bei uns.',
+    shorten:'Ihr Termin ${BOOKINGNUMBER} wurde storniert.',
+    en:'your workshop appointment with booking number ${BOOKINGNUMBER} has been cancelled. If you did not request this cancellation, please contact us.',
+    audi:'hiermit bestätigen wir die Stornierung Ihres Audi Service-Termins (${BOOKINGNUMBER}). Bei Fragen ist unser Serviceteam gerne für Sie da.',
+  },
+  rebook: {
+    improve:'Selbstverständlich können Sie jederzeit bequem einen neuen Termin vereinbaren – rund um die Uhr online oder telefonisch während unserer Öffnungszeiten. Wir freuen uns auf Sie.',
+    shorten:'Einen neuen Termin buchen Sie jederzeit online oder telefonisch.',
+    en:'You can arrange a new appointment at any time – online around the clock or by phone during opening hours.',
+    audi:'Vereinbaren Sie jederzeit Ihren nächsten Audi Service-Termin – online rund um die Uhr oder persönlich bei uns vor Ort.',
+  },
+  greeting: {
+    improve:'Guten Tag ${SALUTATION} ${CUSTOMER_FIRSTNAME} ${CUSTOMER_LASTNAME},',
+    shorten:'Hallo ${CUSTOMER_FIRSTNAME} ${CUSTOMER_LASTNAME},',
+    en:'Dear ${CUSTOMER_FIRSTNAME} ${CUSTOMER_LASTNAME},',
+    audi:'Sehr geehrte/r ${CUSTOMER_FIRSTNAME} ${CUSTOMER_LASTNAME},',
+  },
+  signature: {
+    improve:'Wir freuen uns darauf, Sie und Ihr Fahrzeug bald bei uns begrüßen zu dürfen.\n\nHerzliche Grüße\nIhr Serviceteam\n${DEALER_NAME}\nTel. +43 662 12345 · service@autohaus-senker.at',
+    shorten:'Ihr Serviceteam · ${DEALER_NAME}',
+    en:'We look forward to welcoming you soon.\n\nKind regards\nYour service team\n${DEALER_NAME}',
+    audi:'Vorsprung beginnt beim Service – wir freuen uns auf Ihren Besuch.\n\nIhr Audi Serviceteam\n${DEALER_NAME}',
+  },
+};
+
+/* Rollen-Berechtigungen */
+const ROLES = {
+  dealer:  { name:'Händler',  avatar:'SB',
+    canEditText:true, canEditSystem:false, canEditDataToggles:true, canEditLinkLabel:true,
+    canPublish:false, canReset:true, publishLabel:'Zur Freigabe einreichen',
+    note:'Sie bearbeiten Texte. Geschützte Inhalte sind gesperrt. Veröffentlichung erfolgt nach Freigabe durch einen Key-User.' },
+  keyuser: { name:'Key-User', avatar:'KU',
+    canEditText:true, canEditSystem:false, canEditDataToggles:true, canEditLinkLabel:true,
+    canPublish:true, canReset:true, publishLabel:'Veröffentlichen',
+    note:'Sie können Texte bearbeiten und Änderungen freigeben & veröffentlichen.' },
+  admin:   { name:'Admin',    avatar:'AD',
+    canEditText:true, canEditSystem:true, canEditDataToggles:true, canEditLinkLabel:true,
+    canPublish:true, canReset:true, publishLabel:'Veröffentlichen',
+    note:'Vollzugriff: auch geschützte Systembausteine, Pflichttexte und Platzhalter.' },
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  role: 'dealer',
+  template: 'confirmation',
+  brand: 'vw',
+  device: 'desktop',
+  lang: 'de',
+  data: defaults(),
+  dirty: false,
+  activeField: null,         // { blockId } | { subject:true }
+  versions: {
+    confirmation: [
+      { v:'v8', when:'12.06.2026 · 09:14', who:'Sabine B. (Key-User)', note:'Signatur & Telefonnummer aktualisiert', current:true },
+      { v:'v7', when:'02.04.2026 · 16:38', who:'Tom K. (Händler)', note:'Einleitung freundlicher formuliert' },
+      { v:'v6', when:'15.01.2026 · 11:02', who:'System', note:'Hersteller-Update Pflicht-Footer' },
+    ],
+    cancellation: [
+      { v:'v4', when:'03.05.2026 · 13:20', who:'Sabine B. (Key-User)', note:'Neuer-Termin-Hinweis ergänzt', current:true },
+      { v:'v3', when:'10.02.2026 · 08:45', who:'System', note:'Initiales Standard-Template' },
+    ],
+  },
+};
+
+/* ============================================================
+   HELFER
+   ============================================================ */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const role = () => ROLES[state.role];
+const tpl = () => state.data[state.template];
+const blockById = id => tpl().blocks.find(b => b.id === id);
+
+/* Platzhalter im Vorschau-Text durch Beispielwerte ersetzen (hervorgehoben) */
+function resolve(text) {
+  return esc(text).replace(/\$\{([A-Z_]+)\}/g, (m, key) => {
+    const p = PH[key];
+    if (!p) return `<span class="ph-val" style="color:#dc2626">?${key}?</span>`;
+    return `<span class="ph-val">${esc(p.sample)}</span>`;
+  });
+}
+function nl2br(s){ return s.replace(/\n/g,'<br>'); }
+
+function toast(title, msg, kind='ok') {
+  const ic = { ok:'✅', warn:'⚠️', info:'ℹ️' }[kind] || '✅';
+  const el = document.createElement('div');
+  el.className = 'toast ' + kind;
+  el.innerHTML = `<span class="tic">${ic}</span><div><b>${esc(title)}</b>${msg?`<small>${esc(msg)}</small>`:''}</div>`;
+  $('#toasts').appendChild(el);
+  setTimeout(() => { el.style.opacity='0'; el.style.transform='translateY(8px)'; setTimeout(()=>el.remove(),250); }, 3600);
+}
+
+function markDirty() {
+  state.dirty = true;
+  const s = $('#savedState');
+  s.className = 'saved-state dirty';
+  $('.txt', s).textContent = 'Nicht gespeicherte Änderungen';
+}
+function markSaved(text='Gespeichert · noch nicht veröffentlicht') {
+  state.dirty = false;
+  const s = $('#savedState');
+  s.className = 'saved-state saved';
+  $('.txt', s).textContent = text;
+}
+
+/* ============================================================
+   RENDER — Bausteine
+   ============================================================ */
+function renderBlocks() {
+  const r = role();
+  const host = $('#blocks');
+  host.innerHTML = '';
+  tpl().blocks.forEach(b => {
+    const editableText = b.type === 'text' && r.canEditText;
+    const editableSystem = b.type === 'system' && r.canEditSystem;
+    const lockedNow = (b.type === 'system' && !r.canEditSystem);
+    const el = document.createElement('div');
+    el.className = 'block' + (lockedNow ? ' locked' : '');
+
+    // Tag rechts in der Leiste
+    let tag = '';
+    if (b.type === 'system') {
+      tag = r.canEditSystem
+        ? '<span class="tag-edit">✏️ Admin darf bearbeiten</span>'
+        : '<span class="tag-lock">🔒 Geschützt</span>';
+    } else if (b.type === 'data') {
+      tag = '<span class="tag-lock">🔒 Struktur geschützt</span>';
+    } else if (b.type === 'link') {
+      tag = '<span class="tag-lock">🔗 URL geschützt</span>';
+    } else {
+      tag = '<span class="tag-edit">✏️ Bearbeitbar</span>';
+    }
+
+    let body = '';
+    if (b.type === 'data') {
+      body = `<div class="data-rows">` + b.rows.map((row,i) => {
+        const p = PH[row.token];
+        const lockRow = row.locked || !r.canEditDataToggles;
+        return `<div class="data-row ${row.on?'':'off'}">
+          <span class="k">${esc(row.key)}${row.locked?' <span class="req-dot" title="Pflichtangabe">●</span>':''}</span>
+          <span class="v"><code>\${${row.token}}</code> → ${esc(p?p.sample:'—')}</span>
+          <label class="switch toggle" title="${lockRow?'Pflichtangabe – immer aktiv':'Zeile ein-/ausblenden'}">
+            <input type="checkbox" data-row="${i}" ${row.on?'checked':''} ${lockRow?'disabled':''}>
+            <span class="track"></span>
+          </label>
+        </div>`;
+      }).join('') + `</div>
+      <div class="locked-hint">🔒 Reihenfolge und Format der Buchungsdaten sind vorgegeben, damit nichts Wichtiges verloren geht. Sie entscheiden nur, welche Zeilen sichtbar sind.</div>`;
+    } else if (b.type === 'link') {
+      const canLabel = r.canEditLinkLabel;
+      body = `<div class="field-label">Button-Beschriftung</div>
+        <textarea data-block="${b.id}" rows="1" ${canLabel?'':'readonly'} style="min-height:auto">${esc(b.content)}</textarea>
+        <div class="locked-hint">🔗 Verlinkt automatisch auf <code>\${${b.token}}</code> (die persönliche Buchung des Kunden). Die Zieladresse ist aus Sicherheitsgründen fixiert.</div>`;
+    } else if (editableText || editableSystem) {
+      const rows = Math.max(2, Math.min(7, b.content.split('\n').length + 1));
+      body = `<textarea data-block="${b.id}" rows="${rows}">${esc(b.content)}</textarea>` + aiBar(b);
+    } else {
+      // locked system → read-only Vorschau
+      body = `<div class="locked-preview">${esc(b.content)}</div>
+        <div class="locked-hint">🔒 Dieser Baustein ist gesetzlich/technisch vorgegeben und kann nur von einem Administrator geändert werden.</div>`;
+    }
+
+    el.innerHTML = `
+      <div class="block__bar">
+        <span class="block__ic">${b.icon}</span>
+        <span><span class="block__title">${esc(b.title)}</span> &nbsp;<span class="block__meta">${esc(b.meta)}</span></span>
+        <span class="spacer"></span>
+        ${tag}
+      </div>
+      <div class="block__body">${body}</div>`;
+    host.appendChild(el);
+  });
+
+  // Events: Textbausteine
+  $$('#blocks textarea[data-block]').forEach(t => {
+    t.addEventListener('focus', () => { state.activeField = { blockId: t.dataset.block }; });
+    t.addEventListener('input', () => {
+      blockById(t.dataset.block).content = t.value;
+      markDirty(); renderPreview(); renderValidation();
+    });
+  });
+  // Events: Datentoggles
+  $$('#blocks input[data-row]').forEach(c => {
+    c.addEventListener('change', () => {
+      const dataBlock = tpl().blocks.find(b => b.type === 'data');
+      dataBlock.rows[Number(c.dataset.row)].on = c.checked;
+      markDirty(); renderPreview();
+      c.closest('.data-row').classList.toggle('off', !c.checked);
+    });
+  });
+  // Events: AI-Buttons
+  $$('#blocks .ai-btn').forEach(btn => {
+    btn.addEventListener('click', e => onAi(e, btn));
+  });
+}
+
+function aiBar(b) {
+  return `<div class="ai-bar">
+    <span class="ai-label">✨ KI-Assistent</span>
+    <button class="ai-btn" data-ai="improve" data-block="${b.id}">Verbessern</button>
+    <button class="ai-btn" data-ai="shorten" data-block="${b.id}">Kürzen</button>
+    <button class="ai-btn" data-ai="en" data-block="${b.id}">🇬🇧 Übersetzen</button>
+    <button class="ai-btn" data-ai="audi" data-block="${b.id}">Markenton (Audi)</button>
+  </div>`;
+}
+
+/* ============================================================
+   RENDER — Platzhalter-Chips
+   ============================================================ */
+function renderChips() {
+  const req = new Set(tpl().required);
+  const host = $('#chips');
+  host.innerHTML = Object.entries(PH).map(([key,p]) =>
+    `<button class="chip" data-token="${key}" data-req="${req.has(key)?1:0}">
+       ${esc(p.label)} <span class="ins">＋</span>
+       <span class="tip"><code>\${${key}}</code> · ${esc(p.sample)}</span>
+     </button>`).join('');
+  $$('#chips .chip').forEach(ch => ch.addEventListener('click', () => insertToken(ch.dataset.token)));
+}
+
+function insertToken(token) {
+  const tokenStr = '${' + token + '}';
+  const af = state.activeField;
+  let target = null;
+  if (af && af.subject) target = $('#subject');
+  else if (af && af.blockId) target = $(`#blocks textarea[data-block="${af.blockId}"]`);
+  if (!target || target.readOnly) {
+    toast('Bitte zuerst ein Textfeld wählen', 'Klicken Sie in den Betreff oder einen bearbeitbaren Baustein.', 'warn');
+    return;
+  }
+  const s = target.selectionStart ?? target.value.length;
+  const e = target.selectionEnd ?? target.value.length;
+  target.value = target.value.slice(0,s) + tokenStr + target.value.slice(e);
+  target.dispatchEvent(new Event('input', { bubbles:true }));
+  target.focus();
+  target.selectionStart = target.selectionEnd = s + tokenStr.length;
+}
+
+/* ============================================================
+   RENDER — Betreff
+   ============================================================ */
+function renderSubject() {
+  const s = $('#subject');
+  s.value = tpl().subject;
+}
+
+/* ============================================================
+   RENDER — E-Mail-Vorschau
+   ============================================================ */
+function renderPreview() {
+  const t = tpl();
+  const brand = state.brand === 'neutral' ? 'vw' : state.brand;
+  $('#mSubject').innerHTML = resolve(t.subject);
+  $('#mFrom').innerHTML = BRANDS[state.brand].from;
+  $('#emailFrame').className = 'email-frame ' + state.device;
+
+  const render = $('#emailRender');
+  render.className = 'email brand-' + brand;
+
+  const get = id => t.blocks.find(b => b.id === id);
+  const dataBlock = t.blocks.find(b => b.type === 'data');
+  const linkBlock = t.blocks.find(b => b.type === 'link');
+
+  const dataRows = dataBlock ? dataBlock.rows.filter(r => r.on).map(r =>
+    `<div class="dr"><div class="dk">${esc(r.key)}</div><div class="dv">${resolve('${'+r.token+'}')}</div></div>`).join('') : '';
+
+  const header = brand === 'audi'
+    ? `<div class="e-header">${audiRings()}<span style="font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase">Service</span></div><div class="e-accentbar"></div>`
+    : `<div class="e-header">${vwLogo()}<span style="font-size:15px;font-weight:700;letter-spacing:.02em">Volkswagen Service</span></div>`;
+
+  const noreply = get('noreply');
+  const greeting = get('greeting');
+  const signature = get('signature');
+  const legal = get('legal');
+  const pdf = get('pdf');
+  const kicker = brand === 'audi'
+    ? `<div class="e-kicker">${state.template==='cancellation'?'Terminstornierung':'Terminbestätigung'}</div>` : '';
+  const heading = state.template === 'cancellation'
+    ? (brand==='audi'?'Ihr Termin wurde storniert':'Termin storniert')
+    : (brand==='audi'?'Ihr Termin ist bestätigt':'Termin bestätigt');
+
+  // Hauptinhaltsblöcke (zwischen Begrüßung und Signatur), in Reihenfolge
+  const midOrder = state.template === 'cancellation'
+    ? ['cancel','data','rebook','link']
+    : ['intro','data','link'];
+  const mid = midOrder.map(id => {
+    const b = get(id);
+    if (!b) return '';
+    if (b.type === 'data') return `<div class="e-data">${dataRows}</div>`;
+    if (b.type === 'link') return `<p style="margin:22px 0 6px"><a class="e-btn" href="#">${esc(b.content)} →</a></p>`;
+    return `<p style="margin:0 0 14px">${nl2br(resolve(b.content))}</p>`;
+  }).join('');
+
+  const pdfHtml = (t.pdf && pdf) ? `<div class="e-pdf">📎 <span>${nl2br(resolve(pdf.content))}</span></div>` : '';
+
+  render.innerHTML = `
+    ${header}
+    <div class="e-noreply">${nl2br(resolve(noreply.content))}</div>
+    <div class="e-body">
+      ${kicker}
+      <h1 class="e-h">${esc(heading)}</h1>
+      <p style="margin:0 0 16px">${nl2br(resolve(greeting.content))}</p>
+      ${mid}
+      ${pdfHtml}
+      <div class="e-sign">${nl2br(resolve(signature.content))}</div>
+    </div>
+    <div class="e-footer">${nl2br(resolve(legal.content))}</div>`;
+}
+
+function audiRings() {
+  const ring = cx => `<circle cx="${cx}" cy="17" r="14" fill="none" stroke="#000" stroke-width="3.4"/>`;
+  return `<span class="rings"><svg width="96" height="34" viewBox="0 0 110 34" aria-label="Audi">
+    ${ring(16)}${ring(40)}${ring(64)}${ring(88)}
+  </svg></span>`;
+}
+function vwLogo() {
+  return `<svg width="34" height="34" viewBox="0 0 100 100" aria-label="VW">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#fff" stroke-width="5"/>
+    <path d="M26 30 L40 70 L50 45 L60 70 L74 30 L66 30 L58 55 L50 32 L42 55 L34 30 Z" fill="#fff"/>
+  </svg>`;
+}
+
+/* ============================================================
+   VALIDIERUNG
+   ============================================================ */
+function collectAllText() {
+  const t = tpl();
+  let txt = t.subject + ' ';
+  t.blocks.forEach(b => {
+    if (b.type === 'data') { b.rows.filter(r=>r.on).forEach(r => txt += '${'+r.token+'} '); }
+    else if (b.type === 'link') { txt += b.content + ' ${'+b.token+'} '; }
+    else txt += b.content + ' ';
+  });
+  return txt;
+}
+function findUnknownTokens() {
+  const found = new Set();
+  (collectAllText().match(/\$\{([A-Z_]+)\}/g) || []).forEach(m => {
+    const key = m.slice(2,-1);
+    if (!PH[key]) found.add(key);
+  });
+  return [...found];
+}
+function renderValidation() {
+  const t = tpl();
+  const all = collectAllText();
+  const missing = t.required.filter(tok => !all.includes('${'+tok+'}'));
+  const unknown = findUnknownTokens();
+  const emptyBlocks = t.blocks.filter(b => (b.type==='text') && !b.content.trim()).map(b=>b.title);
+
+  const rows = [];
+  if (missing.length === 0)
+    rows.push(`<div class="valid-row ok"><span class="vic">✅</span><div>Alle <b>Pflicht-Platzhalter</b> sind vorhanden.</div></div>`);
+  else
+    rows.push(`<div class="valid-row err"><span class="vic">⛔</span><div>Es fehlen Pflicht-Platzhalter: ${missing.map(m=>`<code>\${${m}}</code>`).join(' ')}. Diese sind für den Versand zwingend nötig.</div></div>`);
+
+  if (unknown.length === 0)
+    rows.push(`<div class="valid-row ok"><span class="vic">✅</span><div>Keine unbekannten oder beschädigten Platzhalter.</div></div>`);
+  else
+    rows.push(`<div class="valid-row err"><span class="vic">⛔</span><div>Unbekannte Platzhalter: ${unknown.map(m=>`<code>\${${m}}</code>`).join(' ')}. Bitte über die Chips einfügen.</div></div>`);
+
+  if (emptyBlocks.length)
+    rows.push(`<div class="valid-row warn"><span class="vic">⚠️</span><div>Leere Textbausteine: <b>${emptyBlocks.join(', ')}</b>.</div></div>`);
+
+  rows.push(`<div class="valid-row ok"><span class="vic">🔒</span><div>Geschützte Inhalte (No-Reply, rechtlicher Footer${t.pdf?', PDF-Anhang':''}) sind unverändert.</div></div>`);
+
+  $('#valid').innerHTML = rows.join('');
+  return missing.length === 0 && unknown.length === 0;
+}
+
+/* ============================================================
+   KI-ASSISTENT
+   ============================================================ */
+function onAi(e, btn) {
+  const id = btn.dataset.block, mode = btn.dataset.ai;
+  const b = blockById(id);
+  const variants = AI[id] || {};
+  const map = { improve:'improve', shorten:'shorten', en:'en', audi:'audi' };
+  let suggestion = variants[map[mode]];
+  if (!suggestion) {
+    // generischer Fallback
+    if (mode === 'shorten') suggestion = b.content.split(/(?<=[.!?])\s/)[0];
+    else if (mode === 'en') suggestion = '[EN] ' + b.content;
+    else suggestion = b.content;
+  }
+  const titles = { improve:'Verbesserter Vorschlag', shorten:'Gekürzter Vorschlag', en:'Englische Übersetzung', audi:'Audi-Markenton' };
+  openModal(`
+    <div class="modal__head"><h3>✨ KI-Vorschlag</h3><p>${titles[mode]} für „${esc(b.title)}". Original bleibt erhalten, bis Sie übernehmen.</p></div>
+    <div class="modal__body">
+      <div class="ai-result"><h4>✨ ${titles[mode]}</h4>${nl2br(esc(suggestion))}</div>
+      <p style="font-size:12px;color:var(--c-text-muted);margin:12px 0 0">Platzhalter wie <code>\${CUSTOMER_FIRSTNAME}</code> bleiben unangetastet und werden geprüft.</p>
+    </div>
+    <div class="modal__foot">
+      <button class="btn ghost" data-close>Verwerfen</button>
+      <button class="btn primary" id="aiApply">Übernehmen</button>
+    </div>`);
+  $('#aiApply').addEventListener('click', () => {
+    b.content = suggestion;
+    closeModal(); markDirty(); renderBlocks(); renderPreview(); renderValidation();
+    toast('KI-Vorschlag übernommen', 'Bitte vor Veröffentlichung prüfen.', 'info');
+  });
+}
+
+/* ============================================================
+   AKTIONEN — Speichern / Veröffentlichen / Testmail / Reset / Versionen
+   ============================================================ */
+function isCriticalChange() {
+  // „kritisch" = Abweichung der Betreffzeile, des Links oder Datenstruktur
+  // vom Auslieferungsstandard ODER Bearbeitung durch Admin an Systembausteinen.
+  const def = defaults()[state.template];
+  const cur = tpl();
+  if (cur.subject !== def.subject) return true;
+  const curLink = cur.blocks.find(b=>b.type==='link');
+  const defLink = def.blocks.find(b=>b.type==='link');
+  if (curLink && defLink && curLink.content !== defLink.content) return true;
+  // Systembaustein verändert?
+  for (const b of cur.blocks.filter(b=>b.type==='system')) {
+    const d = def.blocks.find(x=>x.id===b.id);
+    if (d && d.content !== b.content) return true;
+  }
+  return false;
+}
+
+function doSave() {
+  if (!renderValidation()) { toast('Speichern nicht möglich', 'Bitte zuerst die rot markierten Prüfpunkte beheben.', 'warn'); return; }
+  markSaved();
+  toast('Entwurf gespeichert', 'Noch nicht an Kunden aktiv – erst nach Veröffentlichung.', 'ok');
+}
+
+function doPublish() {
+  if (!renderValidation()) { toast('Veröffentlichen nicht möglich', 'Bitte zuerst die Prüfpunkte beheben.', 'warn'); return; }
+  const r = role();
+
+  if (!r.canPublish) {
+    // Händler → Freigabe-Workflow
+    openModal(`
+      <div class="modal__head"><h3>Zur Freigabe einreichen</h3><p>Ihre Änderungen werden an einen Key-User zur Prüfung & Veröffentlichung gesendet.</p></div>
+      <div class="modal__body">
+        <div class="warn-box">ℹ️ Als Händler können Sie Texte bearbeiten. Aktiv geschaltet wird das Template nach Freigabe – so bleibt alles rechtssicher.</div>
+        <label class="field-label">Notiz an den Key-User (optional)</label>
+        <input class="input" id="approveNote" placeholder="z. B. Signatur-Telefonnummer korrigiert">
+      </div>
+      <div class="modal__foot">
+        <button class="btn ghost" data-close>Abbrechen</button>
+        <button class="btn primary" id="approveSend">Einreichen</button>
+      </div>`);
+    $('#approveSend').addEventListener('click', () => {
+      closeModal(); markSaved('Eingereicht · wartet auf Freigabe');
+      addVersion('Zur Freigabe eingereicht (Händler)');
+      toast('Zur Freigabe eingereicht', 'Ein Key-User wurde benachrichtigt.', 'ok');
+    });
+    return;
+  }
+
+  // Key-User / Admin: Testmail-Pflicht-Hinweis + ggf. 2FA bei kritischen Änderungen
+  const critical = isCriticalChange();
+  if (critical) { promptTestThen2FA(); }
+  else { confirmPublish(false); }
+}
+
+function promptTestThen2FA() {
+  openModal(`
+    <div class="modal__head"><h3>Kritische Änderung erkannt</h3><p>Sie ändern Betreff, Link oder einen geschützten Baustein. Diese Aktion ist mit 2-Faktor-Bestätigung abgesichert.</p></div>
+    <div class="modal__body">
+      <div class="warn-box">⚠️ <div><b>Empfehlung:</b> Senden Sie zuerst eine Testmail an sich selbst, bevor Sie diese Änderung für alle Kunden aktivieren.</div></div>
+      <p style="font-size:13px;color:var(--c-text-muted);margin:0">Mit „Weiter" bestätigen Sie die Veröffentlichung per Sicherheitscode.</p>
+    </div>
+    <div class="modal__foot">
+      <button class="btn ghost" id="goTest">✉️ Erst Testmail</button>
+      <button class="btn primary" id="go2fa">Weiter zur 2FA →</button>
+    </div>`);
+  $('#goTest').addEventListener('click', () => { closeModal(); openTestMail(); });
+  $('#go2fa').addEventListener('click', () => { closeModal(); open2FA(); });
+}
+
+function open2FA() {
+  openModal(`
+    <div class="modal__head"><h3>🛡️ Sicherheitscode eingeben</h3><p>Wir haben einen 6-stelligen Code an Ihr hinterlegtes Gerät gesendet (Demo: <b>123456</b>).</p></div>
+    <div class="modal__body">
+      <div class="otp" id="otp">
+        ${[0,1,2,3,4,5].map(i=>`<input maxlength="1" inputmode="numeric" data-i="${i}">`).join('')}
+      </div>
+      <p style="text-align:center;font-size:12.5px;color:var(--c-text-muted);margin:14px 0 0">Code nicht erhalten? <a href="#" id="resend">Erneut senden</a></p>
+    </div>
+    <div class="modal__foot">
+      <button class="btn ghost" data-close>Abbrechen</button>
+      <button class="btn primary" id="confirm2fa" disabled>Bestätigen & veröffentlichen</button>
+    </div>`);
+  const inputs = $$('#otp input');
+  inputs[0].focus();
+  const val = () => inputs.map(i=>i.value).join('');
+  inputs.forEach((inp,idx) => {
+    inp.addEventListener('input', () => {
+      inp.value = inp.value.replace(/\D/g,'');
+      if (inp.value && idx<5) inputs[idx+1].focus();
+      $('#confirm2fa').disabled = val().length !== 6;
+    });
+    inp.addEventListener('keydown', e => { if (e.key==='Backspace' && !inp.value && idx>0) inputs[idx-1].focus(); });
+  });
+  $('#resend').addEventListener('click', e => { e.preventDefault(); toast('Code erneut gesendet', 'Demo-Code: 123456', 'info'); });
+  $('#confirm2fa').addEventListener('click', () => {
+    if (val() !== '123456') { toast('Falscher Code', 'Bitte erneut versuchen (Demo: 123456).', 'warn'); return; }
+    closeModal(); confirmPublish(true);
+  });
+}
+
+function confirmPublish(with2fa) {
+  markSaved('Veröffentlicht · aktiv für Kunden');
+  $('#savedState').className = 'saved-state saved';
+  $('.txt', $('#savedState')).textContent = 'Veröffentlicht · aktiv';
+  addVersion(with2fa ? 'Veröffentlicht (2FA-bestätigt)' : 'Veröffentlicht');
+  toast('Template veröffentlicht', with2fa ? 'Kritische Änderung per 2FA bestätigt.' : 'Ab sofort für Kunden aktiv.', 'ok');
+}
+
+function addVersion(note) {
+  const list = state.versions[state.template];
+  list.forEach(v => v.current = false);
+  const num = 'v' + (parseInt((list[0]?.v||'v0').slice(1)) + 1);
+  list.unshift({ v:num, when: new Date().toLocaleDateString('de-AT')+' · '+new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'}),
+    who: role().name + ' (Sie)', note, current:true });
+}
+
+/* Testmail */
+function openTestMail() {
+  openModal(`
+    <div class="modal__head"><h3>✉️ Testmail senden</h3><p>Sehen Sie die fertige E-Mail in Ihrem Postfach – mit Beispieldaten befüllt.</p></div>
+    <div class="modal__body">
+      <label class="field-label">Empfänger</label>
+      <input class="input" id="testTo" value="s.busslehner@gmail.com">
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <div style="flex:1"><label class="field-label">Marke</label>
+          <div class="seg" id="testBrand" style="width:100%">
+            <button data-b="vw" class="${state.brand!=='audi'?'active':''}" style="flex:1">VW</button>
+            <button data-b="audi" class="${state.brand==='audi'?'active':''}" style="flex:1">Audi</button>
+          </div></div>
+      </div>
+      <p style="font-size:12px;color:var(--c-text-muted);margin:12px 0 0">Die Testmail ist als <b>[TEST]</b> gekennzeichnet und geht nicht an echte Kunden.</p>
+    </div>
+    <div class="modal__foot">
+      <button class="btn ghost" data-close>Abbrechen</button>
+      <button class="btn primary" id="sendTest">Testmail senden</button>
+    </div>`);
+  let tb = state.brand==='audi'?'audi':'vw';
+  $$('#testBrand button').forEach(b => b.addEventListener('click', () => {
+    $$('#testBrand button').forEach(x=>x.classList.remove('active')); b.classList.add('active'); tb=b.dataset.b;
+  }));
+  $('#sendTest').addEventListener('click', () => {
+    const to = $('#testTo').value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) { toast('Ungültige E-Mail', 'Bitte eine gültige Adresse eingeben.', 'warn'); return; }
+    closeModal();
+    toast('Testmail unterwegs', `[TEST] „${tpl().name}" (${tb.toUpperCase()}) an ${to} gesendet.`, 'ok');
+  });
+}
+
+/* Reset */
+function doReset() {
+  openModal(`
+    <div class="modal__head"><h3>Auf Standard zurücksetzen?</h3><p>Das Template „${esc(tpl().name)}" wird auf den vom Hersteller ausgelieferten Standard zurückgesetzt.</p></div>
+    <div class="modal__body">
+      <div class="warn-box">⚠️ <div>Ihre individuellen Texte gehen dabei verloren. Die aktuelle Version bleibt in der <b>Versionshistorie</b> erhalten und kann wiederhergestellt werden.</div></div>
+    </div>
+    <div class="modal__foot">
+      <button class="btn ghost" data-close>Abbrechen</button>
+      <button class="btn danger" id="confirmReset">Zurücksetzen</button>
+    </div>`);
+  $('#confirmReset').addEventListener('click', () => {
+    addVersion('Vor Zurücksetzen gesichert');
+    state.data[state.template] = defaults()[state.template];
+    closeModal(); renderAll(); markDirty();
+    toast('Auf Standard zurückgesetzt', 'Bitte prüfen und anschließend speichern.', 'info');
+  });
+}
+
+/* Versionshistorie */
+function openVersions() {
+  const list = state.versions[state.template];
+  openModal(`
+    <div class="modal__head"><h3>🕑 Versionshistorie</h3><p>Jede Veröffentlichung wird gespeichert. Sie können jederzeit zu einer früheren Version zurück.</p></div>
+    <div class="modal__body" style="max-height:50vh;overflow:auto">
+      ${list.map((v,i)=>`
+        <div class="ver-item ${v.current?'current':''}">
+          <span class="ver-dot"></span>
+          <div class="ver-main">
+            <div class="vt">${esc(v.v)} · ${esc(v.note)}</div>
+            <div class="vm">${esc(v.when)} · ${esc(v.who)}</div>
+          </div>
+          ${v.current ? '<span class="ver-badge">Aktiv</span>' : `<button class="btn" data-restore="${i}">Wiederherstellen</button>`}
+        </div>`).join('')}
+    </div>
+    <div class="modal__foot"><button class="btn" data-close>Schließen</button></div>`, true);
+  $$('[data-restore]').forEach(b => b.addEventListener('click', () => {
+    const i = Number(b.dataset.restore);
+    list.forEach(v=>v.current=false); list[i].current = true;
+    closeModal(); markSaved('Version wiederhergestellt · '+list[i].v);
+    toast('Version wiederhergestellt', `${list[i].v} ist wieder aktiv.`, 'ok');
+  }));
+}
+
+/* ============================================================
+   MODAL-INFRASTRUKTUR
+   ============================================================ */
+function openModal(html, wide=false) {
+  const root = $('#modalRoot');
+  root.innerHTML = `<div class="scrim"><div class="modal ${wide?'wide':''}" role="dialog" aria-modal="true">${html}</div></div>`;
+  root.querySelector('.scrim').addEventListener('click', e => { if (e.target.classList.contains('scrim')) closeModal(); });
+  $$('[data-close]', root).forEach(b => b.addEventListener('click', closeModal));
+  document.addEventListener('keydown', escClose);
+}
+function escClose(e){ if (e.key==='Escape') closeModal(); }
+function closeModal(){ $('#modalRoot').innerHTML=''; document.removeEventListener('keydown', escClose); }
+
+/* ============================================================
+   ROLLE / KONTEXT
+   ============================================================ */
+function applyRole() {
+  const r = role();
+  $('#who').textContent = r.avatar;
+  $('#roleNote').innerHTML = `🛈 ${esc(r.note)}`;
+  $('#btnPublish').textContent = r.publishLabel;
+  $('#btnReset').classList.toggle('hidden', !r.canReset);
+}
+
+function renderAll() {
+  renderSubject(); renderBlocks(); renderChips(); renderPreview(); renderValidation(); applyRole();
+}
+
+/* ============================================================
+   EVENTS — Bedienelemente
+   ============================================================ */
+$('#roleSwitch').addEventListener('click', e => {
+  const b = e.target.closest('button[data-role]'); if (!b) return;
+  $$('#roleSwitch button').forEach(x=>x.classList.toggle('active', x===b));
+  state.role = b.dataset.role;
+  renderAll();
+  toast('Rolle gewechselt', 'Aktiv: '+role().name, 'info');
+});
+
+$('#tplPicker').addEventListener('click', e => {
+  const b = e.target.closest('button[data-tpl]'); if (!b || b.classList.contains('soon')) return;
+  $$('#tplPicker .tpl').forEach(x=>x.classList.toggle('active', x===b));
+  state.template = b.dataset.tpl;
+  state.activeField = null;
+  renderAll();
+});
+
+$('#subject').addEventListener('focus', () => { state.activeField = { subject:true }; });
+$('#subject').addEventListener('input', e => { tpl().subject = e.target.value; markDirty(); renderPreview(); renderValidation(); });
+
+$('#brandCtx').addEventListener('click', e => {
+  const b = e.target.closest('button[data-brand]'); if (!b) return;
+  setBrand(b.dataset.brand);
+});
+$('#brandPreview').addEventListener('click', e => {
+  const b = e.target.closest('button[data-brand]'); if (!b) return;
+  setBrand(b.dataset.brand);
+});
+function setBrand(brand) {
+  state.brand = brand;
+  $$('#brandCtx button').forEach(x=>x.classList.toggle('active', x.dataset.brand===brand));
+  $$('#brandPreview button').forEach(x=>x.classList.toggle('active', x.dataset.brand===(brand==='neutral'?'vw':brand)));
+  renderPreview();
+}
+
+$('#langCtx').addEventListener('click', e => {
+  const b = e.target.closest('button[data-lang]'); if (!b) return;
+  $$('#langCtx button').forEach(x=>x.classList.toggle('active', x===b));
+  state.lang = b.dataset.lang;
+  toast('Sprache: '+(state.lang==='de'?'Deutsch':'English'), 'Pro Sprache lässt sich ein eigener Text pflegen.', 'info');
+});
+
+$('#devicePreview').addEventListener('click', e => {
+  const b = e.target.closest('button[data-device]'); if (!b) return;
+  $$('#devicePreview button').forEach(x=>x.classList.toggle('active', x===b));
+  state.device = b.dataset.device;
+  renderPreview();
+});
+
+$('#btnSave').addEventListener('click', doSave);
+$('#btnPublish').addEventListener('click', doPublish);
+$('#btnTest').addEventListener('click', openTestMail);
+$('#btnReset').addEventListener('click', doReset);
+$('#btnVersions').addEventListener('click', openVersions);
+$('#howto').addEventListener('click', e => {
+  e.preventDefault();
+  openModal(`
+    <div class="modal__head"><h3>So funktioniert der Template-Assistent</h3><p>In drei Schritten zur fertigen Kunden-E-Mail.</p></div>
+    <div class="modal__body" style="font-size:13.5px;line-height:1.65">
+      <p><b>1 · Bausteine bearbeiten</b><br>Grün markierte Bausteine (✏️) können Sie frei umschreiben. Grau hinterlegte (🔒) sind rechtlich/technisch geschützt und bleiben automatisch korrekt.</p>
+      <p><b>2 · Platzhalter nutzen</b><br>Platzhalter-Chips wie „Vorname" werden beim Versand automatisch befüllt. Pflicht-Platzhalter (●) dürfen nicht fehlen – die Prüfung warnt Sie.</p>
+      <p><b>3 · Prüfen, testen, veröffentlichen</b><br>Die Live-Vorschau zeigt das Ergebnis im Marken-Design. Senden Sie eine Testmail an sich selbst und veröffentlichen Sie erst dann. Kritische Änderungen werden per 2FA bestätigt.</p>
+      <p style="color:var(--c-text-muted)">Jede Veröffentlichung landet in der Versionshistorie – Sie können jederzeit zurück.</p>
+    </div>
+    <div class="modal__foot"><button class="btn primary" data-close>Verstanden</button></div>`, true);
+});
+
+/* INIT */
+renderAll();
+markSaved('Veröffentlicht · aktuelle Version');
+</script>
+</body>
+</html>
